@@ -1,9 +1,11 @@
 #pragma once
 #include <WinSock2.h>
 #include <map>
+#include <string>
 #include <iostream>
 #include <thread>
 #include "IRequestHandler.h"
+#include "LoginRequestHandler.h"
 
 #define PORT 8326
 
