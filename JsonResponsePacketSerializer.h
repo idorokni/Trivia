@@ -3,11 +3,7 @@
 #include "Responses.h"
 #include <iostream>
 #include "json.hpp"
-
-#define FOURTH_BYTE_SHIFT 24
-#define THIRD_BYTE_SHIFT 16
-#define SECEOND_BYTE_SHIFT 8
-#define ENSURE_LEAST_SIGNIFICANT_BYTE_USE 0xFF
+#include "Constants.h"
 
 class JsonResponsePacketSerializer {
 public:

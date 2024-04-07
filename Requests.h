@@ -3,6 +3,11 @@
 #include <ctime>
 #include <vector>
 
+enum class RequestCode {
+	LOGIN_REQUEST_CODE = 51,
+	SIGNUP_REQUEST_CODE = 52
+};
+
 struct RequestId {
 	int id;
 };
