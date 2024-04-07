@@ -9,7 +9,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(LoginResponse loginRespon
 
 	Buffer buff(HEADER_LENGTH + dumpLen);
 
-	buff.at(0) = LOGIN_RESPONSE_CODE;
+	buff.at(0) = (int)ResponseCode::LOGIN_RESPONSE_CODE;
 	std::memcpy(&buff.data()[CODE_AMOUNT_BYTES], &dumpLen, BYTES_LENGTH);
 	std::memcpy(&buff.data()[HEADER_LENGTH], jsonDump.c_str(), dumpLen);
 
@@ -26,7 +26,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(SignupResponse signUpResp
 
 	Buffer buff(HEADER_LENGTH + dumpLen);
 
-	buff.at(0) = LOGIN_RESPONSE_CODE;
+	buff.at(0) = (int)ResponseCode::SIGNUP_RESPONSE_CODE;
 	std::memcpy(&buff.data()[CODE_AMOUNT_BYTES], &dumpLen, BYTES_LENGTH);
 	std::memcpy(&buff.data()[HEADER_LENGTH], jsonDump.c_str(), dumpLen);
 
@@ -43,7 +43,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(ErrorResponse errorRespon
 
 	Buffer buff(HEADER_LENGTH + dumpLen);
 
-	buff.at(0) = LOGIN_RESPONSE_CODE;
+	buff.at(0) = (int)ResponseCode::ERROR_RESPONSE_CODE;
 	std::memcpy(&buff.data()[CODE_AMOUNT_BYTES], &dumpLen, BYTES_LENGTH);
 	std::memcpy(&buff.data()[HEADER_LENGTH], jsonDump.c_str(), dumpLen);
 
