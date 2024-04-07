@@ -1,6 +1,4 @@
 #pragma once
 #include <vector>
 
-struct Buffer {
-	std::vector<unsigned char> bytes;
-};
+using Buffer = std::vector<uint8_t>;

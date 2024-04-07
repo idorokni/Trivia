@@ -4,10 +4,8 @@
 #include <iostream>
 #include "json.hpp"
 
-#define FOURTH_BYTE_SHIFT 24
-#define THIRD_BYTE_SHIFT 16
-#define SECEOND_BYTE_SHIFT 8
-#define ENSURE_LEAST_SIGNIFICANT_BYTE_USE 0xFF
+#define CODE_AMOUNT_BYTES 1
+#define BYTES_LENGTH 4
 
 class JsonResponsePacketSerializer {
 public:
