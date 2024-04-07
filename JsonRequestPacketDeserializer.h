@@ -1,11 +1,11 @@
 #include "Requests.h"
 #include "Buffer.h"
-
-#define LOGIN_REQUEST_CODE 51
-#define SIGNUP_REQUEST_CODE 52
+#include "Constants.h"
 
 class JsonRequestPacketDeserializer {
 public:
-	LoginRequest deserializeLoginRequest(Buffer buff);
-	SignUpRequest deserializeSignupRequest(Buffer buff);
+	static LoginRequest deserializeLoginRequest(Buffer buff);
+	static SignUpRequest deserializeSignupRequest(Buffer buff);
+private:
+	static nlohmann::json convertToJsonObject(Buffer buff);
 };

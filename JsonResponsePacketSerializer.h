@@ -3,9 +3,7 @@
 #include "Responses.h"
 #include <iostream>
 #include "json.hpp"
-
-#define CODE_AMOUNT_BYTES 1
-#define BYTES_LENGTH 4
+#include "Constants.h"
 
 class JsonResponsePacketSerializer {
 public:

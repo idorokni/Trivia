@@ -3,6 +3,7 @@
 #include "WSAInitializer.h"
 #include "Server.h"
 #include "JsonResponsePacketSerializer.h"
+#include "JsonRequestPacketDeserializer.h"
 
 
 int main() {
@@ -12,6 +13,7 @@ int main() {
 		LoginResponse l;
 		l.status = 1;
 		Buffer buff = JsonResponsePacketSerializer::serializeResponse(l);
+		LoginRequest lo = JsonRequestPacketDeserializer::deserializeLoginRequest(buff);
 		Server server;
 
 		server.run();

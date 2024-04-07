@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClInclude Include="Buffer.h" />
     <ClInclude Include="Communicator.h" />
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="IRequestHandler.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="JsonRequestPacketDeserializer.h" />
