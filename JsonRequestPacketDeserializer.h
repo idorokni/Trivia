@@ -1,6 +1,7 @@
 #include "Requests.h"
 #include "Buffer.h"
 #include "Constants.h"
+#include "json.hpp"
 
 class JsonRequestPacketDeserializer {
 public:
