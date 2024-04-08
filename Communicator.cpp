@@ -45,7 +45,7 @@ void Communicator::handleNewClient(SOCKET sock) {
 		}
 		uint32_t length;
 		std::memcpy(&length, &buff.at(CODE_AMOUNT_BYTES), BYTES_LENGTH);
-		int res = recv(sock, (char*)&buff.at(HEADER_LENGTH), length, 0);
+		res = recv(sock, (char*)&buff.at(HEADER_LENGTH), length, 0);
 		if (res == INVALID_SOCKET)
 		{
 			std::string s = "Error while recieving from socket: ";
@@ -59,7 +59,12 @@ void Communicator::handleNewClient(SOCKET sock) {
 		info.recivalTime = std::time(nullptr);
 		if (this->m_clients[sock]->isRequestRelevant(info)) {
 			LoginRequestHandler handler;
-			this->m_clients.at(sock)->handleRequest(info);
+			RequestResult reasult = this->m_clients.at(sock)->handleRequest(info);
+			std::string data(reasult.response.begin(), reasult.response.begin() + length);
+			if (send(sock, data.c_str(), reasult.response.size(), 0) == INVALID_SOCKET)
+			{
+				throw std::exception("Error while sending message to client");
+			}
 		}
 
 		
