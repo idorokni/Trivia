@@ -1,3 +1,4 @@
+#pragma once
 #include "Requests.h"
 #include "Buffer.h"
 #include "Constants.h"
