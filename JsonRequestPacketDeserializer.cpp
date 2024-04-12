@@ -35,7 +35,6 @@ SignUpRequest JsonRequestPacketDeserializer::deserializeSignupRequest(Buffer buf
 nlohmann::json JsonRequestPacketDeserializer::convertToJsonObject(Buffer buff) {
 	uint32_t length;
 	std::memcpy(&length, &buff.data()[CODE_AMOUNT_BYTES], BYTES_LENGTH);
-	nlohmann::json jsonObj = std::string(buff.begin() + HEADER_LENGTH, buff.begin() + HEADER_LENGTH + length);
 
-	return jsonObj;
+	return nlohmann::json::parse(std::string((char*)&buff.at(HEADER_LENGTH), length));
 }
