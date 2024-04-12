@@ -23,7 +23,7 @@ def main():
         loginJson = {"username" : "user1", "password" : "1234", "mail" : "user1@gmail.com"}
         msg_code = 51
         
-        msg_bytes = msg_code.to_bytes(1, 'big') + (len(json.dumps(loginJson))).to_bytes(4, 'big') + json.dumps(loginJson).encode()
+        msg_bytes = msg_code.to_bytes(1, 'big') + (len(json.dumps(loginJson))).to_bytes(4, 'little') + json.dumps(loginJson).encode()
         msg_bytes = bytearray(msg_bytes)
         sock.sendall(msg_bytes)
 
@@ -35,7 +35,7 @@ def main():
 
 
     except Exception as e:
-        print("The Server Disconnected!\n")
+        print(e)
 
     sock.close()
 
