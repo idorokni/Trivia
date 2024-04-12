@@ -29,9 +29,20 @@ def main():
 
         
         # Rcieving a response
-        server_msg = sock.recv(1024)
-        server_msg = server_msg.decode()
-        print(server_msg)
+        # Receive code (assuming 1 byte)
+        code_byte = sock.recv(1)
+        code = int.from_bytes(code_byte, byteorder='big')  # Convert bytes to int
+        print("CODE IS:", code)
+
+        # Receive length (assuming 4 bytes)
+        length_byte = sock.recv(4)
+        length = int.from_bytes(length_byte, byteorder='little')  # Convert bytes to int
+        print("Length is:", length)
+
+        # Receive message data
+        server_msg = sock.recv(length).decode('utf-8')  # Decode bytes to string
+        print("MSG:", server_msg)
+
 
 
     except Exception as e:

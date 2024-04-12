@@ -63,7 +63,7 @@ void Communicator::handleNewClient(SOCKET sock) {
 			if (this->m_clients[sock]->isRequestRelevant(info)) {
 				LoginRequestHandler handler;
 				RequestResult reasult = this->m_clients.at(sock)->handleRequest(info);
-				if (send(sock, (const char*)&reasult.response, reasult.response.size(), 0) == INVALID_SOCKET)
+				if (send(sock, std::string(reasult.response.begin(), reasult.response.end()).c_str(), reasult.response.size(), 0) == INVALID_SOCKET)
 				{
 					throw std::exception("Error while sending message to client");
 				}
