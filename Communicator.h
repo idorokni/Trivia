@@ -4,10 +4,10 @@
 #include <string>
 #include <iostream>
 #include <thread>
-#include "IRequestHandler.h"
 #include "LoginRequestHandler.h"
 #include "JsonRequestPacketDeserializer.h"
 #include "JsonResponsePacketSerializer.h"
+#include "RequestHandlerFactory.h"
 
 #define PORT 8326
 
@@ -18,6 +18,7 @@ public:
 private:
 	SOCKET m_serverSocket;
 	std::map<SOCKET, IRequestHandler*> m_clients;
+	RequestHandlerFactory& m_handleFactory;
 
 	void bindAndListen();
 	void handleNewClient(SOCKET sock);

@@ -10,8 +10,8 @@ LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(Buffer buff)
 	}
 	nlohmann::json jsonObj = convertToJsonObject(buff);
 	if(jsonObj.contains("password") && jsonObj.contains("username")) {
-		loginRequest.username = jsonObj["username"];
-		loginRequest.password = jsonObj["password"];
+		loginRequest.username = std::move(jsonObj["username"]);
+		loginRequest.password = std::move(jsonObj["password"]);
 	}
 
 
@@ -26,8 +26,8 @@ SignUpRequest JsonRequestPacketDeserializer::deserializeSignupRequest(Buffer buf
 	}
 	nlohmann::json jsonObj = convertToJsonObject(buff);
 	if (jsonObj.contains("password") && jsonObj.contains("username")) {
-		signupRequest.username = jsonObj["username"];
-		signupRequest.password = jsonObj["password"];
+		signupRequest.username = std::move(jsonObj["username"]);
+		signupRequest.password = std::move(jsonObj["password"]);
 	}
 	return signupRequest;
 }
