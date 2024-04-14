@@ -34,29 +34,45 @@ void Communicator::startHandleRequest() {
 }
 
 void Communicator::handleNewClient(SOCKET sock) {
-	// sending a welcome message
-	std::string message = "Hello";
-	const char* dataToSend = message.c_str();
-	if (send(sock, dataToSend, message.size(), 0) == INVALID_SOCKET)
-	{
-		throw std::exception("Error while sending message to client");
+	try {
+		while (true) {
+			Buffer buff;
+			buff.resize(HEADER_LENGTH);
+			int res = recv(sock, (char*)&buff.at(0), HEADER_LENGTH, 0);
+			if (res == INVALID_SOCKET)
+			{
+				std::string s = "Error while recieving from socket: " + sock;
+
+				throw std::exception(s.c_str());
+			}
+			uint32_t length;
+			std::memcpy(&length, &buff.at(CODE_AMOUNT_BYTES), BYTES_LENGTH);
+			buff.resize(HEADER_LENGTH + length);
+			res = recv(sock, (char*)&buff.at(HEADER_LENGTH), length, 0);
+			if (res == INVALID_SOCKET)
+			{
+				std::string s = "Error while recieving from socket: ";
+				s += std::to_string(sock);
+				throw std::exception(s.c_str());
+			}
+
+			RequestInfo info;
+			info.buff = buff;
+			info.id = buff.at(0);
+			info.recivalTime = std::time(nullptr);
+			if (this->m_clients[sock]->isRequestRelevant(info)) {
+				LoginRequestHandler handler;
+				RequestResult reasult = this->m_clients.at(sock)->handleRequest(info);
+				if (send(sock, std::string(reasult.response.begin(), reasult.response.end()).c_str(), reasult.response.size(), 0) == INVALID_SOCKET)
+				{
+					throw std::exception("Error while sending message to client");
+				}
+			}
+		}
 	}
-
-	// recieving a response message
-	char* dataToRecv = new char[HELLO_LEN + 1];
-	int res = recv(sock, dataToRecv, HELLO_LEN, 0);
-
-	if (res == INVALID_SOCKET)
-	{
-		std::string s = "Error while recieving from socket: ";
-		s += std::to_string(sock);
-		throw std::exception(s.c_str());
+	catch (const std::exception& e) {
+		this->m_clients.erase(sock);
 	}
-	*(dataToRecv + HELLO_LEN) = 0;
-	std::cout << dataToRecv << std::endl;
-
-	// erasing client from the clients map when the connection is done
-	this->m_clients.erase(sock);
 }
 
 void Communicator::bindAndListen() {

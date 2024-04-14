@@ -1,10 +1,10 @@
 def main():
     import socket
+    import json
     SERVER_IP = "127.0.0.1"
     SERVER_PORT = 8326
-    HELLO_MSG_LEN = 5
 
-    #Trying to catch an error in the connecting process   
+    # Trying to catch an error in the connecting process   
     try:
         #Create a TCP socket
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -16,21 +16,37 @@ def main():
     except Exception as e:
         print("Failed to connect:", e)
 
-    #Trying to catch an error in case the server suddenly disconnects    
+    # Trying to catch an error in case the server suddenly disconnects    
     try:
         
-        #Rcieving a "welcome message"
-        server_msg = sock.recv(HELLO_MSG_LEN)
-        server_msg = server_msg.decode()
-        print(server_msg)
+        # Sending a signup message
+        loginJson = {"username" : "user1", "password" : "1234", "mail" : "user1@gmail.com"}
+        msg_code = 51
+        
+        msg_bytes = msg_code.to_bytes(1, 'big') + (len(json.dumps(loginJson))).to_bytes(4, 'little') + json.dumps(loginJson).encode()
+        msg_bytes = bytearray(msg_bytes)
+        sock.sendall(msg_bytes)
 
-        #Sending a response to the welcome message
-        if (server_msg == "Hello"):
-            msg = "Hello"
-            sock.sendall(msg.encode())
+        
+        # Rcieving a response
+        # Receive code (assuming 1 byte)
+        code_byte = sock.recv(1)
+        code = int.from_bytes(code_byte, byteorder='big')  # Convert bytes to int
+        print("CODE IS:", code)
+
+        # Receive length (assuming 4 bytes)
+        length_byte = sock.recv(4)
+        length = int.from_bytes(length_byte, byteorder='little')  # Convert bytes to int
+        print("Length is:", length)
+
+        # Receive message data
+        server_msg = sock.recv(length).decode('utf-8')  # Decode bytes to string
+        print("MSG:", server_msg)
+
+
 
     except Exception as e:
-        print("The Server Disconnected!\n")
+        print(e)
 
     sock.close()
 
