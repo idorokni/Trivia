@@ -9,27 +9,40 @@ RequestResult LoginRequestHandler::handleRequest(const RequestInfo& info) {
 
 	try {
 		if (info.id == (int)RequestCode::LOGIN_REQUEST_CODE) {
-			LoginRequest login = JsonRequestPacketDeserializer::deserializeLoginRequest(info.buff);
+			LoginRequest loginRequest = JsonRequestPacketDeserializer::deserializeLoginRequest(info.buff);
 			LoginResponse loginResponse;
-			loginResponse.status = 1; //should be checked with data base later
+			if (LoginManager::get().login(loginRequest.password, loginRequest.username)) {
+				loginResponse.status = 1;
+				reasult.newHandler = RequestHandlerFactory::get().createMenuRequestHandler();
+			}
+			else {
+				loginResponse.status = 0;
+			}
 			buff = JsonResponsePacketSerializer::serializeResponse(loginResponse);
 		}
 		else {
 
-			SignUpRequest signUp = JsonRequestPacketDeserializer::deserializeSignupRequest(info.buff);
+			SignUpRequest signupRequest = JsonRequestPacketDeserializer::deserializeSignupRequest(info.buff);
 			SignupResponse signupResponse;
-			signupResponse.status = 1; //should be checked with data base later
+			if (LoginManager::get().signup(signupRequest.password, signupRequest.username, signupRequest.email)) {
+				signupResponse.status = 1;
+				reasult.newHandler = RequestHandlerFactory::get().createMenuRequestHandler();
+			}
+			else {
+				signupResponse.status = 0;
+			}
 			buff = JsonResponsePacketSerializer::serializeResponse(signupResponse);
 
 		}
 	}
 	catch (const std::exception& e) {
-		std::cerr << e.what() << std::endl;
 		reasult.newHandler = nullptr;
+		ErrorResponse errResponse;
+		errResponse.msg = e.what();
+		buff = JsonResponsePacketSerializer::serializeResponse(errResponse);
 
 	}
 	
-	reasult.newHandler = RequestHandlerFactory::getFactory().createMenuRequestHandler();
 	reasult.response = buff;
 	return reasult;
 }

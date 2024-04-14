@@ -7,5 +7,5 @@ public:
 	virtual bool close() = 0;
 	virtual int doesUserExist(const std::string& val) const = 0;
 	virtual int doesPasswordMatch(const std::string& comparedValue, const std::string valueToComare) const = 0;
-	virtual int addNewUser(const std::string& password, const std::string& userName, const std::string& mail);
+	virtual int addNewUser(const std::string& password, const std::string& userName, const std::string& mail) = 0;
 };

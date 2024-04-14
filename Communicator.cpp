@@ -18,7 +18,7 @@ void Communicator::startHandleRequest() {
 			return;
 
 		// adding new client to the clients map
-		LoginRequestHandler* client_login_request = RequestHandlerFactory::getFactory().createLoginRequestHandler();
+		LoginRequestHandler* client_login_request = RequestHandlerFactory::get().createLoginRequestHandler();
 		this->m_clients[client_socket] = client_login_request;
 		std::cout << "Client accepted. Server and client can speak" << std::endl;
 		try

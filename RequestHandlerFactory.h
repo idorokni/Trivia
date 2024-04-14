@@ -4,16 +4,17 @@
 #include "LoginRequestHandler.h"
 #include "MenuRequestHandler.h"
 
+class LoginRequestHandler;
+class MenuRequestHandler;
+
 class RequestHandlerFactory {
 private:
-	LoginManager m_loginManager;
-	IDatabase* m_database;
+	IDatabase* m_database = nullptr;
 
 	static RequestHandlerFactory s_Instance;
 public:
-	const LoginManager& getLoginManager() const noexcept;
 	LoginRequestHandler* createLoginRequestHandler() const;
 	MenuRequestHandler* createMenuRequestHandler() const;
 
-	static RequestHandlerFactory& getFactory();
+	static RequestHandlerFactory& get() noexcept;
 };
