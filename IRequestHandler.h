@@ -1,5 +1,6 @@
 #pragma once
 #include "Requests.h"
+#include "RequestHandlerFactory.h"
 
 class RequestResult;
 class RequestInfo;

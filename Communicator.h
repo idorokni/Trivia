@@ -18,7 +18,6 @@ public:
 private:
 	SOCKET m_serverSocket;
 	std::map<SOCKET, IRequestHandler*> m_clients;
-	RequestHandlerFactory& m_handleFactory;
 
 	void bindAndListen();
 	void handleNewClient(SOCKET sock);
