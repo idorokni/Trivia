@@ -10,4 +10,6 @@ public:
     virtual int doesUserExist(const std::string& username) = 0;
     virtual int doesPasswordMatch(const std::string& username, const std::string& password) = 0;
     virtual int addNewUser(const std::string& username, const std::string& password, const std::string& email) = 0;
+
+    static IDatabase& get();
 };

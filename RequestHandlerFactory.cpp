@@ -1,8 +1,5 @@
 #include "RequestHandlerFactory.h"
 
-RequestHandlerFactory RequestHandlerFactory::s_Instance;
-
-
 LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler() const{
 	return new LoginRequestHandler();
 }
@@ -12,5 +9,6 @@ MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler() const {
 }
 
 RequestHandlerFactory& RequestHandlerFactory::get() noexcept{
+	static RequestHandlerFactory s_Instance;
 	return s_Instance;
 }
