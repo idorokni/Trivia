@@ -4,10 +4,10 @@
 #include <string>
 #include <iostream>
 #include <thread>
-#include "IRequestHandler.h"
 #include "LoginRequestHandler.h"
 #include "JsonRequestPacketDeserializer.h"
 #include "JsonResponsePacketSerializer.h"
+#include "RequestHandlerFactory.h"
 
 #define PORT 8326
 

@@ -18,7 +18,7 @@ void Communicator::startHandleRequest() {
 			return;
 
 		// adding new client to the clients map
-		LoginRequestHandler* client_login_request = new LoginRequestHandler();
+		LoginRequestHandler* client_login_request = RequestHandlerFactory::get().createLoginRequestHandler();
 		this->m_clients[client_socket] = client_login_request;
 		std::cout << "Client accepted. Server and client can speak" << std::endl;
 		try
@@ -57,12 +57,13 @@ void Communicator::handleNewClient(SOCKET sock) {
 			}
 
 			RequestInfo info;
-			info.buff = buff;
 			info.id = buff.at(0);
+			info.buff = std::move(buff);
 			info.recivalTime = std::time(nullptr);
 			if (this->m_clients[sock]->isRequestRelevant(info)) {
-				LoginRequestHandler handler;
 				RequestResult reasult = this->m_clients.at(sock)->handleRequest(info);
+				delete this->m_clients.at(sock);
+				this->m_clients.at(sock) = reasult.newHandler;
 				if (send(sock, std::string(reasult.response.begin(), reasult.response.end()).c_str(), reasult.response.size(), 0) == INVALID_SOCKET)
 				{
 					throw std::exception("Error while sending message to client");
