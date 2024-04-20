@@ -11,7 +11,6 @@ class RequestHandlerFactory {
 private:
 	IDatabase* m_database = nullptr;
 
-	static RequestHandlerFactory s_Instance;
 public:
 	LoginRequestHandler* createLoginRequestHandler() const;
 	MenuRequestHandler* createMenuRequestHandler() const;

@@ -2,13 +2,23 @@
 #include "sqlite3.h"
 #include <io.h>
 
+IDatabase& IDatabase::get() {
+	static SqliteDataBase instance;
+	return instance;
+}
+
+SqliteDataBase::~SqliteDataBase() {
+	IDatabase::get().close();
+	this->_db = nullptr;
+}
+
 bool SqliteDataBase::open()
 {
-	std::string dbFileName = "TriviaDB.sqlite";
+	std::string dbFileName = DATABASE_NAME;
 
 	// Check if the DB exists
 	int file_exist = _access(dbFileName.c_str(), 0);
-	// Create DB if doesn't exist, or alternitavely opening it if it exists
+	// Create DB if doesn't exist, or alternitavely opening it if it exists 
 	int res = sqlite3_open(dbFileName.c_str(), &(this->_db));
 	if (res != SQLITE_OK) {
 		this->_db = nullptr;
