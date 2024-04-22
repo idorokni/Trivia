@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Managers">
       <UniqueIdentifier>{aeac4a4e-e27f-4525-b18d-7f1afba71e9d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Database">
+      <UniqueIdentifier>{3d15ce98-caf7-4994-8ab1-64b7aeaa7374}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Database">
+      <UniqueIdentifier>{de19c854-b8eb-4d3d-9e26-6455ea8ae907}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Responses.h">
@@ -100,10 +106,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SqliteDataBase.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Database</Filter>
     </ClInclude>
     <ClInclude Include="sqlite3.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Database</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -143,14 +149,11 @@
     <ClCompile Include="JsonRequestPacketDeserializer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IDatabase.h">
-      <Filter>Header Files</Filter>
+    <ClCompile Include="sqlite3.c">
+      <Filter>Source Files\Database</Filter>
     </ClCompile>
     <ClCompile Include="SqliteDataBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sqlite3.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Database</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

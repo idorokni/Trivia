@@ -1,6 +1,11 @@
 #include "Communicator.h"
 #define HELLO_LEN 5
 
+Communicator& Communicator::get() noexcept {
+	static Communicator s_Instance;
+	return s_Instance;
+}
+
 void Communicator::startHandleRequest() {
 	// this server use TCP. that why SOCK_STREAM & IPPROTO_TCP
 	// if the server use UDP we will use: SOCK_DGRAM & IPPROTO_UDP

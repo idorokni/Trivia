@@ -15,6 +15,8 @@ class Communicator {
 public:
 	void startHandleRequest();
 
+	static Communicator& get() noexcept;
+
 private:
 	SOCKET m_serverSocket;
 	std::map<SOCKET, IRequestHandler*> m_clients;

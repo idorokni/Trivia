@@ -8,7 +8,6 @@ class LoginManager {
 private:
 	std::vector<LoggedUser> m_loggedUsers;
 
-	static LoginManager s_Instance;
 public:
 	bool signup(const std::string& password, const std::string& userName, const std::string& mail);
 	bool login(const std::string& password, const std::string& userName);
