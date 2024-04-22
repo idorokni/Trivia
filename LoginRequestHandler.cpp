@@ -17,6 +17,7 @@ RequestResult LoginRequestHandler::handleRequest(const RequestInfo& info) {
 			}
 			else {
 				loginResponse.status = 0;
+				reasult.newHandler = this;
 			}
 			buff = JsonResponsePacketSerializer::serializeResponse(loginResponse);
 		}
@@ -30,6 +31,7 @@ RequestResult LoginRequestHandler::handleRequest(const RequestInfo& info) {
 			}
 			else {
 				signupResponse.status = 0;
+				reasult.newHandler = this;
 			}
 			buff = JsonResponsePacketSerializer::serializeResponse(signupResponse);
 

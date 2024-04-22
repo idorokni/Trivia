@@ -67,10 +67,11 @@ void Communicator::handleNewClient(SOCKET sock) {
 			info.recivalTime = std::time(nullptr);
 			if (this->m_clients[sock]->isRequestRelevant(info)) {
 				RequestResult reasult = this->m_clients.at(sock)->handleRequest(info);
-				delete this->m_clients.at(sock);
-				this->m_clients.at(sock) = reasult.newHandler;
-				if (send(sock, std::string(reasult.response.begin(), reasult.response.end()).c_str(), reasult.response.size(), 0) == INVALID_SOCKET)
-				{
+				if (reasult.newHandler != this->m_clients.at(sock)) {
+					delete this->m_clients.at(sock);
+					this->m_clients.at(sock) = reasult.newHandler;
+				}
+				if (send(sock, std::string(reasult.response.begin(), reasult.response.end()).c_str(), reasult.response.size(), 0) == INVALID_SOCKET){
 					throw std::exception("Error while sending message to client");
 				}
 			}

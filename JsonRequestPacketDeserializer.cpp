@@ -25,9 +25,10 @@ SignUpRequest JsonRequestPacketDeserializer::deserializeSignupRequest(Buffer buf
 		throw std::exception("not proper code");
 	}
 	nlohmann::json jsonObj = convertToJsonObject(buff);
-	if (jsonObj.contains("password") && jsonObj.contains("username")) {
+	if (jsonObj.contains("password") && jsonObj.contains("username") && jsonObj.contains("mail")) {
 		signupRequest.username = std::move(jsonObj["username"]);
 		signupRequest.password = std::move(jsonObj["password"]);
+		signupRequest.email = std::move(jsonObj["mail"]);
 	}
 	return signupRequest;
 }

@@ -28,7 +28,7 @@ bool SqliteDataBase::open()
 	if (file_exist != 0) // If the DB doesn't exist, we will now create it
 	{
 		//sql query
-		const char* sqlStatement = "create table User (username integer primary key autoincrement not null, password text not null, email text not null);";
+		const char* sqlStatement = "create table User (username text primary key not null, password text not null, email text not null);";
 
 		char* errMessage = nullptr;
 		res = sqlite3_exec(this->_db, sqlStatement, nullptr, nullptr, &errMessage);
@@ -82,7 +82,7 @@ int SqliteDataBase::doesPasswordMatch(const std::string& username, const std::st
 
 int SqliteDataBase::addNewUser(const std::string& username, const std::string& password, const std::string& email)
 {
-	std::string sqlString = "insert into User (username, password, email) values (" + username + ", '" + password + ", '" + email + "');";
+	std::string sqlString = "insert into User (username, password, email) values ('" + username + "', '" + password + "', '" + email + "');";
 	const char* sqlStatement = sqlString.c_str();
 	int res = 0;
 	char* errMessage = nullptr;
@@ -91,7 +91,7 @@ int SqliteDataBase::addNewUser(const std::string& username, const std::string& p
 	res = sqlite3_exec(this->_db, sqlStatement, nullptr, nullptr, &errMessage);
 	if (res != SQLITE_OK)
 	{
-		std::cout << "one of the given parameters is wrong.";
+		std::cout << sqlite3_errmsg(this->_db) << std::endl;
 		return -1;
 	}
 	return 0;
