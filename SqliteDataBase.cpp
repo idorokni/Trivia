@@ -28,7 +28,7 @@ bool SqliteDataBase::open()
 	if (file_exist != 0) // If the DB doesn't exist, we will now create it
 	{
 		//sql query
-		const char* sqlStatement = "create table User (username integer primary key autoincrement not null, password text not null, email text not null);";
+		const char* sqlStatement = "create table User (username text primary key autoincrement not null, password text not null, email text not null);";
 
 		char* errMessage = nullptr;
 		res = sqlite3_exec(this->_db, sqlStatement, nullptr, nullptr, &errMessage);
@@ -52,50 +52,81 @@ bool SqliteDataBase::close()
 
 int SqliteDataBase::doesUserExist(const std::string& username)
 {
-	std::string sqlString = "select * from User where username = '" + username + "';";
-	const char* sqlStatement = sqlString.c_str();
-	int res = 0, exists = 0;
-	char* errMessage = nullptr;
+	const char* sql = "select 1 from User where username = ? limit 1;";
+	sqlite3_stmt* stmt;
+	int exists = 0;
 
 	// Trying to get the user by his username.
 	// If the variable 'exists' = 0, it means that no user with this username was found therefore it doesn't exist. Otherwise, it exists and we will return 1.
-	res = sqlite3_exec(this->_db, sqlStatement, callbackGetUser, &exists, &errMessage);
-	if (res != SQLITE_OK)
-		std::cout << "one of the given parameters is wrong.";
+	if (sqlite3_prepare_v2(this->_db, sql, -1, &stmt, nullptr) == SQLITE_OK) {
+		sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
+
+		if (sqlite3_step(stmt) == SQLITE_ROW) {
+			exists = 1;
+		}
+
+		sqlite3_finalize(stmt);
+	}
+	else {
+		std::cerr << "Error preparing statement: " << sqlite3_errmsg(this->_db) << std::endl;
+	}
+
 	return exists;
 }
 
 int SqliteDataBase::doesPasswordMatch(const std::string& username, const std::string& password)
 {
-	std::string sqlString = "select * from User where username = '" + username + "' and password = '" + password + ";";
-	const char* sqlStatement = sqlString.c_str();
-	int res = 0, matches = 0;
-	char* errMessage = nullptr;
+	const char* sql = "SELECT 1 FROM User WHERE username = ? AND password = ? LIMIT 1;";
+	sqlite3_stmt* stmt;
+	int matches = 0;
 
 	// Trying to get the user by his username.
 	// If the variable 'matches' = 0, it means that no user with this username and this password was found therefore the password doesn't match. Otherwise, it matches and we will return 1.
-	res = sqlite3_exec(this->_db, sqlStatement, callbackGetUser, &matches, &errMessage);
-	if (res != SQLITE_OK)
-		std::cout << "one of the given parameters is wrong.";
+	if (sqlite3_prepare_v2(this->_db, sql, -1, &stmt, nullptr) == SQLITE_OK) {
+		sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 2, password.c_str(), -1, SQLITE_STATIC);
+
+		if (sqlite3_step(stmt) == SQLITE_ROW) {
+			matches = 1;
+		}
+
+		sqlite3_finalize(stmt);
+	}
+	else {
+		std::cerr << "Error preparing statement: " << sqlite3_errmsg(this->_db) << std::endl;
+	}
+
 	return matches;
 }
 
 int SqliteDataBase::addNewUser(const std::string& username, const std::string& password, const std::string& email)
 {
-	std::string sqlString = "insert into User (username, password, email) values (" + username + ", '" + password + ", '" + email + "');";
-	const char* sqlStatement = sqlString.c_str();
+	const char* sql = "INSERT INTO User (username, password, email) VALUES (?, ?, ?);";
+	sqlite3_stmt* stmt;
 	int res = 0;
-	char* errMessage = nullptr;
 
-	// Adding a user to the users table with an sql statement
-	res = sqlite3_exec(this->_db, sqlStatement, nullptr, nullptr, &errMessage);
-	if (res != SQLITE_OK)
-	{
-		std::cout << "one of the given parameters is wrong.";
-		return -1;
+	if (sqlite3_prepare_v2(this->_db, sql, -1, &stmt, nullptr) == SQLITE_OK) {
+		// Bind parameters to the prepared statement
+		sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 2, password.c_str(), -1, SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 3, email.c_str(), -1, SQLITE_STATIC);
+
+		// Execute the prepared statement to insert the new user
+		if (sqlite3_step(stmt) != SQLITE_DONE) {
+			std::cerr << "Error executing statement: " << sqlite3_errmsg(this->_db) << std::endl;
+			res = -1; // Return error code
+		}
+
+		sqlite3_finalize(stmt); // Finalize the statement
 	}
-	return 0;
+	else {
+		std::cerr << "Error preparing statement: " << sqlite3_errmsg(this->_db) << std::endl;
+		res = -1; // Return error code
+	}
+
+	return res;
 }
+
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// CallBacks ///////////////////////////////////////////////
