@@ -6,7 +6,6 @@
 
 class LoginManager {
 private:
-	IDatabase* m_database;
 	std::vector<LoggedUser> m_loggedUsers;
 
 	static LoginManager s_Instance;
