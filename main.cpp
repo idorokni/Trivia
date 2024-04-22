@@ -10,11 +10,9 @@ int main() {
 	try 
 	{
 		WSAInitializer wsaInit;
-		Server server;
-
-		server.run();
+		Server::get().run();
 	}
-	catch (std::exception& e) 
+	catch (const std::exception& e) 
 	{
 		std::cout << e.what() << std::endl;
 	}

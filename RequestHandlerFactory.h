@@ -8,9 +8,6 @@ class LoginRequestHandler;
 class MenuRequestHandler;
 
 class RequestHandlerFactory {
-private:
-	IDatabase* m_database = nullptr;
-
 public:
 	LoginRequestHandler* createLoginRequestHandler() const;
 	MenuRequestHandler* createMenuRequestHandler() const;

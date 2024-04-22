@@ -7,6 +7,5 @@ class Server {
 public:
 	void run();
 
-private:
-	Communicator m_communicator;
+	static Server& get() noexcept;
 };
