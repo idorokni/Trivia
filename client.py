@@ -25,9 +25,7 @@ def main():
         msg_code = 51
         listJsons = [
             (loginJson, 51), # Should get an error from server because the user isn't logged yet
-            (signupJson, 52),
-            (loginJson, 51), # Should get an error from server because user is already logged
-            (signupJson, 52) # Should get an error from server because user with this name is already signed
+            (signupJson, 52) # Should get an error fron server if user is already signed up, otherwise should work properly
             ]
 
         for i in range (len(listJsons)):
