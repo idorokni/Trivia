@@ -26,7 +26,6 @@ def main():
         listJsons = [
             (loginJson, 51), # Should get an error from server because the user isn't logged yet
             (signupJson, 52),
-            (loginJson, 51),
             (loginJson, 51), # Should get an error from server because user is already logged
             (signupJson, 52) # Should get an error from server because user with this name is already signed
             ]
