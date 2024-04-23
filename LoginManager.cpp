@@ -4,7 +4,10 @@
 bool LoginManager::signup(const std::string& password, const std::string& userName, const std::string& mail) 
 {
 	// Adding the user using the addNewUser from the dataBase class
-	if (IDatabase::get().addNewUser(userName, password, mail) == 0) return true;
+	if (IDatabase::get().addNewUser(userName, password, mail) == 0)
+	{
+		return (this->login(password, userName));
+	}
 	else return false;
 }
 
