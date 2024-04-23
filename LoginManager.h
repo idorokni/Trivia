@@ -1,8 +1,10 @@
 #pragma once
 
 #include <vector>
+#include <regex>
 #include "IDatabase.h"
 #include "LoggedUser.h"
+#include "Constants.h"
 
 class LoginManager {
 private:
