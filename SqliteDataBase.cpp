@@ -28,7 +28,7 @@ bool SqliteDataBase::open()
 	if (file_exist != 0) // If the DB doesn't exist, we will now create it
 	{
 		//sql query
-		const char* sqlStatement = "create table User (username text primary key autoincrement not null, password text not null, email text not null);";
+		const char* sqlStatement = "create table User (username text primary key not null, password text not null, email text not null);";
 
 		char* errMessage = nullptr;
 		res = sqlite3_exec(this->_db, sqlStatement, nullptr, nullptr, &errMessage);
