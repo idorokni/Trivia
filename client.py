@@ -20,8 +20,8 @@ def main():
     try:
         
         # Sending a signup message
-        loginJson = {"username" : "user1", "password" : "1234"}
-        signupJson = {"username" : "user1", "password" : "1234", "mail" : "user1@gmail.com"}
+        loginJson = {"username" : "user134", "password" : "1234"}
+        signupJson = {"username" : "user134", "password" : "1234", "mail" : "user1@gmail.com"}
         msg_code = 51
         listJsons = [
             (loginJson, 51), # Should get an error from server because the user isn't logged yet
