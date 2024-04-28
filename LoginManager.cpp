@@ -1,13 +1,10 @@
 #include "LoginManager.h"
 #include "SqliteDataBase.h"
 
-bool LoginManager::signup(const std::string& password, const std::string& userName, const std::string& mail) 
+bool LoginManager::signup(const std::string& password, const std::string& userName, const std::string& mail, const std::string& address, const std::string& phone, const std::string& birthday)
 {
 	// Adding the user using the addNewUser from the dataBase class
-	if (IDatabase::get().addNewUser(userName, password, mail) == 0)
-	{
-		return (this->login(password, userName));
-	}
+	if (std::regex_search(password, std::regex(PASSWORD_REGEX_PATTERN)) && std::regex_search(mail, std::regex(EMAIL_REGEX_PATTERN)) && std::regex_search(address, std::regex(ADDRESS_REGEX_PATTERN)) && std::regex_search(phone, std::regex(PHONE_REGEX_PATTERN)) && std::regex_search(birthday, std::regex(BIRTHDAY_REGEX_PATTERN)) && IDatabase::get().addNewUser(userName, password, mail, address, phone, birthday) == 0) return true;
 	else return false;
 }
 
