@@ -13,6 +13,11 @@ bool LoginManager::login(const std::string& password, const std::string& userNam
 	// Adding the user to the list of the logged user, after checking this user exists and its passwords matches
 	if (IDatabase::get().doesUserExist(userName) == 1 && IDatabase::get().doesPasswordMatch(userName, password) == 1)
 	{
+		// Checking if this user is already looged
+		for (auto& loggedUser : this->m_loggedUsers)
+		{
+			if (loggedUser.getUsername() == userName) return false;
+		}
 		this->m_loggedUsers.emplace_back(userName);
 		return true;
 	}
