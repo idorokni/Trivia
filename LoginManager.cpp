@@ -4,7 +4,7 @@
 bool LoginManager::signup(const std::string& password, const std::string& userName, const std::string& mail, const std::string& address, const std::string& phone, const std::string& birthday)
 {
 	// Adding the user using the addNewUser from the dataBase class
-	if (std::regex_search(password, std::regex(PASSWORD_REGEX_PATTERN)) && std::regex_search(mail, std::regex(EMAIL_REGEX_PATTERN)) && std::regex_search(address, std::regex(ADDRESS_REGEX_PATTERN)) && std::regex_search(phone, std::regex(PHONE_REGEX_PATTERN)) && std::regex_search(birthday, std::regex(BIRTHDAY_REGEX_PATTERN)) && IDatabase::get().addNewUser(userName, password, mail, address, phone, birthday) == 0) return true;
+	if (std::regex_search(password, std::regex(PASSWORD_REGEX_PATTERN)) && std::regex_search(mail, std::regex(EMAIL_REGEX_PATTERN)) && std::regex_search(address, std::regex(ADDRESS_REGEX_PATTERN)) && std::regex_search(phone, std::regex(PHONE_REGEX_PATTERN)) && std::regex_search(birthday, std::regex(BIRTHDAY_REGEX_PATTERN)) && IDatabase::get().addNewUser(userName, password, mail, address, phone, birthday) == 0) return login(password, userName);
 	else return false;
 }
 
