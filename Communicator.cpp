@@ -75,6 +75,17 @@ void Communicator::handleNewClient(SOCKET sock) {
 					throw std::exception("Error while sending message to client");
 				}
 			}
+			else
+			{
+				RequestResult reasult;
+				reasult.newHandler = nullptr;
+				ErrorResponse errResponse;
+				errResponse.msg = "request code isn't proper!";
+				reasult.response = JsonResponsePacketSerializer::serializeResponse(errResponse);
+				if (send(sock, std::string(reasult.response.begin(), reasult.response.end()).c_str(), reasult.response.size(), 0) == INVALID_SOCKET) {
+					throw std::exception("Error while sending message to client");
+				}
+			}
 		}
 	}
 	catch (const std::exception& e) {
