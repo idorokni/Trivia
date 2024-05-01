@@ -1,6 +1,11 @@
 #include "Communicator.h"
 #define HELLO_LEN 5
 
+Communicator& Communicator::get() noexcept {
+	static Communicator s_Instance;
+	return s_Instance;
+}
+
 void Communicator::startHandleRequest() {
 	// this server use TCP. that why SOCK_STREAM & IPPROTO_TCP
 	// if the server use UDP we will use: SOCK_DGRAM & IPPROTO_UDP
@@ -18,7 +23,7 @@ void Communicator::startHandleRequest() {
 			return;
 
 		// adding new client to the clients map
-		LoginRequestHandler* client_login_request = new LoginRequestHandler();
+		LoginRequestHandler* client_login_request = RequestHandlerFactory::get().createLoginRequestHandler();
 		this->m_clients[client_socket] = client_login_request;
 		std::cout << "Client accepted. Server and client can speak" << std::endl;
 		try
@@ -57,14 +62,27 @@ void Communicator::handleNewClient(SOCKET sock) {
 			}
 
 			RequestInfo info;
-			info.buff = buff;
 			info.id = buff.at(0);
+			info.buff = std::move(buff);
 			info.recivalTime = std::time(nullptr);
 			if (this->m_clients[sock]->isRequestRelevant(info)) {
-				LoginRequestHandler handler;
 				RequestResult reasult = this->m_clients.at(sock)->handleRequest(info);
-				if (send(sock, std::string(reasult.response.begin(), reasult.response.end()).c_str(), reasult.response.size(), 0) == INVALID_SOCKET)
-				{
+				if (reasult.newHandler != this->m_clients.at(sock)) {
+					delete this->m_clients.at(sock);
+					this->m_clients.at(sock) = reasult.newHandler;
+				}
+				if (send(sock, std::string(reasult.response.begin(), reasult.response.end()).c_str(), reasult.response.size(), 0) == INVALID_SOCKET){
+					throw std::exception("Error while sending message to client");
+				}
+			}
+			else
+			{
+				RequestResult reasult;
+				reasult.newHandler = nullptr;
+				ErrorResponse errResponse;
+				errResponse.msg = "request code isn't proper!";
+				reasult.response = JsonResponsePacketSerializer::serializeResponse(errResponse);
+				if (send(sock, std::string(reasult.response.begin(), reasult.response.end()).c_str(), reasult.response.size(), 0) == INVALID_SOCKET) {
 					throw std::exception("Error while sending message to client");
 				}
 			}
