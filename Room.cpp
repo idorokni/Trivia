@@ -1,5 +1,10 @@
 #include "Room.h"
 
+Room::Room(const LoggedUser& loggedUser, const RoomData& roomData) {
+	this->addUser(loggedUser);
+	m_metadata = roomData;
+}
+
 void Room::addUser(const LoggedUser& loggedUser) {
 	m_users.emplace_back(loggedUser.getUsername());
 }
@@ -17,4 +22,8 @@ const std::vector<std::string>& Room::getAllUsers() const {
 	}
 
 	return allUsers;
+}
+
+const RoomData& Room::getRoomData() const {
+	return m_metadata;
 }
