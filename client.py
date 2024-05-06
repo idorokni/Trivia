@@ -20,15 +20,14 @@ def main():
     try:
         
         # Sending a signup message
-        loginJson = {"username" : "user1", "password" : "1234"}
-        signupJson = {"username" : "user1", "password" : "1234", "mail" : "user1@gmail.com"}
-        msg_code = 51
+        loginJson = {"username" : "user134", "password" : "1234Aa!#"}
+        wrongSignupJson = {"username" : "user134", "password" : "1234Aa!#", "mail" : "user1@gmail.com", "address" : "KerenHayesod, 1, Ashdod", "phone" : "050-123456", "birthday" : "01.01.2020"}
+        properSignupJson = {"username" : "user134", "password" : "1234Aa!#", "mail" : "user1@gmail.com", "address" : "KerenHayesod, 1, Ashdod", "phone" : "050-1234567", "birthday" : "01.01.2020"}
+
         listJsons = [
-            (loginJson, 51), # Should get an error from server because the user isn't logged yet
-            (signupJson, 52),
-            (loginJson, 51),
-            (loginJson, 51), # Should get an error from server because user is already logged
-            (signupJson, 52) # Should get an error from server because user with this name is already signed
+            (loginJson, 51), # Should get an error from server because the user isn't logged yet (if this is the first run) or because the user is already logged (if this is the second run)
+            (wrongSignupJson, 52), # Should get an error from server because the phone field won't pass regex checks
+            (properSignupJson, 52) # Should work properly (only if user isn't already signed up!)
             ]
 
         for i in range (len(listJsons)):
