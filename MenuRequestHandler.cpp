@@ -65,6 +65,62 @@ RequestResult MenuRequestHandler::getPersonalStats(const RequestInfo& info) {
 	reasult.response = buff;
 	return reasult;
 }
-RequestResult MenuRequestHandler::getHighScore(const RequestInfo& info);
-RequestResult MenuRequestHandler::joinRoom(const RequestInfo& info);
-RequestResult MenuRequestHandler::createRoom(const RequestInfo& info);
+RequestResult MenuRequestHandler::getHighScore(const RequestInfo& info) {
+	RequestResult reasult;
+	Buffer buff;
+	GetHighScoreResponse getHighScoreReponse;
+	getHighScoreReponse.statistics = StatisticsManager::get().getHighScore();
+	getHighScoreReponse.status = 1;
+	reasult.newHandler = this; //should be changed in later versions
+	buff = JsonResponsePacketSerializer::serializeResponse(getHighScoreReponse);
+	reasult.response = buff;
+	return reasult;
+}
+RequestResult MenuRequestHandler::joinRoom(const RequestInfo& info) {
+	RequestResult reasult;
+	Buffer buff;
+	JoinRoomRequest joinRoomRequest = JsonRequestPacketDeserializer::deserializeJoinRoomRequest(info.buff);
+	JoinRoomResponse joinRoomResponse;
+	try {
+		RoomManager::get().getRoom(joinRoomRequest.roomId).addUser(m_user);
+		joinRoomResponse.status = 1;
+	}
+	catch (...) {
+		joinRoomResponse.status = 0;
+	}
+	reasult.newHandler = this; //should be changed in later versions
+	buff = JsonResponsePacketSerializer::serializeResponse(joinRoomResponse);
+
+	reasult.response = buff;
+	return reasult;
+}
+RequestResult MenuRequestHandler::createRoom(const RequestInfo& info) {
+	RequestResult reasult;
+	Buffer buff;
+	CreateRoomRequest createRoomRequest = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(info.buff);
+	CreateRoomResponse createRoomResponse;
+	RoomData roomData;
+	if (RoomManager::get().getRooms().size() == 0) {
+		roomData.id = 0;
+	}
+	else {
+		roomData.id = RoomManager::get().getRooms().end()->id + 1;
+	}
+	roomData.isActive = true;
+	roomData.maxPlayers = createRoomRequest.maxUsers;
+	roomData.name = createRoomRequest.roomName;
+	roomData.timePerQuestion = createRoomRequest.answerTimeout;
+	roomData.numOfQuestionsInGame = createRoomRequest.questionCount;
+	try {
+		RoomManager::get().createRoom(m_user, roomData);
+		createRoomResponse.status = 1;
+	}
+	catch (...) {
+		createRoomResponse.status = 0;
+	}
+	reasult.newHandler = this; //should be changed in later versions
+	buff = JsonResponsePacketSerializer::serializeResponse(createRoomResponse);
+
+	reasult.response = buff;
+	return reasult;
+}

@@ -18,7 +18,7 @@ const std::vector<RoomData> RoomManager::getRooms() const {
 
 	return data;
 }
-const Room& RoomManager::getRoom(int ID) const {
+Room& RoomManager::getRoom(int ID) {
 	return m_rooms.at(ID);
 }
 
