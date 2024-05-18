@@ -22,7 +22,7 @@ const Room& RoomManager::getRoom(int ID) const {
 	return m_rooms.at(ID);
 }
 
-RoomManager& StatisticsManager::get() noexcept {
-	static StatisticsManager s_Instance;
+RoomManager& RoomManager::get() noexcept {
+	static RoomManager s_Instance;
 	return s_Instance;
 }

@@ -15,5 +15,5 @@ public:
 	const std::vector<RoomData> getRooms() const;
 	const Room& getRoom(int ID) const;
 
-
+	static RoomManager& get() noexcept;
 };
