@@ -4,10 +4,6 @@
 
 LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(Buffer buff) {
 	LoginRequest loginRequest;
-	std::cout << (int)RequestCode::LOGIN_REQUEST_CODE << std::endl;
-	if ((int)buff.at(0) != (int)RequestCode::LOGIN_REQUEST_CODE) {
-		throw std::exception("not proper code");
-	}
 	nlohmann::json jsonObj = convertToJsonObject(buff);
 	if(jsonObj.contains("password") && jsonObj.contains("username")) {
 		loginRequest.username = std::move(jsonObj["username"]);
@@ -21,9 +17,6 @@ LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(Buffer buff)
 }
 SignUpRequest JsonRequestPacketDeserializer::deserializeSignupRequest(Buffer buff) {
 	SignUpRequest signupRequest;
-	if ((int)buff.at(0) != (int)RequestCode::SIGNUP_REQUEST_CODE) {
-		throw std::exception("not proper code");
-	}
 	nlohmann::json jsonObj = convertToJsonObject(buff);
 	if (jsonObj.contains("password") && jsonObj.contains("username") && jsonObj.contains("mail") && jsonObj.contains("address") && jsonObj.contains("phone") && jsonObj.contains("birthday")) 
 	{
@@ -35,6 +28,39 @@ SignUpRequest JsonRequestPacketDeserializer::deserializeSignupRequest(Buffer buf
 		signupRequest.birthday = std::move(jsonObj["birthday"]);
 	}
 	return signupRequest;
+}
+
+GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersInRoomRequest(Buffer buff) {
+	GetPlayersInRoomRequest getPlayersInRoomRequest;
+	nlohmann::json jsonObj = convertToJsonObject(buff);
+	if (jsonObj.contains("roomId")) {
+		getPlayersInRoomRequest.roomId = jsonObj["roomId"];
+	}
+
+	return getPlayersInRoomRequest;
+}
+
+JoinRoomRequest JsonRequestPacketDeserializer::deserializeJoinRoomRequest(Buffer buff) {
+	JoinRoomRequest joinRoomRequest;
+	nlohmann::json jsonObj = convertToJsonObject(buff);
+	if (jsonObj.contains("roomId")) {
+		joinRoomRequest.roomId = jsonObj["roomId"];
+	}
+
+	return joinRoomRequest;
+}
+
+CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(Buffer buff) {
+	CreateRoomRequest createRoomRequest;
+	nlohmann::json jsonObj = convertToJsonObject(buff);
+	if (jsonObj.contains("roomName") && jsonObj.contains("maxUsers") && jsonObj.contains("questionCount") && jsonObj.contains("answerTimeout")) {
+		createRoomRequest.roomName = std::move(jsonObj["roomName"]);
+		createRoomRequest.maxUsers = jsonObj["maxUsers"];
+		createRoomRequest.questionCount = jsonObj["questionCount"];
+		createRoomRequest.answerTimeout = jsonObj["answerTimeout"];
+	}
+
+	return createRoomRequest;
 }
 
 nlohmann::json JsonRequestPacketDeserializer::convertToJsonObject(Buffer buff) {
