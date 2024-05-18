@@ -35,21 +35,36 @@ RequestResult MenuRequestHandler::getRooms(const RequestInfo& info) {
 	RequestResult reasult;
 	Buffer buff;
 	GetRoomsResponse getRoomsResponse;
-	if (RoomManager::ge) {
-		loginResponse.status = 1;
-		reasult.newHandler = RequestHandlerFactory::get().createMenuRequestHandler(LoggedUser(loginRequest.username));
-	}
-	else {
-		loginResponse.status = 0;
-		reasult.newHandler = this;
-	}
-	buff = JsonResponsePacketSerializer::serializeResponse(loginResponse);
+	getRoomsResponse.rooms = RoomManager::get().getRooms();
+	getRoomsResponse.status = 1;
+	buff = JsonResponsePacketSerializer::serializeResponse(getRoomsResponse);
+	reasult.newHandler = this; // should change in later versions
+	reasult.response = buff;
+	return reasult;
+}
+RequestResult MenuRequestHandler::getPlayersInRoom(const RequestInfo& info) {
+	RequestResult reasult;
+	Buffer buff;
+	GetPlayersInRoomRequest getPlayersInRoomRequest = JsonRequestPacketDeserializer::deserializeGetPlayersInRoomRequest(info.buff);
+	GetPlayersInRoomResponse getPlayersInRoomResponse;
+	getPlayersInRoomResponse.players = RoomManager::get().getRoom(getPlayersInRoomRequest.roomId).getAllUsers();
+	reasult.newHandler = this;
+	buff = JsonResponsePacketSerializer::serializeResponse(getPlayersInRoomResponse);
 
 	reasult.response = buff;
 	return reasult;
 }
-RequestResult MenuRequestHandler::getPlayersInRoom(const RequestInfo& info);
-RequestResult MenuRequestHandler::getPersonalStats(const RequestInfo& info);
+RequestResult MenuRequestHandler::getPersonalStats(const RequestInfo& info) {
+	RequestResult reasult;
+	Buffer buff;
+	GetPersonalStatusResponse getPersonalStatusResponse;
+	Statis
+	reasult.newHandler = this;
+	buff = JsonResponsePacketSerializer::serializeResponse(getPlayersInRoomResponse);
+
+	reasult.response = buff;
+	return reasult;
+}
 RequestResult MenuRequestHandler::getHighScore(const RequestInfo& info);
 RequestResult MenuRequestHandler::joinRoom(const RequestInfo& info);
 RequestResult MenuRequestHandler::createRoom(const RequestInfo& info);
