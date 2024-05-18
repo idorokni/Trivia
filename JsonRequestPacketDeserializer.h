@@ -8,6 +8,9 @@ class JsonRequestPacketDeserializer {
 public:
 	static LoginRequest deserializeLoginRequest(Buffer buff);
 	static SignUpRequest deserializeSignupRequest(Buffer buff);
+	static GetPlayersInRoomRequest deserializeGetPlayersInRoomRequest(Buffer buff);
+	static JoinRoomRequest deserializeJoinRoomRequest(Buffer buff);
+	static CreateRoomRequest deserializeCreateRoomRequest(Buffer buff);
 private:
 	static nlohmann::json convertToJsonObject(Buffer buff);
 };
