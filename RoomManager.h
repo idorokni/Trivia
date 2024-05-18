@@ -14,4 +14,6 @@ public:
 	unsigned int getRoomState(int ID);
 	const std::vector<RoomData> getRooms() const;
 	const Room& getRoom(int ID) const;
+
+
 };

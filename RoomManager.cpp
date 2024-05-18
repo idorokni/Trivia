@@ -21,3 +21,8 @@ const std::vector<RoomData> RoomManager::getRooms() const {
 const Room& RoomManager::getRoom(int ID) const {
 	return m_rooms.at(ID);
 }
+
+RoomManager& StatisticsManager::get() noexcept {
+	static StatisticsManager s_Instance;
+	return s_Instance;
+}

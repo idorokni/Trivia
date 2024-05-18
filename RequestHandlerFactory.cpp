@@ -4,8 +4,8 @@ LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler() const{
 	return new LoginRequestHandler();
 }
 
-MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler() const {
-	return new MenuRequestHandler();
+MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler(const LoggedUser& loggedUser) const {
+	return new MenuRequestHandler(loggedUser);
 }
 
 RequestHandlerFactory& RequestHandlerFactory::get() noexcept{
