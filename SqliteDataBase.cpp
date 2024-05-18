@@ -28,7 +28,8 @@ bool SqliteDataBase::open()
 	if (file_exist != 0) // If the DB doesn't exist, we will now create it
 	{
 		//sql query
-		const char* sqlStatement = "create table User (username text primary key not null, password text not null, email text not null, address text not null, phone text not null, birthday text not null);";
+		const char* sqlStatement = "create table User (username text primary key not null, password text not null, email text not null, address text not null, phone text not null, birthday text not null);"
+			"create table Question (id integer primary key not null, question text not null, correct text not null);";
 
 		char* errMessage = nullptr;
 		res = sqlite3_exec(this->_db, sqlStatement, nullptr, nullptr, &errMessage);
@@ -130,6 +131,34 @@ int SqliteDataBase::addNewUser(const std::string& username, const std::string& p
 	return res;
 }
 
+std::list<Question> SqliteDataBase::getQuestions(const int number) {
+	const char* sql = "SELECT id, question, correct FROM Question LIMIT ?;";
+	sqlite3_stmt* stmt;
+	std::list<Question> questions;
+
+	// Prepare the SQL statement
+	if (sqlite3_prepare_v2(this->_db, sql, -1, &stmt, nullptr) == SQLITE_OK) {
+		// Bind the number parameter to the SQL statement
+		sqlite3_bind_int(stmt, 1, number);
+
+		// Execute the statement and retrieve the rows
+		while (sqlite3_step(stmt) == SQLITE_ROW) {
+			int id = sqlite3_column_int(stmt, 0);
+			const unsigned char* questionText = sqlite3_column_text(stmt, 1);
+			const unsigned char* correctText = sqlite3_column_text(stmt, 2);
+
+			questions.emplace_back(id, reinterpret_cast<const char*>(questionText), reinterpret_cast<const char*>(correctText));
+		}
+
+		// Finalize the statement
+		sqlite3_finalize(stmt);
+	}
+	else {
+		std::cerr << "Error preparing statement: " << sqlite3_errmsg(this->_db) << std::endl;
+	}
+
+	return questions;
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// CallBacks ///////////////////////////////////////////////
