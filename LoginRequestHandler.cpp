@@ -50,7 +50,7 @@ RequestResult LoginRequestHandler::signup(const RequestInfo& info) {
 	Buffer buff;
 	SignUpRequest signupRequest = JsonRequestPacketDeserializer::deserializeSignupRequest(info.buff);
 	SignupResponse signupResponse;
-	if (LoginManager::get().signup(signupRequest.password, signupRequest.username, signupRequest.email)) {
+	if (LoginManager::get().signup(signupRequest.password, signupRequest.username, signupRequest.email, signupRequest.address, signupRequest.phone, signupRequest.birthday)) {
 		signupResponse.status = 1;
 		reasult.newHandler = RequestHandlerFactory::get().createMenuRequestHandler();
 	}
