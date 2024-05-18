@@ -48,7 +48,7 @@ RequestResult MenuRequestHandler::getPlayersInRoom(const RequestInfo& info) {
 	GetPlayersInRoomRequest getPlayersInRoomRequest = JsonRequestPacketDeserializer::deserializeGetPlayersInRoomRequest(info.buff);
 	GetPlayersInRoomResponse getPlayersInRoomResponse;
 	getPlayersInRoomResponse.players = RoomManager::get().getRoom(getPlayersInRoomRequest.roomId).getAllUsers();
-	reasult.newHandler = this;
+	reasult.newHandler = this; //should be changed in later versions
 	buff = JsonResponsePacketSerializer::serializeResponse(getPlayersInRoomResponse);
 
 	reasult.response = buff;
@@ -58,10 +58,10 @@ RequestResult MenuRequestHandler::getPersonalStats(const RequestInfo& info) {
 	RequestResult reasult;
 	Buffer buff;
 	GetPersonalStatusResponse getPersonalStatusResponse;
-	Statis
-	reasult.newHandler = this;
-	buff = JsonResponsePacketSerializer::serializeResponse(getPlayersInRoomResponse);
-
+	getPersonalStatusResponse.statistics = StatisticsManager::get().getUserStatistics(m_user.getUsername());
+	getPersonalStatusResponse.status = 1;
+	reasult.newHandler = this; //should be changed in later versions
+	buff = JsonResponsePacketSerializer::serializeResponse(getPersonalStatusResponse);
 	reasult.response = buff;
 	return reasult;
 }
