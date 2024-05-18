@@ -50,3 +50,10 @@ Buffer JsonResponsePacketSerializer::serializeResponse(ErrorResponse errorRespon
 
 	return buff;
 }
+
+Buffer JsonResponsePacketSerializer::serializeResponse(LogoutResponse logoutResponse);
+Buffer JsonResponsePacketSerializer::serializeResponse(GetRoomsResponse getRoomsResponseResponse);
+Buffer JsonResponsePacketSerializer::serializeResponse(JoinRoomResponse joinRoomResponse);
+Buffer JsonResponsePacketSerializer::serializeResponse(CreateRoomResponse createRoomResponseResponse);
+Buffer JsonResponsePacketSerializer::serializeResponse(GetHighScoreResponse getHighScoreResponse);
+Buffer JsonResponsePacketSerializer::serializeResponse(GetPersonalStatusResponse getPersonalStatusResponse);
