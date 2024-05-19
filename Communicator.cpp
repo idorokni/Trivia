@@ -62,7 +62,7 @@ void Communicator::handleNewClient(SOCKET sock) {
 			}
 
 			RequestInfo info;
-			info.id = buff.at(0);
+			info.id = (RequestCode)buff.at(0);
 			info.buff = std::move(buff);
 			info.recivalTime = std::time(nullptr);
 			if (this->m_clients[sock]->isRequestRelevant(info)) {

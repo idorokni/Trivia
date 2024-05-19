@@ -1,13 +1,13 @@
 #include "LoginRequestHandler.h"
 
 bool LoginRequestHandler::isRequestRelevant(const RequestInfo& info) {
-	return info.id == (int)RequestCode::LOGIN_REQUEST_CODE || info.id == (int)RequestCode::SIGNUP_REQUEST_CODE;
+	return info.id == RequestCode::LOGIN_REQUEST_CODE || info.id == RequestCode::SIGNUP_REQUEST_CODE;
 }
 RequestResult LoginRequestHandler::handleRequest(const RequestInfo& info) {
 	RequestResult reasult;
 
 	try {
-		if (info.id == (int)RequestCode::LOGIN_REQUEST_CODE) {
+		if (info.id == RequestCode::LOGIN_REQUEST_CODE) {
 			reasult = login(info);
 		}
 		else {

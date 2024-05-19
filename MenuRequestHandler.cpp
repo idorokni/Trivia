@@ -5,11 +5,37 @@ MenuRequestHandler::MenuRequestHandler(const LoggedUser& loggedUser) {
 }
 
 bool MenuRequestHandler::isRequestRelevant(const RequestInfo& info) {
-	return info.id == (int)RequestCode::LOGOUT_REQUEST_CODE || info.id == (int)RequestCode::CREATE_ROOM_REQUEST_CODE || info.id == (int)RequestCode::GET_PLAYERS_IN_ROOM_REQUEST_CODE || info.id == (int)RequestCode::GET_ROOM_REQUEST_CODE || info.id == (int)RequestCode::JOIN_ROOM_REQUEST_CODE || info.id == (int)RequestCode::GET_USER_STATISTICS_REQUEST_CODE;
+	return info.id == RequestCode::LOGOUT_REQUEST_CODE || info.id == RequestCode::CREATE_ROOM_REQUEST_CODE || info.id == RequestCode::GET_PLAYERS_IN_ROOM_REQUEST_CODE || info.id == RequestCode::GET_ROOMS_REQUEST_CODE || info.id == RequestCode::JOIN_ROOM_REQUEST_CODE || info.id == RequestCode::GET_USER_STATISTICS_REQUEST_CODE;
 }
 
 RequestResult MenuRequestHandler::handleRequest(const RequestInfo& info) {
 	RequestResult reasult;
+	switch (info.id)
+	{
+	case RequestCode::CREATE_ROOM_REQUEST_CODE:
+		reasult = createRoom(info);
+		break;
+	case RequestCode::GET_PLAYERS_IN_ROOM_REQUEST_CODE:
+		reasult = getPlayersInRoom(info);
+		break;
+	case RequestCode::LOGOUT_REQUEST_CODE:
+		reasult = logout(info);
+		break;
+	case RequestCode::JOIN_ROOM_REQUEST_CODE:
+		reasult = joinRoom(info);
+		break;
+	case RequestCode::HIGH_SCORE_REQUEST_CODE:
+		reasult = getHighScore(info);
+		break;
+	case RequestCode::GET_ROOMS_REQUEST_CODE:
+		reasult = getRooms(info);
+		break;
+	case RequestCode::GET_USER_STATISTICS_REQUEST_CODE:
+		reasult = getPersonalStats(info);
+		break;
+	default:
+		break;
+	}
 	return reasult;
 }
 
