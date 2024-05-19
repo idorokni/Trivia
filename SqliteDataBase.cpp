@@ -1,6 +1,7 @@
 #include "SqliteDataBase.h"
 #include "sqlite3.h"
 #include <io.h>
+#include <string>
 
 IDatabase& IDatabase::get() {
 	static SqliteDataBase instance;
@@ -29,7 +30,8 @@ bool SqliteDataBase::open()
 	{
 		//sql query
 		const char* sqlStatement = "create table User (username text primary key not null, password text not null, email text not null, address text not null, phone text not null, birthday text not null);"
-			"create table Question (id integer primary key not null, question text not null, correct text not null);";
+			"create table Question (id integer primary key not null, question text not null, correct text not null);"
+			"create table Statistics (username text primary key not null, num_correct_answers integer not null, avg_time_per_question real not null, num_of_total_answers integer not null, num_of_total_games integer not null, score integer not null);";
 
 		char* errMessage = nullptr;
 		res = sqlite3_exec(this->_db, sqlStatement, nullptr, nullptr, &errMessage);
@@ -131,7 +133,8 @@ int SqliteDataBase::addNewUser(const std::string& username, const std::string& p
 	return res;
 }
 
-std::list<Question> SqliteDataBase::getQuestions(const int number) {
+std::list<Question> SqliteDataBase::getQuestions(const int number) 
+{
 	const char* sql = "SELECT id, question, correct FROM Question LIMIT ?;";
 	sqlite3_stmt* stmt;
 	std::list<Question> questions;
@@ -160,6 +163,78 @@ std::list<Question> SqliteDataBase::getQuestions(const int number) {
 	return questions;
 }
 
+float SqliteDataBase::getPlayerAverageAnswerTime(const std::string& username) 
+{
+	const char* sql = "SELECT avg_time_per_question FROM Statistics WHERE username = ?;";
+	sqlite3_stmt* stmt;
+	float avgTime = 0.0;
+
+	// Prepare the SQL statement
+	if (sqlite3_prepare_v2(this->_db, sql, -1, &stmt, nullptr) == SQLITE_OK) {
+		// Bind the username parameter to the SQL statement
+		sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
+
+		// Execute the statement and retrieve the average time
+		if (sqlite3_step(stmt) == SQLITE_ROW) avgTime = static_cast<float>(sqlite3_column_double(stmt, 0));
+
+		// Finalize the statement
+		sqlite3_finalize(stmt);
+	}
+	else std::cerr << "Error preparing statement: " << sqlite3_errmsg(this->_db) << std::endl;
+
+	return avgTime;
+}
+
+int SqliteDataBase::getNumOfCorrectAnswers(const std::string& username)
+{
+	const char* sql = "SELECT num_correct_answers FROM Statistics WHERE username = ?;";
+	return getColumn(sql, username);
+}
+
+int SqliteDataBase::getNumOfTotalAnswers(const std::string& username)
+{
+	const char* sql = "SELECT num_of_total_answers FROM Statistics WHERE username = ?;";
+	return getColumn(sql, username);
+}
+
+int SqliteDataBase::getNumOfPlayerGames(const std::string& username)
+{
+	const char* sql = "SELECT num_of_total_games FROM Statistics WHERE username = ?;";
+	return getColumn(sql, username);
+}
+
+int SqliteDataBase::getPlayerScore(const std::string& username)
+{
+	const char* sql = "SELECT score FROM Statistics WHERE username = ?;";
+	return getColumn(sql, username);
+}
+
+std::vector<std::string> SqliteDataBase::getHighScores()
+{
+	const char* sql = "SELECT score FROM Statistics ORDER BY score DESC LIMIT 5;";
+	sqlite3_stmt* stmt;
+	std::vector<std::string> topScores;
+
+	// Prepare the SQL statement
+	if (sqlite3_prepare_v2(this->_db, sql, -1, &stmt, nullptr) == SQLITE_OK) 
+	{
+		// Execute the statement and retrieve the top five scores
+		while (sqlite3_step(stmt) == SQLITE_ROW) 
+		{
+			int score = sqlite3_column_int(stmt, 0);
+			topScores.push_back(std::to_string(score));
+		}
+
+		// Finalize the statement
+		sqlite3_finalize(stmt);
+	}
+	else {
+		std::cerr << "Error preparing statement: " << sqlite3_errmsg(this->_db) << std::endl;
+	}
+
+	return topScores;
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// CallBacks ///////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -174,4 +249,25 @@ int SqliteDataBase::callbackGetUser(void* data, int argc, char** argv, char** az
 	}
 
 	return 0;
+}
+
+int SqliteDataBase::getColumn(const char* sql, const std::string& username)
+{
+	sqlite3_stmt* stmt;
+	int column = 0;
+
+	// Prepare the SQL statement
+	if (sqlite3_prepare_v2(this->_db, sql, -1, &stmt, nullptr) == SQLITE_OK) {
+		// Bind the username parameter to the SQL statement
+		sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
+
+		// Execute the statement and retrieve the column
+		if (sqlite3_step(stmt) == SQLITE_ROW) column = static_cast<float>(sqlite3_column_int(stmt, 0));
+
+		// Finalize the statement
+		sqlite3_finalize(stmt);
+	}
+	else std::cerr << "Error preparing statement: " << sqlite3_errmsg(this->_db) << std::endl;
+
+	return column;
 }

@@ -12,7 +12,12 @@ public:
     virtual int addNewUser(const std::string& username, const std::string& password, const std::string& email, const std::string& address, const std::string& phone, const std::string& birthday) = 0;
 
     virtual std::list<Question> getQuestions(const int number) = 0;
-    virtual float getPlayerAverageAnswerTime(const std::string&) = 0;
+    virtual float getPlayerAverageAnswerTime(const std::string& username) = 0;
+    virtual int getNumOfCorrectAnswers(const std::string& username) = 0;
+    virtual int getNumOfTotalAnswers(const std::string& username) = 0;
+    virtual int getNumOfPlayerGames(const std::string& username) = 0;
+    virtual int getPlayerScore(const std::string& username) = 0;
+    virtual std::vector<std::string> getHighScores() = 0;
 
     static IDatabase& get();
 };
