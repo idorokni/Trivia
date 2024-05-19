@@ -30,8 +30,18 @@ bool SqliteDataBase::open()
 	{
 		//sql query
 		const char* sqlStatement = "create table User (username text primary key not null, password text not null, email text not null, address text not null, phone text not null, birthday text not null);"
-			"create table Question (id integer primary key not null, question text not null, correct text not null);"
-			"create table Statistics (username text primary key not null, num_correct_answers integer not null, avg_time_per_question real not null, num_of_total_answers integer not null, num_of_total_games integer not null, score integer not null);";
+			"create table Question (id integer primary key not null, question text not null, correct text not null, ans1 text not null, ans2 text not null, ans3 text not null);"
+			"create table Statistics (username text primary key not null, num_correct_answers integer not null, avg_time_per_question real not null, num_of_total_answers integer not null, num_of_total_games integer not null, score integer not null);"
+			"insert into Question (id, question, correct) VALUES (1, 'capital of Israel?', 'Jerusalem', 'Ashdod', 'Berlin', 'New York');"
+			"insert into Question (id, question, correct) VALUES (2, 'capital of Germany?', 'Berlin', 'Paris', 'Hamburg', 'New York');"
+			"insert into Question (id, question, correct) VALUES (3, 'capital of USA?', 'Washington', 'New York', 'San Diego', 'Los Santos');"
+			"insert into Question (id, question, correct) VALUES (4, 'capital of Russia?', 'Moscow', 'Sain petersburg', 'Krasnoyarsk', 'Dagistan');"
+			"insert into Question (id, question, correct) VALUES (5, 'capital of Ukraine?', 'Kiev', 'Oddessa', 'Kishinev', 'London');"
+			"insert into Question (id, question, correct) VALUES (6, 'capital of France?', 'Paris', 'Monaco', 'Sen', 'Lyos');"
+			"insert into Question (id, question, correct) VALUES (7, 'capital of Italy?', 'Rome', 'Napoly', 'Firenze', 'Milano');"
+			"insert into Question (id, question, correct) VALUES (8, 'capital of Egypt?', 'Cairo', 'Alexandria', 'Taba', 'Sharem A Sehich');"
+			"insert into Question (id, question, correct) VALUES (9, 'capital of Jordan?', 'Amman', 'Baku', 'Akabba', 'Damascus');"
+			"insert into Question (id, question, correct) VALUES (10, 'capital of Lebanon?', 'Beirut', 'Tzur', 'Baalback', 'Tziddon');";
 
 		char* errMessage = nullptr;
 		res = sqlite3_exec(this->_db, sqlStatement, nullptr, nullptr, &errMessage);
