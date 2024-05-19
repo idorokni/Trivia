@@ -65,6 +65,16 @@ Buffer JsonResponsePacketSerializer::serializeResponse(GetPersonalStatusResponse
 	return convertToBuffer(j, ResponseCode::GET_PERSONAL_STATUS_REPONSE);
 }
 
+Buffer JsonResponsePacketSerializer::serializeResponse(GetPlayersInRoomResponse getPlayersInRoomRespone){
+	nlohmann::json j;
+	std::string playersString = "";
+	GetPlayersInRoomResponse getPlayersInRoomResponse;
+	for (std::string data : getPlayersInRoomResponse.players) { playersString += data + ","; }
+	playersString.erase(playersString.end());
+	j["players"] = playersString;
+	return convertToBuffer(j, ResponseCode::GET_PERSONAL_STATUS_REPONSE);
+}
+
 
 Buffer JsonResponsePacketSerializer::convertToBuffer(const nlohmann::json& jsonObj, ResponseCode code) {
 	std::string jsonDump = jsonObj.dump();

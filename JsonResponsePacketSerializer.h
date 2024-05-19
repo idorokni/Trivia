@@ -16,6 +16,7 @@ public:
 	static Buffer serializeResponse(CreateRoomResponse createRoomResponse);
 	static Buffer serializeResponse(GetHighScoreResponse getHighScoreResponse);
 	static Buffer serializeResponse(GetPersonalStatusResponse getPersonalStatusResponse);
+	static Buffer serializeResponse(GetPlayersInRoomResponse getPlayersInRoomRespone);
 private:
 	static Buffer convertToBuffer(const nlohmann::json& jsonObj, ResponseCode code);
 };

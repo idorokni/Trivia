@@ -1,13 +1,13 @@
 #include "LoginRequestHandler.h"
 
 bool LoginRequestHandler::isRequestRelevant(const RequestInfo& info) {
-	return info.id == (int)RequestCode::LOGIN_REQUEST_CODE || info.id == (int)RequestCode::SIGNUP_REQUEST_CODE;
+	return info.id == RequestCode::LOGIN_REQUEST_CODE || info.id == RequestCode::SIGNUP_REQUEST_CODE;
 }
 RequestResult LoginRequestHandler::handleRequest(const RequestInfo& info) {
 	RequestResult reasult;
 
 	try {
-		if (info.id == (int)RequestCode::LOGIN_REQUEST_CODE) {
+		if (info.id == RequestCode::LOGIN_REQUEST_CODE) {
 			reasult = login(info);
 		}
 		else {
@@ -34,7 +34,7 @@ RequestResult LoginRequestHandler::login(const RequestInfo& info) {
 	LoginResponse loginResponse;
 	if (LoginManager::get().login(loginRequest.password, loginRequest.username)) {
 		loginResponse.status = 1;
-		reasult.newHandler = RequestHandlerFactory::get().createMenuRequestHandler();
+		reasult.newHandler = RequestHandlerFactory::get().createMenuRequestHandler(LoggedUser(loginRequest.username));
 	}
 	else {
 		loginResponse.status = 0;
@@ -52,7 +52,7 @@ RequestResult LoginRequestHandler::signup(const RequestInfo& info) {
 	SignupResponse signupResponse;
 	if (LoginManager::get().signup(signupRequest.password, signupRequest.username, signupRequest.email, signupRequest.address, signupRequest.phone, signupRequest.birthday)) {
 		signupResponse.status = 1;
-		reasult.newHandler = RequestHandlerFactory::get().createMenuRequestHandler();
+		reasult.newHandler = RequestHandlerFactory::get().createMenuRequestHandler(LoggedUser(signupRequest.username));
 	}
 	else {
 		signupResponse.status = 0;

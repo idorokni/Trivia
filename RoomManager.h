@@ -13,5 +13,7 @@ public:
 	void deleteRoom(int ID);
 	unsigned int getRoomState(int ID);
 	const std::vector<RoomData> getRooms() const;
-	const Room& getRoom(int ID) const;
+	Room& getRoom(int ID);
+
+	static RoomManager& get() noexcept;
 };

@@ -7,14 +7,16 @@
 
 class IRequestHandler;
 
-using RequestId = int;
-
-enum class RequestCode {
+enum class RequestCode{
     LOGIN_REQUEST_CODE = 51,
     SIGNUP_REQUEST_CODE = 52,
     GET_PLAYERS_IN_ROOM_REQUEST_CODE = 53,
     CREATE_ROOM_REQUEST_CODE = 54,
-    JOIN_ROOM_REQUEST = 55
+    JOIN_ROOM_REQUEST_CODE = 55,
+    HIGH_SCORE_REQUEST_CODE = 56,
+    LOGOUT_REQUEST_CODE = 57,
+    GET_ROOMS_REQUEST_CODE = 58,
+    GET_USER_STATISTICS_REQUEST_CODE = 59
 };
 
 struct LoginRequest {
@@ -37,7 +39,7 @@ struct RequestResult {
 };
 
 struct RequestInfo {
-    RequestId id;
+    RequestCode id;
     std::time_t recivalTime;
     Buffer buff;
 };
