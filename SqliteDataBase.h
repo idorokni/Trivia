@@ -3,6 +3,7 @@
 #include "sqlite3.h"
 #include "Constants.h"
 #include <list>
+#include <vector>
 #include "Question.h"
 
 class SqliteDataBase : public IDatabase
