@@ -3,6 +3,7 @@
 #include "sqlite3.h"
 #include "Constants.h"
 #include <list>
+#include <vector>
 #include "Question.h"
 
 class SqliteDataBase : public IDatabase
@@ -27,7 +28,7 @@ public:
     int getNumOfTotalAnswers(const std::string& username) override;
     int getNumOfPlayerGames(const std::string& username) override;
     int getPlayerScore(const std::string& username) override;
-    virtual std::vector<std::string> getHighScores() = 0;
+    std::vector<std::string> getHighScores() override;
 
 
     static IDatabase& get();
