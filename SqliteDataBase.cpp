@@ -3,7 +3,8 @@
 #include <io.h>
 #include <string>
 
-IDatabase& IDatabase::get() {
+IDatabase& IDatabase::get()
+{
 	static SqliteDataBase instance;
 	return instance;
 }

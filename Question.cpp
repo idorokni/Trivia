@@ -14,3 +14,9 @@ int Question::getCorrectAnswerId()
 {
 	return CORRECT_ANSWER_INDEX;
 }
+
+Question::Question(const std::string& question, const std::vector<std::string>& answers)
+{
+	this->m_possibleAnswers = answers;
+	this->m_question = question;
+}
