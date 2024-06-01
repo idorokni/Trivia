@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "Question.h"
 
 class IDatabase {
 public:
