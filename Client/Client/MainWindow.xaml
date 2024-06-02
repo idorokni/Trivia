@@ -5,8 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow" Height="600" Width="920"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True">
+    <Border Background="#D0C88E" CornerRadius="30">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="128"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="600"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Image Grid.Column="0" 
+                Width="150"
+                Height="200"
+                Source="/Images/logo.png"/>
+
+                <TextBlock Grid.Column ="1"
+                Text="BRAINPOP"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Foreground="Black"
+                FontSize="50"
+                FontFamily="/Fonts/FreudianSlit-e8L3.ttf #"/>
+
+                <Image Grid.Column="2" 
+                Width="150"
+                Height="200"
+                Source="/Images/logo.png"/>
+            </Grid>
+        </Grid>
+    </Border>
 </Window>
