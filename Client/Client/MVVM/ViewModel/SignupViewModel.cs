@@ -63,6 +63,7 @@ namespace Client.MVVM.ViewModel
         {
             //here should be called a module function to connect with the server
             Console.WriteLine(Username + " " + Password + " " + Email + " " + Address + " " + Birthday + " " + Phone);
+            MainViewModel.Instance.CurrentView = new HomeViewModel();
         }
 
         private bool CanSubmitLogin(object obj)

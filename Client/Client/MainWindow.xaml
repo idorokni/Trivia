@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="920"
         WindowStyle="None"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
         ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True">
