@@ -30,24 +30,16 @@ namespace Client.MVVM.ViewModel
 
         public LoginViewModel()
         {
-            SubmitLoginCommand = new RelayCommand(SubmitLogin, CanSubmitLogin);
+            SubmitLoginCommand = new RelayCommand(o =>
+            {
+                Console.WriteLine(Username + " " + Password);
+                MainViewModel.Instance.CurrentView = new HomeViewModel();
+            }, o => !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password));
 
             SignupViewCommand = new RelayCommand(o =>
             {
                 MainViewModel.Instance.CurrentView = new SignupViewModel();
             });
-        }
-
-        private void SubmitLogin(object obj)
-        {
-            //here should be called a module function to connect with the server
-            Console.WriteLine(Username + " " + Password);
-            MainViewModel.Instance.CurrentView = new HomeViewModel();
-        }
-
-        private bool CanSubmitLogin(object obj)
-        {
-            return !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password);
         }
     }
 }

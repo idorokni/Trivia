@@ -56,19 +56,11 @@ namespace Client.MVVM.ViewModel
 
         public SignupViewModel()
         {
-            SubmitSignupCommand = new RelayCommand(SubmitSignup, CanSubmitLogin);
-        }
-
-        private void SubmitSignup(object obj)
-        {
-            //here should be called a module function to connect with the server
-            Console.WriteLine(Username + " " + Password + " " + Email + " " + Address + " " + Birthday + " " + Phone);
-            MainViewModel.Instance.CurrentView = new HomeViewModel();
-        }
-
-        private bool CanSubmitLogin(object obj)
-        {
-            return !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password) && !string.IsNullOrEmpty(Phone) && !string.IsNullOrEmpty(Birthday) && !string.IsNullOrEmpty(Email);
+            SubmitSignupCommand = new RelayCommand(o =>
+            {
+                Console.WriteLine(Username + " " + Password + " " + Email + " " + Address + " " + Birthday + " " + Phone);
+                MainViewModel.Instance.CurrentView = new HomeViewModel();
+            }, o => !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password) && !string.IsNullOrEmpty(Phone) && !string.IsNullOrEmpty(Birthday) && !string.IsNullOrEmpty(Email));
         }
 
     }

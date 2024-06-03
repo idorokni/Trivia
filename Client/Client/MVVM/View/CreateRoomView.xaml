@@ -3,10 +3,101 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Client.MVVM.View"
+             xmlns:local="clr-namespace:Client.MVVM.View" 
+             xmlns:viewmodel="clr-namespace:Client.MVVM.ViewModel" 
+             d:DataContext="{d:DesignInstance Type=viewmodel:CreateRoomViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+    <Border Background="#5FBFF9"
+    CornerRadius="30">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" 
+                Text="NAME:"
+                FontSize="40"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Margin="30,0,0,0"/>
+
+                <TextBox Grid.Row="0"
+                Height="50"
+                Width="600"
+                HorizontalAlignment="Right"
+                Margin="0,0,30,0"
+                Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Grid.Row="1" 
+                Text="MAX USERS:"
+                FontSize="40"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Margin="30,0,0,0"/>
+
+                <TextBox Grid.Row="1"
+                Height="50"
+                Width="500"
+                HorizontalAlignment="Right"
+                Margin="0,0,30,0"
+                Text="{Binding AmountOfUsers, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Grid.Row="2" 
+                Text="AMOUNT OF QUESTIONS:"
+                FontSize="40"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Margin="30,0,0,0"/>
+
+                <TextBox Grid.Row="2"
+                Height="50"
+                Width="260"
+                HorizontalAlignment="Right"
+                Margin="0,0,30,0"
+                Text="{Binding AmountOfQuestions, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Grid.Row="3" 
+                Text="TIME PER QUESTION:"
+                FontSize="40"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Margin="30,0,0,0"/>
+
+                <TextBox Grid.Row="3"
+                Height="50"
+                Width="350"
+                HorizontalAlignment="Right"
+                Margin="0,0,30,0"
+                Text="{Binding TimePerQuestions, UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                <Button Grid.Row="4"
+                Height="60"
+                Width="200"
+                Style="{StaticResource OptionButtonStyle}"
+                Background="#DB2955"
+                Content="CREATE ROOM"
+                FontSize="25"
+                FontWeight="SemiBold"
+                Command="{Binding SubmitCreateRoomCommand}"/>
+            </Grid>
+
+            <TextBlock Text="CREATE ROOM"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="50"
+            FontWeight="SemiBold"/>
+        </Grid>
+    </Border>
 </UserControl>
