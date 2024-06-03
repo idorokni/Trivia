@@ -9,6 +9,14 @@ namespace Client.MVVM.ViewModel
 {
     internal class HomeViewModel : ObservableObject
     {
+        public RelayCommand CreateRoomViewCommand { get; set; }
 
+        public HomeViewModel()
+        {
+            CreateRoomViewCommand = new RelayCommand(o =>
+            {
+                MainViewModel.Instance.CurrentView = new C
+            });
+        }
     }
 }

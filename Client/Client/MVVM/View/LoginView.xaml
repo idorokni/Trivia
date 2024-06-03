@@ -36,7 +36,8 @@
                     Foreground="Black"
                     FontSize="30"
                     Margin="20"/>
-                <Button Grid.Row="2" 
+                <Button Style="{StaticResource OptionButtonStyle}" 
+                    Grid.Row="2" 
                     Content="SUBMIT"
                     Width="100"
                     Height="60"
@@ -45,7 +46,8 @@
                     HorizontalAlignment="Left"
                     Margin="180,0,0,0"
                     Command="{Binding SubmitLoginCommand}"/>
-                <Button Grid.Row="2" 
+                <Button Style="{StaticResource OptionButtonStyle}"
+                    Grid.Row="2" 
                     Content="SIGN UP"
                     Width="100"
                     Height="60"
