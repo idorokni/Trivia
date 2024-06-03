@@ -15,7 +15,7 @@ namespace Client.MVVM.ViewModel
         {
             CreateRoomViewCommand = new RelayCommand(o =>
             {
-                MainViewModel.Instance.CurrentView = new C
+                MainViewModel.Instance.CurrentView = new CreateRoomViewModel();
             });
         }
     }

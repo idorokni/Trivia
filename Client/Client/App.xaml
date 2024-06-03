@@ -16,6 +16,9 @@
             <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
                 <view:HomeView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:CreateRoomViewModel}">
+                <view:CreateRoomView/>
+            </DataTemplate>
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/OptionButtonTheme.xaml"/>
