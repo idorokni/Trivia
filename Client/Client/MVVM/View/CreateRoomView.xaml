@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Client.MVVM.View"
+             xmlns:local="clr-namespace:Client.MVVM.View" 
+             xmlns:viewmodel="clr-namespace:Client.MVVM.ViewModel" 
+             d:DataContext="{d:DesignInstance Type=viewmodel:CreateRoomViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border Background="#5FBFF9"
@@ -34,7 +36,8 @@
                 Height="50"
                 Width="600"
                 HorizontalAlignment="Right"
-                Margin="0,0,30,0"/>
+                Margin="0,0,30,0"
+                Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Grid.Row="1" 
                 Text="MAX USERS:"
@@ -47,7 +50,8 @@
                 Height="50"
                 Width="500"
                 HorizontalAlignment="Right"
-                Margin="0,0,30,0"/>
+                Margin="0,0,30,0"
+                Text="{Binding AmountOfUsers, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Grid.Row="2" 
                 Text="AMOUNT OF QUESTIONS:"
@@ -60,7 +64,8 @@
                 Height="50"
                 Width="260"
                 HorizontalAlignment="Right"
-                Margin="0,0,30,0"/>
+                Margin="0,0,30,0"
+                Text="{Binding AmountOfQuestions, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Grid.Row="3" 
                 Text="TIME PER QUESTION:"
@@ -73,7 +78,8 @@
                 Height="50"
                 Width="350"
                 HorizontalAlignment="Right"
-                Margin="0,0,30,0"/>
+                Margin="0,0,30,0"
+                Text="{Binding TimePerQuestions, UpdateSourceTrigger=PropertyChanged}"/>
 
 
                 <Button Grid.Row="4"
@@ -83,7 +89,8 @@
                 Background="#DB2955"
                 Content="CREATE ROOM"
                 FontSize="25"
-                FontWeight="SemiBold"/>
+                FontWeight="SemiBold"
+                Command="{Binding SubmitCreateRoomCommand}"/>
             </Grid>
 
             <TextBlock Text="CREATE ROOM"

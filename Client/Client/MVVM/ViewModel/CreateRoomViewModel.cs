@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,7 +43,13 @@ namespace Client.MVVM.ViewModel
 
         public CreateRoomViewModel()
         {
+            SubmitCreateRoomCommand = new RelayCommand(o =>
+            {
+                Console.WriteLine(Name + " " + AmountOfUsers + " " + TimePerQuestions + " " + AmountOfQuestions);
+                //should be added model to talk with server and change the view to the waiting
+            }, o => !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(AmountOfQuestions) && !string.IsNullOrEmpty(AmountOfUsers) && !string.IsNullOrEmpty(TimePerQuestions));
         }
+
 
 
     }
