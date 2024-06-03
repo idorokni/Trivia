@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Client.MVVM.View"
+             xmlns:local="clr-namespace:Client.MVVM.View" 
+             xmlns:viewmodel="clr-namespace:Client.MVVM.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:SignupViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border Background="#DED6D1"
@@ -35,7 +36,8 @@
                 Height="30"
                 Width="550"
                 HorizontalAlignment="Right"
-                Margin="0,0,40,0"/>
+                Margin="0,0,40,0"
+                Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Grid.Row="1" 
                 Text="PASSWORD:"
@@ -48,7 +50,8 @@
                 Height="30"
                 Width="550"
                 HorizontalAlignment="Right"
-                Margin="0,0,40,0"/>
+                Margin="0,0,40,0"
+                Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Grid.Row="2" 
                 Text="EMAIL:"
@@ -61,7 +64,8 @@
                 Height="30"
                 Width="620"
                 HorizontalAlignment="Right"
-                Margin="0,0,40,0"/>
+                Margin="0,0,40,0"
+                Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Grid.Row="3" 
                 Text="ADDRESS:"
@@ -74,7 +78,8 @@
                 Height="30"
                 Width="580"
                 HorizontalAlignment="Right"
-                Margin="0,0,40,0"/>
+                Margin="0,0,40,0"
+                Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Grid.Row="4" 
                 Text="PHONE NUMBER:"
@@ -87,7 +92,8 @@
                 Height="30"
                 Width="480"
                 HorizontalAlignment="Right"
-                Margin="0,0,40,0"/>
+                Margin="0,0,40,0"
+                Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Grid.Row="5" 
                 Text="BIRTHDAY:"
@@ -100,7 +106,8 @@
                 Height="30"
                 Width="570"
                 HorizontalAlignment="Right"
-                Margin="0,0,40,0"/>
+                Margin="0,0,40,0"
+                Text="{Binding Birthday, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Button Grid.Row="6" 
                 Content="SUBMIT"
@@ -109,7 +116,8 @@
                 Background="#4F6367"
                 Foreground="AntiqueWhite"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"/>
+                VerticalAlignment="Center"
+                Command="{Binding SubmitSignupCommand}"/>
             </Grid>
 
             <TextBlock Grid.Row="0" 

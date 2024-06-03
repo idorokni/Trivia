@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Client.MVVM.View;
+using Client.MVVM.ViewModel;
 namespace Client.MVVM.ViewModel
 {
     internal class LoginViewModel : ObservableObject
@@ -25,10 +26,16 @@ namespace Client.MVVM.ViewModel
         }
 
         public RelayCommand SubmitLoginCommand { get; set; }
+        public RelayCommand SignupViewCommand {get; set; }
 
         public LoginViewModel()
         {
             SubmitLoginCommand = new RelayCommand(SubmitLogin, CanSubmitLogin);
+
+            SignupViewCommand = new RelayCommand(o =>
+            {
+                MainViewModel.Instance.CurrentView = new SignupViewModel();
+            });
         }
 
         private void SubmitLogin(object obj)

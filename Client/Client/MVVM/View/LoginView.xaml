@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Client.MVVM.View" 
-             xmlns:viewmodel="clr-namespace:Client.MVVM.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:LoginViewModel}"
+             xmlns:viewmodel="clr-namespace:Client.MVVM.ViewModel" 
+             d:DataContext="{d:DesignInstance Type=viewmodel:LoginViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border Background="#EDEEC0"
@@ -52,7 +53,7 @@
                     Foreground="AntiqueWhite"
                     HorizontalAlignment="Right"
                     Margin="0,0,180,0"
-                    />
+                    Command="{Binding SignupViewCommand}"/>
 
                 <TextBox Grid.Row="0"
                     Height="50"

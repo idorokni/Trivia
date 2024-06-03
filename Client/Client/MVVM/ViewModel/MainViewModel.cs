@@ -11,7 +11,13 @@ namespace Client.MVVM.ViewModel
     internal class MainViewModel : ObservableObject
     {
         private object _currentView;
+
+        public static MainViewModel Instance {  get; private set; }
+
         public LoginViewModel LoginVM { get; set; }
+        public SignupViewModel SignupVM { get; set; }
+
+        public RelayCommand SignupViewCommand {  get; set; }
 
         public object CurrentView
         {
@@ -24,8 +30,15 @@ namespace Client.MVVM.ViewModel
 
         public MainViewModel()
         {
+            Instance = this;
             LoginVM = new LoginViewModel();
+            SignupVM = new SignupViewModel();
             CurrentView = LoginVM;
+
+            SignupViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = SignupVM;
+            });
         }
     }
 }
