@@ -11,6 +11,9 @@ namespace Client.MVVM.Model
     {
         private string _name;
         private List<string> _participants;
+        private int _maxPlayers;
+        private int _numOfQuestionsInGame;
+        private int _timePerQuestion;
 
         public string Name
         {
