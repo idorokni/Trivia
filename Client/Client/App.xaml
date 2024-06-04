@@ -22,6 +22,9 @@
             <DataTemplate DataType="{x:Type viewModel:JoinRoomViewModel}">
                 <view:JoinRoomView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:InsideRoomViewModel}">
+                <view:InsideRoomView/>
+            </DataTemplate>
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/OptionButtonTheme.xaml"/>

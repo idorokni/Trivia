@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Client.MVVM.View"
+             xmlns:local="clr-namespace:Client.MVVM.View" 
+             xmlns:viewmodel="clr-namespace:Client.MVVM.ViewModel" 
+             d:DataContext="{d:DesignInstance Type=viewmodel:InsideRoomViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border Background="#E5F77D"
@@ -40,7 +42,7 @@
                                VerticalAlignment="Center"
                                FontSize="30">
                         <Run Text="AMOUNT OF QUESTIONS:"/>
-                        <Run Text="{Binding AmountOfPlayers}"/>
+                        <Run Text="{Binding AmountOfQuestions}"/>
                     </TextBlock>
 
                     <TextBlock Grid.Row="2"
@@ -48,7 +50,7 @@
                                VerticalAlignment="Center"
                                FontSize="30">
                         <Run Text="TIME PER QUESTION:"/>
-                        <Run Text="{Binding AmountOfPlayers}"/>
+                        <Run Text="{Binding TimePerQuestion}"/>
                     </TextBlock>
 
                     <Button Grid.Row="3"
@@ -58,12 +60,31 @@
                             FontSize="25"
                             Style="{StaticResource OptionButtonStyle}"
                             FontWeight="SemiBold"
-                            Background="#DEBA6F"/>
+                            Background="#DEBA6F"
+                            Margin="120,0,0,0"/>
                 </Grid>
 
-                <ListView Grid.Column="1"
-                          Background="Transparent"
-                          ItemContainerStyle="{StaticResource ParticipantItem}"/>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0"
+                               Text="PARTICIPANTS"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="20"
+                               FontWeight="SemiBold"/>
+
+                    <ListView Grid.Row="1"
+                              Background="Transparent"
+                              ItemContainerStyle="{StaticResource ParticipantItem}"
+                              BorderThickness="0"
+                              ItemsSource="{Binding Participants}"/>
+                </Grid>
+
+              
                 
             </Grid>
 

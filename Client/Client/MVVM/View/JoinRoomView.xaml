@@ -30,12 +30,15 @@
                     Style="{StaticResource OptionButtonStyle}"
                     Content="JOIN ROOM"
                     FontWeight="SemiBold"
-                    FontSize="30"/>
+                    FontSize="30"
+                    Command="{Binding JoinRoomCommand}"/>
 
             <ListView Grid.Row="1"
                       Background="Transparent"
                       ItemsSource="{Binding Rooms}"
-                      ItemContainerStyle="{StaticResource RoomItem}"/>
+                      ItemContainerStyle="{StaticResource RoomItem}"
+                      SelectedItem="{Binding Room}"
+                      BorderThickness="0"/>
 
 
         </Grid>

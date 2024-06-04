@@ -13,12 +13,17 @@ namespace Client.MVVM.ViewModel
         private RoomModel _room;
 
         public string Name { get; set; }
-        public string MaxNumOfPlayers { get; set; }
+        public int MaxNumOfPlayers { get; set; }
+        public int AmountOfQuestions { get; set; }
+        public int TimePerQuestion { get; set; }
+        public List<string> Participants {  get; set; }
         public InsideRoomViewModel(RoomModel roomModel)
         {
-            _room = roomModel;
             Name = roomModel.Name;
-            MaxNumOfPlayers = roomModel.
+            MaxNumOfPlayers = roomModel.GetMaxPlayers();
+            AmountOfQuestions = roomModel.GetNumOfQuestionsInGame();
+            TimePerQuestion = roomModel.GetTimePerQuestion();
+            Participants = roomModel.Participants;
         }
     }
 }
