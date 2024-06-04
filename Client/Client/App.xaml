@@ -26,6 +26,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/OptionButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/RoomListItemTheme.xaml"/>
+                <ResourceDictionary Source="Theme/ParticipantListItem.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

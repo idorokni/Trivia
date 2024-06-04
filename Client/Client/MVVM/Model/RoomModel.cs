@@ -27,10 +27,17 @@ namespace Client.MVVM.Model
             set { _participants = value; }
         }
 
-        public RoomModel(List<string> participants, string name)
+        public RoomModel(List<string> participants, string name, int maxPlayers, int numOfQuestionsInGame, int timePerQuestion)
         {
             _participants = participants;
             _name = name;
+            _maxPlayers = maxPlayers;
+            _numOfQuestionsInGame = numOfQuestionsInGame;
+            _timePerQuestion = timePerQuestion;
         }
+
+        public int GetMaxPlayers() => _maxPlayers;
+        public int GetNumOfQuestionsInGame() => _numOfQuestionsInGame;
+        public int GetTimePerQuestion() => _timePerQuestion;
     }
 }
