@@ -28,7 +28,8 @@
         Background="#DB162F"
         Content="JOIN ROOM"
         FontSize="40"
-        FontWeight="Bold"/>
+        FontWeight="Bold"
+        Command="{Binding JoinRoomViewCommand}"/>
 
         <Button Style="{StaticResource OptionButtonStyle}" 
         Grid.Column="0"
