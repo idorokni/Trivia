@@ -8,6 +8,7 @@ RequestResult LoginRequestHandler::handleRequest(const RequestInfo& info) {
 
 	try {
 		if (info.id == RequestCode::LOGIN_REQUEST_CODE) {
+
 			reasult = login(info);
 		}
 		else {

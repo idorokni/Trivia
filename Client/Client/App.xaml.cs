@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Client.MVVM.Model;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,19 @@ namespace Client
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            Communicator communicator = new Communicator();
+            LoginRequest loginRequest = new LoginRequest("user134", "1234Aa!#");
+
+            communicator.Connect();
+            byte[] msg = communicator.SerializeLogIn(loginRequest);
+            communicator.SendMessage(msg);
+
+            RequestResult response = communicator.DeserializeMessage();
+        }
     }
 }
+
