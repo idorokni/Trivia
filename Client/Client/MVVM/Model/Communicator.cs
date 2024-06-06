@@ -31,7 +31,7 @@ namespace Client.MVVM.Model
             this.clientStream.Flush();
         }
 
-        public byte[] SerializeLogIn(LoginRequest request)
+        public byte[] SerializeLogIn(Request request)
         {
             // Convert message code to byte array
             byte codeByte = (byte)Client.MVVM.Model.RequestCode.LOGIN_REQUEST_CODE;
@@ -55,12 +55,12 @@ namespace Client.MVVM.Model
         }
 
 
-        public string ReceiveMessage()
+        /*public string ReceiveMessage()
         {
             byte[] buffer = new byte[4096];
             int bytesRead = clientStream.Read(buffer, 0, buffer.Length);
             return Encoding.ASCII.GetString(buffer, 0, bytesRead);
-        }
+        }*/
 
         public RequestResult DeserializeMessage()
         {
@@ -75,7 +75,7 @@ namespace Client.MVVM.Model
 
             clientStream.Read(lengthBytes, 0, lengthBytes.Length);
             // Extract length of data (4 bytes, little-endian)
-            if (BitConverter.IsLittleEndian)
+            if (!BitConverter.IsLittleEndian)
             {
                 Array.Reverse(lengthBytes); // Convert to little-endian if needed
             }

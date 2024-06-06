@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,7 +21,11 @@ namespace Client.MVVM.Model
         GET_USER_STATISTICS_REQUEST_CODE = 59
     };
 
-    public class LoginRequest
+    public class Request
+    {
+
+    }
+    public class LoginRequest : Request
     {
         public string username;
         public string password;
@@ -31,6 +36,60 @@ namespace Client.MVVM.Model
             this.password = password;
         }
 
+    }
+
+    public class SignUpRequest : Request
+    {
+        public string username;
+        public string password;
+        public string email;
+        public string address;
+        public string phone;
+        public string birthday;
+
+        public SignUpRequest(string username, string password, string email, string address, string phone, string birthday)
+        {
+            this.username = username;
+            this.password = password;
+            this.email = email;
+            this.address = address;
+            this.phone = phone;
+            this.birthday = birthday;
+        }
+    }
+
+    public class GetPlayersInRoomRequest : Request
+    {
+        private uint roomId;
+        public GetPlayersInRoomRequest(uint roomId)
+        {
+            this.roomId = roomId;
+        }
+    }
+    
+    public class JoinRoomRequest : Request
+    {
+        private uint roomId;
+        public JoinRoomRequest(uint roomId)
+        {
+            this.roomId = roomId;
+        }
+    }
+    
+    public class CreateRoomRequest : Request
+    {
+        private string roomName;
+        private uint maxUsers;
+        private uint questionCount;
+        private uint answerTimeout;
+
+        public CreateRoomRequest(string roomName, uint maxUsers, uint questionCount, uint answerTimeout)
+        {
+            this.roomName = roomName;
+            this.maxUsers = maxUsers;
+            this.questionCount = questionCount;
+            this.answerTimeout = answerTimeout;
+        }
     }
 
     public class RequestResult
