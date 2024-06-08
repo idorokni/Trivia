@@ -69,7 +69,7 @@ namespace Client.MVVM.ViewModel
 
                 if (response.IsSuccess) 
                 {
-                    MessageBox.Show("Login successful!");
+                    //MessageBox.Show("Login successful!");
                     MainViewModel.Instance.CurrentView = new HomeViewModel();
                 }
                 else

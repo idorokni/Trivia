@@ -1,4 +1,5 @@
 #include "JsonResponsePacketSerializer.h"
+#include "RoomManager.h"
 
 Buffer JsonResponsePacketSerializer::serializeResponse(LoginResponse loginResponse) {
 	nlohmann::json j;
@@ -26,7 +27,19 @@ Buffer JsonResponsePacketSerializer::serializeResponse(LogoutResponse logoutResp
 Buffer JsonResponsePacketSerializer::serializeResponse(GetRoomsResponse getRoomsResponse) {
 	nlohmann::json j;
 	std::string roomsString = "";
-	for (RoomData data : getRoomsResponse.rooms) { roomsString += data.name + ","; }
+	// j structure:
+	// {"Rooms":"userlist-""user1," "user2"..., roomdata-...; again, ... }
+	for (RoomData data : getRoomsResponse.rooms) 
+	{ 
+		roomsString += "userlist-";
+		for (std::string user : RoomManager::get().getRoom(data.id).getAllUsers()) roomsString += user + ",";
+		roomsString += "roomdata-";
+		roomsString += data.name + ","; 
+		roomsString += data.maxPlayers + ",";
+		roomsString += data.numOfQuestionsInGame + ",";
+		roomsString += data.timePerQuestion + ",";
+		roomsString += data.id + ";";
+	}
 	roomsString.erase(roomsString.end());
 	j["Rooms"] = roomsString;
 	j["status"] = getRoomsResponse.status;

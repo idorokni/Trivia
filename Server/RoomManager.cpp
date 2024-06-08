@@ -1,8 +1,7 @@
 #include "RoomManager.h"
 
 void RoomManager::createRoom(const LoggedUser& loggedUser, const RoomData& roomData) {
-	m_rooms.at(roomData.id) = Room(loggedUser, roomData);
-
+	m_rooms.emplace(roomData.id, Room(loggedUser, roomData));
 }
 void RoomManager::deleteRoom(int ID) {
 	m_rooms.erase(ID);
