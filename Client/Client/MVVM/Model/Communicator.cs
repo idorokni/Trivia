@@ -3,15 +3,17 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Windows.Markup;
+using Client.MVVM.ViewModel;
 using Newtonsoft.Json;
 
 namespace Client.MVVM.Model
 {
-    internal class Communicator
+    public class Communicator
     {
         private TcpClient client;
         private IPEndPoint serverEndPoint;
         private NetworkStream clientStream;
+
 
         public Communicator()
         {
@@ -31,10 +33,11 @@ namespace Client.MVVM.Model
             this.clientStream.Flush();
         }
 
-        public byte[] SerializeLogIn(Request request)
+        public byte[] Serialize(Request request, int messageCode)
         {
             // Convert message code to byte array
-            byte codeByte = (byte)Client.MVVM.Model.RequestCode.LOGIN_REQUEST_CODE;
+            //byte codeByte = (byte)Client.MVVM.Model.RequestCode.LOGIN_REQUEST_CODE;
+            byte codeByte = (byte)messageCode;
             byte[] codeBytes = new byte[] { codeByte };
 
             // Convert JSON data to byte array

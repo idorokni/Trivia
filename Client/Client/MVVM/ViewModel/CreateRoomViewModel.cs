@@ -1,10 +1,13 @@
 ﻿using Client.Core;
+using Client.MVVM.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Client.MVVM.ViewModel
 {
@@ -43,14 +46,45 @@ namespace Client.MVVM.ViewModel
 
         public CreateRoomViewModel()
         {
-            SubmitCreateRoomCommand = new RelayCommand(o =>
-            {
-                Console.WriteLine(Name + " " + AmountOfUsers + " " + TimePerQuestions + " " + AmountOfQuestions);
-                //should be added model to talk with server and change the view to the waiting
-            }, o => !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(AmountOfQuestions) && !string.IsNullOrEmpty(AmountOfUsers) && !string.IsNullOrEmpty(TimePerQuestions));
+            SubmitCreateRoomCommand = new RelayCommand(o => ExecuteCreateRoomModel(), o => CanExecuteCreateRoomModel());
         }
 
+        private bool CanExecuteCreateRoomModel()
+        {
+            if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(AmountOfQuestions) && !string.IsNullOrEmpty(AmountOfUsers) && !string.IsNullOrEmpty(TimePerQuestions))
+            {
+                return UInt32.TryParse(AmountOfQuestions, out _) && UInt32.TryParse(AmountOfUsers, out _) && UInt32.TryParse(TimePerQuestions, out _);
+            }
+            return false;
+        }
 
+        private void ExecuteCreateRoomModel()
+        {
+            try
+            {
+                CreateRoomRequest CreateroomRequest = new CreateRoomRequest(Name, UInt32.Parse(AmountOfUsers), UInt32.Parse(AmountOfQuestions), UInt32.Parse(TimePerQuestions));
 
+                byte[] msg = App.Communicator.Serialize(CreateroomRequest, (int)Client.MVVM.Model.RequestCode.CREATE_ROOM_REQUEST_CODE);
+                App.Communicator.SendMessage(msg);
+
+                RequestResult response = App.Communicator.DeserializeMessage();
+                // Handle the response here (e.g., check if signup was successful)
+
+                if (response.IsSuccess)
+                {
+                    MessageBox.Show("Create Room successful!");
+                    MainViewModel.Instance.CurrentView = new HomeViewModel();
+                }
+                else
+                {
+                    MessageBox.Show("Create Room failed: " + response.Data);
+                }
+             
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message);
+            }
+        }
     }
 }

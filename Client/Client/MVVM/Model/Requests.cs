@@ -42,16 +42,16 @@ namespace Client.MVVM.Model
     {
         public string username;
         public string password;
-        public string email;
+        public string mail;
         public string address;
         public string phone;
         public string birthday;
 
-        public SignUpRequest(string username, string password, string email, string address, string phone, string birthday)
+        public SignUpRequest(string username, string password, string mail, string address, string phone, string birthday)
         {
             this.username = username;
             this.password = password;
-            this.email = email;
+            this.mail = mail;
             this.address = address;
             this.phone = phone;
             this.birthday = birthday;
@@ -60,7 +60,7 @@ namespace Client.MVVM.Model
 
     public class GetPlayersInRoomRequest : Request
     {
-        private uint roomId;
+        public uint roomId;
         public GetPlayersInRoomRequest(uint roomId)
         {
             this.roomId = roomId;
@@ -69,7 +69,7 @@ namespace Client.MVVM.Model
     
     public class JoinRoomRequest : Request
     {
-        private uint roomId;
+        public uint roomId;
         public JoinRoomRequest(uint roomId)
         {
             this.roomId = roomId;
@@ -78,10 +78,10 @@ namespace Client.MVVM.Model
     
     public class CreateRoomRequest : Request
     {
-        private string roomName;
-        private uint maxUsers;
-        private uint questionCount;
-        private uint answerTimeout;
+        public string roomName;
+        public uint maxUsers;
+        public uint questionCount;
+        public uint answerTimeout;
 
         public CreateRoomRequest(string roomName, uint maxUsers, uint questionCount, uint answerTimeout)
         {
@@ -96,11 +96,14 @@ namespace Client.MVVM.Model
     {
         public int code;
         public string Data { get; set; }
+        public bool IsSuccess;
 
         public RequestResult(int code, string data)
         {
             this.code = code;
             this.Data = data;
+            if (data.Contains("\"status\":1")) this.IsSuccess = true;
+            else this.IsSuccess = false;
         }
     }
 }

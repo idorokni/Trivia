@@ -14,7 +14,16 @@ namespace Client
     /// </summary>
     public partial class App : Application
     {
+        public static Communicator Communicator { get; private set; }
+
         protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            Communicator = new Communicator();
+            Communicator.Connect();
+        }
+        /*protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
@@ -26,7 +35,7 @@ namespace Client
             communicator.SendMessage(msg);
 
             RequestResult response = communicator.DeserializeMessage();
-        }
+        }*/
     }
 }
 
