@@ -74,7 +74,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(GetPersonalStatusResponse
 	for (std::string data : getPersonalStatusResponse.statistics) { statisticsString += data + ","; }
 	statisticsString.erase(statisticsString.end());
 	j["status"] = getPersonalStatusResponse.status;
-	j["highScores"] = statisticsString;
+	j["userStats"] = statisticsString;
 	return convertToBuffer(j, ResponseCode::GET_PERSONAL_STATUS_REPONSE);
 }
 

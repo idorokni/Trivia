@@ -1,9 +1,13 @@
 ﻿using Client.Core;
+using Client.MVVM.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Client.MVVM.ViewModel
 {
@@ -23,7 +27,30 @@ namespace Client.MVVM.ViewModel
 
         public UserStatsViewModel()
         {
-            _name = "SDFSF";
+            try
+            {
+                _name = MainViewModel.Instance.Username;
+                UserStatisticsRequest UserStatisticsRequest = new UserStatisticsRequest();
+
+                byte[] msg = App.Communicator.Serialize(UserStatisticsRequest, (int)Client.MVVM.Model.RequestCode.GET_USER_STATISTICS_REQUEST_CODE);
+                App.Communicator.SendMessage(msg);
+
+                RequestResult response = App.Communicator.DeserializeMessage();
+                // Handle the response here (e.g., check if signup was successful)
+
+                if (response.IsSuccess)
+                {
+                   // _avgAnswerTime = response.Data
+                }
+                else
+                {
+                    MessageBox.Show("SignUp failed: " + response.Data);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message);
+            }
         }
     }
 }

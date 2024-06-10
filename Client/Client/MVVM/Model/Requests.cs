@@ -92,6 +92,12 @@ namespace Client.MVVM.Model
         }
     }
 
+    public class UserStatisticsRequest : Request
+    {
+        public UserStatisticsRequest() { }
+    }
+
+
     public class RequestResult
     {
         public int code;

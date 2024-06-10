@@ -73,6 +73,8 @@ namespace Client.MVVM.ViewModel
                 {
                     //MessageBox.Show("Login successful!");
                     MainViewModel.Instance.CurrentView = new HomeViewModel();
+                    MainWindow.mainWindow.ChangeVisibilityOfButton();
+                    MainViewModel.Instance.Username = _username;
                 }
                 else
                 {
