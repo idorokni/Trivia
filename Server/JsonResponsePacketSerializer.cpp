@@ -1,4 +1,5 @@
 #include "JsonResponsePacketSerializer.h"
+#include "RoomManager.h"
 
 Buffer JsonResponsePacketSerializer::serializeResponse(LoginResponse loginResponse) {
 	nlohmann::json j;
@@ -26,7 +27,19 @@ Buffer JsonResponsePacketSerializer::serializeResponse(LogoutResponse logoutResp
 Buffer JsonResponsePacketSerializer::serializeResponse(GetRoomsResponse getRoomsResponse) {
 	nlohmann::json j;
 	std::string roomsString = "";
-	for (RoomData data : getRoomsResponse.rooms) { roomsString += data.name + ","; }
+	// j structure:
+	// {"Rooms":"userlist-""user1," "user2"..., roomdata-...; again, ... }
+	for (RoomData data : getRoomsResponse.rooms) 
+	{ 
+		roomsString += "userlist-";
+		for (std::string user : RoomManager::get().getRoom(data.id).getAllUsers()) roomsString += user + ",";
+		roomsString += "roomdata-";
+		roomsString += data.name + ","; 
+		roomsString += data.maxPlayers + ",";
+		roomsString += data.numOfQuestionsInGame + ",";
+		roomsString += data.timePerQuestion + ",";
+		roomsString += data.id + ";";
+	}
 	roomsString.erase(roomsString.end());
 	j["Rooms"] = roomsString;
 	j["status"] = getRoomsResponse.status;
@@ -65,14 +78,48 @@ Buffer JsonResponsePacketSerializer::serializeResponse(GetPersonalStatusResponse
 	return convertToBuffer(j, ResponseCode::GET_PERSONAL_STATUS_REPONSE);
 }
 
-Buffer JsonResponsePacketSerializer::serializeResponse(GetPlayersInRoomResponse getPlayersInRoomRespone){
+Buffer JsonResponsePacketSerializer::serializeResponse(GetPlayersInRoomResponse getPlayersInRoomResponse){
 	nlohmann::json j;
 	std::string playersString = "";
-	GetPlayersInRoomResponse getPlayersInRoomResponse;
 	for (std::string data : getPlayersInRoomResponse.players) { playersString += data + ","; }
 	playersString.erase(playersString.end());
 	j["players"] = playersString;
 	return convertToBuffer(j, ResponseCode::GET_PERSONAL_STATUS_REPONSE);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(CloseRoomResponse closeRoomResponse)
+{
+	nlohmann::json j;
+	j["status"] = closeRoomResponse.status;
+	return convertToBuffer(j, ResponseCode::CLOSE_ROOM_RESPONSE);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(StartGameResponse startGameResponse)
+{
+	nlohmann::json j;
+	j["status"] = startGameResponse.status;
+	return convertToBuffer(j, ResponseCode::START_GAME_RESPONSE);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(GetRoomStateResponse getRoomStateResponse)
+{
+	nlohmann::json j;
+	j["status"] = getRoomStateResponse.status;
+	j["hasGameBegun"] = getRoomStateResponse.answerTimeout;
+	std::string playersString = "";
+	for (std::string data : getRoomStateResponse.players) { playersString += data + ","; }
+	playersString.erase(playersString.end());
+	j["players"] = playersString;	
+	j["questionCount"] = getRoomStateResponse.questionCount;
+	j["answerTimeout"] = getRoomStateResponse.answerTimeout;
+	return convertToBuffer(j, ResponseCode::GET_ROOM_STATE_RESPONSE);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(LeaveRoomResponse leaveRoomResponse)
+{
+	nlohmann::json j;
+	j["status"] = leaveRoomResponse.status;
+	return convertToBuffer(j, ResponseCode::LEAVE_ROOM_RESPONSE);
 }
 
 

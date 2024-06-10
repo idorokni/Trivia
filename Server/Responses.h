@@ -13,7 +13,11 @@ enum class ResponseCode {
 	GET_HIGH_SCORE_RESPONSE = 107,
 	GET_PERSONAL_STATUS_REPONSE = 108,
 	JOIN_ROOM_RESPONSE = 109,
-	CREATE_ROOM_RESPONSE = 110
+	CREATE_ROOM_RESPONSE = 110,
+	CLOSE_ROOM_RESPONSE = 111,
+	START_GAME_RESPONSE = 112,
+	GET_ROOM_STATE_RESPONSE = 113, 
+	LEAVE_ROOM_RESPONSE = 114
 };
 
 struct ErrorResponse {
@@ -56,5 +60,25 @@ struct JoinRoomResponse {
 };
 
 struct CreateRoomResponse {
+	unsigned int status;
+};
+
+struct CloseRoomResponse {
+	unsigned int status;
+};
+
+struct StartGameResponse {
+	unsigned int status;
+};
+
+struct GetRoomStateResponse {
+	unsigned int status;
+	bool hasGameBegun;
+	std::vector<std::string> players;
+	unsigned int questionCount;
+	unsigned int answerTimeout;
+};
+
+struct LeaveRoomResponse {
 	unsigned int status;
 };
