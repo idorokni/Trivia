@@ -30,18 +30,45 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="150"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column ="1"
+                               Text="BRAINPOP"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Foreground="Black"
+                               FontSize="50"
+                               FontWeight="SemiBold"/>
+                    <TextBlock Grid.Column ="2"
+                               Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Foreground="Black"
+                               FontSize="30"
+                               FontWeight="SemiBold"/>
+                    <Button Grid.Column="0"
+                            Style="{StaticResource OptionButtonStyle}"
+                            Width="150"
+                            Height="70"
+                            Content="BACK"
+                            FontSize="30"
+                            FontWeight="SemiBold"
+                            Background="#FDFFFC"
+                            Visibility="Hidden"
+                            x:Name="BackButton"
+                            Command="{Binding BackToMenuCommand}"/>
+                </Grid>
+
                 <Image Grid.Column="0" 
                 Width="150"
                 Height="200"
                 Source="/Images/logo.png"/>
 
-                <TextBlock Grid.Column ="1"
-                Text="BRAINPOP"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                Foreground="Black"
-                FontSize="50"
-                FontFamily="/Fonts/FreudianSlit-e8L3.ttf #"/>
 
                 <Image Grid.Column="2" 
                 Width="150"

@@ -13,28 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Client
+namespace Client.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for UserStatsView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class UserStatsView : UserControl
     {
-        public static MainWindow mainWindow {  get; set; }
-        public MainWindow()
+        public UserStatsView()
         {
             InitializeComponent();
-            mainWindow = this;
-        }
-
-        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            DragMove();
-        }
-        
-        public void ChangeVisibilityOfButton()
-        {
-            BackButton.Visibility = Visibility.Visible;
         }
     }
 }

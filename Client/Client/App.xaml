@@ -25,6 +25,12 @@
             <DataTemplate DataType="{x:Type viewModel:InsideRoomViewModel}">
                 <view:InsideRoomView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:UserStatsViewModel}">
+                <view:UserStatsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:HighScoreViewModel}">
+                <view:HighScoreView/>
+            </DataTemplate>
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/OptionButtonTheme.xaml"/>

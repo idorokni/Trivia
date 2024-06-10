@@ -54,7 +54,8 @@
         Background="#FDE12D"
         Content="USER STATS"
         FontSize="40"
-        FontWeight="Bold"/>
+        FontWeight="Bold"
+        Command="{Binding UserStatsViewCommand}"/>
 
         <Button Style="{StaticResource OptionButtonStyle}" 
         Grid.Column="1"
@@ -66,6 +67,7 @@
         Background="#47A025"
         Content="HIGH SCORE"
         FontSize="40"
-        FontWeight="Bold"/>
+        FontWeight="Bold"
+        Command="{Binding HighScoreViewCommand}"/>
     </Grid>
 </UserControl>

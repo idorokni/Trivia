@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Proxies;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,8 @@ namespace Client.MVVM.ViewModel
     {
         public RelayCommand CreateRoomViewCommand { get; set; }
         public RelayCommand JoinRoomViewCommand { get; set; }
+        public RelayCommand UserStatsViewCommand { get; set; }
+        public RelayCommand HighScoreViewCommand { get; set; }
 
         public HomeViewModel()
         {
@@ -23,6 +26,17 @@ namespace Client.MVVM.ViewModel
             {
                 MainViewModel.Instance.CurrentView = new JoinRoomViewModel();
             });
+
+            UserStatsViewCommand = new RelayCommand(o =>
+            {
+                MainViewModel.Instance.CurrentView = new UserStatsViewModel();
+            });
+
+            HighScoreViewCommand = new RelayCommand(o =>
+            {
+                MainViewModel.Instance.CurrentView = new HighScoreViewModel();
+            });
+
         }
     }
 }

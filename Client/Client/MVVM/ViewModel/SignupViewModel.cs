@@ -1,4 +1,4 @@
-﻿using Client.Core;
+using Client.Core;
 using Client.MVVM.Model;
 using System;
 using System.Collections.Generic;
@@ -82,6 +82,8 @@ namespace Client.MVVM.ViewModel
                 {
                     MessageBox.Show("SignUp successful!");
                     MainViewModel.Instance.CurrentView = new HomeViewModel();
+                    MainWindow.mainWindow.ChangeVisibilityOfButton();
+                    MainViewModel.Instance.Username = _username;
                 }
                 else
                 {
