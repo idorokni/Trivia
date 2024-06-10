@@ -53,14 +53,16 @@ void Communicator::handleNewClient(SOCKET sock) {
 			uint32_t length;
 			std::memcpy(&length, &buff.at(CODE_AMOUNT_BYTES), BYTES_LENGTH);
 			buff.resize(HEADER_LENGTH + length);
-			res = recv(sock, (char*)&buff.at(HEADER_LENGTH), length, 0);
-			if (res == INVALID_SOCKET)
+			if (length > 0)
 			{
-				std::string s = "Error while recieving from socket: ";
-				s += std::to_string(sock);
-				throw std::exception(s.c_str());
+				res = recv(sock, (char*)&buff.at(HEADER_LENGTH), length, 0);
+				if (res == INVALID_SOCKET)
+				{
+					std::string s = "Error while recieving from socket: ";
+					s += std::to_string(sock);
+					throw std::exception(s.c_str());
+				}
 			}
-
 			RequestInfo info;
 			info.id = (RequestCode)buff.at(0);
 			info.buff = std::move(buff);

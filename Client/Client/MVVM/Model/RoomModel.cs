@@ -14,6 +14,7 @@ namespace Client.MVVM.Model
         private int _maxPlayers;
         private int _numOfQuestionsInGame;
         private int _timePerQuestion;
+        private uint _id;
 
         public string Name
         {
@@ -27,13 +28,20 @@ namespace Client.MVVM.Model
             set { _participants = value; }
         }
 
-        public RoomModel(List<string> participants, string name, int maxPlayers, int numOfQuestionsInGame, int timePerQuestion)
+        public uint Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
+
+        public RoomModel(List<string> participants, string name, int maxPlayers, int numOfQuestionsInGame, int timePerQuestion, uint id)
         {
             _participants = participants;
             _name = name;
             _maxPlayers = maxPlayers;
             _numOfQuestionsInGame = numOfQuestionsInGame;
             _timePerQuestion = timePerQuestion;
+            _id = id;
         }
 
         public int GetMaxPlayers() => _maxPlayers;
