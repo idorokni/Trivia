@@ -94,7 +94,7 @@
                        FontSize="40"
                        FontWeight="SemiBold">
                 <Run Text="WELCOME TO"/>
-                <Run Text="{Binding Name}"/>
+                <Run Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
             </TextBlock>
         </Grid>
     </Border>
