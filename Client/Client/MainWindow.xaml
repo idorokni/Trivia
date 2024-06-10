@@ -45,7 +45,7 @@
                                FontSize="50"
                                FontWeight="SemiBold"/>
                     <TextBlock Grid.Column ="2"
-                               Text="{Binding Name}"
+                               Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"
                                Foreground="Black"
@@ -59,7 +59,9 @@
                             FontSize="30"
                             FontWeight="SemiBold"
                             Background="#FDFFFC"
-                            Visibility="Hidden"/>
+                            Visibility="Hidden"
+                            x:Name="BackButton"
+                            Command="{Binding BackToMenuCommand}"/>
                 </Grid>
 
                 <Image Grid.Column="0" 

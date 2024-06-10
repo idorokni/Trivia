@@ -67,6 +67,7 @@
         Background="#47A025"
         Content="HIGH SCORE"
         FontSize="40"
-        FontWeight="Bold"/>
+        FontWeight="Bold"
+        Command="{Binding HighScoreViewCommand}"/>
     </Grid>
 </UserControl>

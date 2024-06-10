@@ -13,6 +13,7 @@ namespace Client.MVVM.ViewModel
         public RelayCommand CreateRoomViewCommand { get; set; }
         public RelayCommand JoinRoomViewCommand { get; set; }
         public RelayCommand UserStatsViewCommand { get; set; }
+        public RelayCommand HighScoreViewCommand { get; set; }
 
         public HomeViewModel()
         {
@@ -30,6 +31,12 @@ namespace Client.MVVM.ViewModel
             {
                 MainViewModel.Instance.CurrentView = new UserStatsViewModel();
             });
+
+            HighScoreViewCommand = new RelayCommand(o =>
+            {
+                MainViewModel.Instance.CurrentView = new HighScoreViewModel();
+            });
+
         }
     }
 }

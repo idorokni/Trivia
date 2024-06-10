@@ -60,6 +60,8 @@ namespace Client.MVVM.ViewModel
             {
                 Console.WriteLine(Username + " " + Password + " " + Email + " " + Address + " " + Birthday + " " + Phone);
                 MainViewModel.Instance.CurrentView = new HomeViewModel();
+                MainWindow.mainWindow.ChangeVisibilityOfButton();
+                MainViewModel.Instance.Username = _username;
             }, o => !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password) && !string.IsNullOrEmpty(Phone) && !string.IsNullOrEmpty(Birthday) && !string.IsNullOrEmpty(Email));
         }
 

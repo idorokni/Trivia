@@ -34,6 +34,8 @@ namespace Client.MVVM.ViewModel
             {
                 Console.WriteLine(Username + " " + Password);
                 MainViewModel.Instance.CurrentView = new HomeViewModel();
+                MainWindow.mainWindow.ChangeVisibilityOfButton();
+                MainViewModel.Instance.Username = _username;
             }, o => !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password));
 
             SignupViewCommand = new RelayCommand(o =>
