@@ -78,14 +78,48 @@ Buffer JsonResponsePacketSerializer::serializeResponse(GetPersonalStatusResponse
 	return convertToBuffer(j, ResponseCode::GET_PERSONAL_STATUS_REPONSE);
 }
 
-Buffer JsonResponsePacketSerializer::serializeResponse(GetPlayersInRoomResponse getPlayersInRoomRespone){
+Buffer JsonResponsePacketSerializer::serializeResponse(GetPlayersInRoomResponse getPlayersInRoomResponse){
 	nlohmann::json j;
 	std::string playersString = "";
-	GetPlayersInRoomResponse getPlayersInRoomResponse;
 	for (std::string data : getPlayersInRoomResponse.players) { playersString += data + ","; }
 	playersString.erase(playersString.end());
 	j["players"] = playersString;
 	return convertToBuffer(j, ResponseCode::GET_PERSONAL_STATUS_REPONSE);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(CloseRoomResponse closeRoomResponse)
+{
+	nlohmann::json j;
+	j["status"] = closeRoomResponse.status;
+	return convertToBuffer(j, ResponseCode::CLOSE_ROOM_RESPONSE);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(StartGameResponse startGameResponse)
+{
+	nlohmann::json j;
+	j["status"] = startGameResponse.status;
+	return convertToBuffer(j, ResponseCode::START_GAME_RESPONSE);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(GetRoomStateResponse getRoomStateResponse)
+{
+	nlohmann::json j;
+	j["status"] = getRoomStateResponse.status;
+	j["hasGameBegun"] = getRoomStateResponse.answerTimeout;
+	std::string playersString = "";
+	for (std::string data : getRoomStateResponse.players) { playersString += data + ","; }
+	playersString.erase(playersString.end());
+	j["players"] = playersString;	
+	j["questionCount"] = getRoomStateResponse.questionCount;
+	j["answerTimeout"] = getRoomStateResponse.answerTimeout;
+	return convertToBuffer(j, ResponseCode::GET_ROOM_STATE_RESPONSE);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(LeaveRoomResponse leaveRoomResponse)
+{
+	nlohmann::json j;
+	j["status"] = leaveRoomResponse.status;
+	return convertToBuffer(j, ResponseCode::LEAVE_ROOM_RESPONSE);
 }
 
 
