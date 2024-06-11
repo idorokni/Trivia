@@ -6,11 +6,17 @@ void RoomManager::createRoom(const LoggedUser& loggedUser, const RoomData& roomD
 void RoomManager::deleteRoom(int ID) {
 	m_rooms.erase(ID);
 }
-void RoomManager::getRoomState(GetRoomStateResponse& getRoomStateResponse, const Room& room) {
-	getRoomStateResponse.questionCount = room.getRoomData().numOfQuestionsInGame;
-	getRoomStateResponse.answerTimeout = room.getRoomData().timePerQuestion;
-	getRoomStateResponse.players = room.getAllUsers();
-	getRoomStateResponse.state = room.getRoomData().isActive;
+void RoomManager::getRoomState(GetRoomStateResponse& getRoomStateResponse, int ID) {
+	try {
+		Room room = m_rooms.at(ID);
+		getRoomStateResponse.questionCount = room.getRoomData().numOfQuestionsInGame;
+		getRoomStateResponse.answerTimeout = room.getRoomData().timePerQuestion;
+		getRoomStateResponse.players = room.getAllUsers();
+		getRoomStateResponse.state = room.getRoomData().isActive;
+	}
+	catch (...) {
+		getRoomStateResponse.state = RoomState::ROOM_CLOSED;
+	}
 }
 const std::vector<RoomData> RoomManager::getRooms() const {
 	std::vector<RoomData> data;

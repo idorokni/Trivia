@@ -14,7 +14,7 @@ public:
 	void deleteRoom(int ID);
 	void startGame(int ID);
 	void deleteUserFromGame(int ID, const LoggedUser& loggedUser);
-	void getRoomState(GetRoomStateResponse& getRoomStateResponse, const Room& room);
+	void getRoomState(GetRoomStateResponse& getRoomStateResponse, int ID);
 	const std::vector<RoomData> getRooms() const;
 	Room& getRoom(int ID);
 

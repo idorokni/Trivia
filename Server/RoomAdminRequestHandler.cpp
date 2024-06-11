@@ -57,7 +57,7 @@ RequestResult RoomAdminRequestHandler::getRoomState(const RequestInfo& info) {
     Buffer buff;
     GetRoomStateResponse getRoomStateResponse;
     try {
-        RoomManager::get().getRoomState(getRoomStateResponse, m_room);
+        RoomManager::get().getRoomState(getRoomStateResponse, m_room.getRoomData().id);
         getRoomStateResponse.status = 1;
         result.newHandler = this;
     }

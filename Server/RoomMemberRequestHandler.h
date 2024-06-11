@@ -3,6 +3,8 @@
 #include "Room.h"
 #include "LoggedUser.h"
 #include "Requests.h"
+#include <unordered_map>
+#include <functional>
 
 class RoomMemberRequestHandler : public IRequestHandler {
 public:
