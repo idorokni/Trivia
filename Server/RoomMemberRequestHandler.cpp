@@ -1,5 +1,10 @@
 #include "RoomMemberRequestHandler.h"
 
+RoomMemberRequestHandler::RoomMemberRequestHandler(const LoggedUser& loggedUser, const Room& room) {
+    m_room = room;
+    m_user = loggedUser;
+}
+
 bool RoomMemberRequestHandler::isRequestRelevant(const RequestInfo& info) {
 	return info.id == RequestCode::LEAVE_ROOM_REQUEST_CODE || info.id == RequestCode::GET_PLAYERS_IN_ROOM_REQUEST_CODE;
 }
