@@ -12,6 +12,11 @@ RoomAdminRequestHandler* RequestHandlerFactory::createRoomAdminRequestHandler(co
 	return new RoomAdminRequestHandler(loggedUser, room);
 }
 
+RoomMemberRequestHandler* RequestHandlerFactory::creatRoomMemberRequestHandler(const LoggedUser& loggedUser, const Room& room) {
+	return new RoomMemberRequestHandler(loggedUser, room);
+}
+
+
 RequestHandlerFactory& RequestHandlerFactory::get() noexcept{
 	static RequestHandlerFactory s_Instance;
 	return s_Instance;
