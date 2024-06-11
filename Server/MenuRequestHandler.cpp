@@ -5,7 +5,7 @@ MenuRequestHandler::MenuRequestHandler(const LoggedUser& loggedUser) {
 }
 
 bool MenuRequestHandler::isRequestRelevant(const RequestInfo& info) {
-	return info.id == RequestCode::LOGOUT_REQUEST_CODE || info.id == RequestCode::CREATE_ROOM_REQUEST_CODE || info.id == RequestCode::GET_PLAYERS_IN_ROOM_REQUEST_CODE || info.id == RequestCode::GET_ROOMS_REQUEST_CODE || info.id == RequestCode::JOIN_ROOM_REQUEST_CODE || info.id == RequestCode::GET_USER_STATISTICS_REQUEST_CODE;
+	return info.id == RequestCode::LOGOUT_REQUEST_CODE || info.id == RequestCode::HIGH_SCORE_REQUEST_CODE || info.id == RequestCode::CREATE_ROOM_REQUEST_CODE || info.id == RequestCode::GET_PLAYERS_IN_ROOM_REQUEST_CODE || info.id == RequestCode::GET_ROOMS_REQUEST_CODE || info.id == RequestCode::JOIN_ROOM_REQUEST_CODE || info.id == RequestCode::GET_USER_STATISTICS_REQUEST_CODE;
 }
 
 RequestResult MenuRequestHandler::handleRequest(const RequestInfo& info) {

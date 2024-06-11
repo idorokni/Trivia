@@ -24,6 +24,7 @@ namespace Client.MVVM.ViewModel
             AmountOfQuestions = roomModel.GetNumOfQuestionsInGame();
             TimePerQuestion = roomModel.GetTimePerQuestion();
             Participants = roomModel.Participants;
+            Participants.Add(MainViewModel.Instance.Username);
         }
     }
 }

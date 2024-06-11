@@ -40,11 +40,21 @@ namespace Client.MVVM.ViewModel
 
                 if (response.IsSuccess)
                 {
-                   // _avgAnswerTime = response.Data
+                    int userStatsStartIndex = response.Data.IndexOf("userStats");
+                    if (userStatsStartIndex != -1)
+                    {
+                        userStatsStartIndex += "userStats\":\"".Length;
+                        string highScoresSubstring = response.Data.Substring(userStatsStartIndex);
+                        string[] scoresArray = highScoresSubstring.Split(',');
+                        _avgAnswerTime = scoresArray[0];
+                        _numOfCorrectAnswers = scoresArray[1];
+                        _numOfTotalAnswers = scoresArray[2];
+                        _numOfGamesPlayed = scoresArray[3];
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("SignUp failed: " + response.Data);
+                    MessageBox.Show("scores failed: " + response.Data);
                 }
             }
             catch (Exception ex)

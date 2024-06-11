@@ -32,13 +32,15 @@ Buffer JsonResponsePacketSerializer::serializeResponse(GetRoomsResponse getRooms
 	for (RoomData data : getRoomsResponse.rooms) 
 	{ 
 		roomsString += "userlist-";
-		for (std::string user : RoomManager::get().getRoom(data.id).getAllUsers()) roomsString += user + ",";
+		for (std::string user : RoomManager::get().getRoom(data.id).getAllUsers()) {
+			roomsString += user + ",";
+		}
 		roomsString += "roomdata-";
 		roomsString += data.name + ","; 
-		roomsString += data.maxPlayers + ",";
-		roomsString += data.numOfQuestionsInGame + ",";
-		roomsString += data.timePerQuestion + ",";
-		roomsString += data.id + ";";
+		roomsString += std::to_string(data.maxPlayers) + ",";
+		roomsString += std::to_string(data.numOfQuestionsInGame) + ",";
+		roomsString += std::to_string(data.timePerQuestion) + ",";
+		roomsString += std::to_string(data.id) + ";";
 	}
 	roomsString.erase(roomsString.end());
 	j["Rooms"] = roomsString;
