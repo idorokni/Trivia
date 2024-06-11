@@ -12,8 +12,8 @@
 class RoomAdminRequestHandler : public IRequestHandler {
 public:
 	RoomAdminRequestHandler(const LoggedUser& loggedUser, const Room& room);
-	bool isRequestRelevant(const RequestInfo& info);
-	RequestResult handleRequest(const RequestInfo& info);
+	bool isRequestRelevant(const RequestInfo& info) override;
+	RequestResult handleRequest(const RequestInfo& info) override;
 private:
 	Room m_room;
 	LoggedUser m_user;

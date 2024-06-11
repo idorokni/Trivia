@@ -151,6 +151,7 @@
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomAdminRequestHandler.h" />
     <ClInclude Include="RoomManager.h" />
+    <ClInclude Include="RoomMemberRequestHandler.h" />
     <ClInclude Include="RoomState.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="sqlite3.h" />

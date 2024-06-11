@@ -57,11 +57,8 @@ RequestResult RoomAdminRequestHandler::getRoomState(const RequestInfo& info) {
     Buffer buff;
     GetRoomStateResponse getRoomStateResponse;
     try {
+        RoomManager::get().getRoomState(getRoomStateResponse, m_room);
         getRoomStateResponse.status = 1;
-        getRoomStateResponse.questionCount = m_room.getRoomData().numOfQuestionsInGame;
-        getRoomStateResponse.answerTimeout = m_room.getRoomData().timePerQuestion;
-        getRoomStateResponse.players = m_room.getAllUsers();
-        getRoomStateResponse.state = m_room.getRoomData().isActive;
         result.newHandler = this;
     }
     catch (...) {
