@@ -3,6 +3,10 @@
 #include "Room.h"
 #include "LoggedUser.h"
 #include "Requests.h"
+#include "Responses.h"
+#include "RoomManager.h"
+#include "JsonResponsePacketSerializer.h"
+#include "RequestHandlerFactory.h"
 #include <unordered_map>
 #include <functional>
 

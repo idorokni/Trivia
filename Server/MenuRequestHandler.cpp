@@ -110,8 +110,10 @@ RequestResult MenuRequestHandler::joinRoom(const RequestInfo& info) {
 	try {
 		RoomManager::get().getRoom(joinRoomRequest.roomId).addUser(m_user);
 		joinRoomResponse.status = 1;
+		reasult.newHandler = this;
 	}
 	catch (...) {
+		reasult.newHandler = this;
 		joinRoomResponse.status = 0;
 	}
 	reasult.newHandler = this; //should be changed in later versions

@@ -10,8 +10,36 @@ RequestResult RoomMemberRequestHandler::handleRequest(const RequestInfo& info) {
     }.at(info.id)(info);
 }
 RequestResult RoomMemberRequestHandler::leaveRoom(const RequestInfo& info) {
+    RequestResult result;
+    Buffer buff;
+    LeaveRoomResponse leaveRoomResponse;
+    try {
+        RoomManager::get().deleteUserFromGame(m_room.getRoomData().id, m_user);
+        leaveRoomResponse.status = 1;
+        result.newHandler = RequestHandlerFactory::get().createMenuRequestHandler(m_user);
+    }
+    catch (...) {
+        leaveRoomResponse.status = 0;
+        result.newHandler = this;
+    }
 
+    result.response = JsonResponsePacketSerializer::serializeResponse(leaveRoomResponse);
+    return result;
 }
 RequestResult RoomMemberRequestHandler::getRoomState(const RequestInfo& info) {
+    RequestResult result;
+    Buffer buff;
+    GetRoomStateResponse getRoomStateResponse;
+    try {
+        RoomManager::get().getRoomState(getRoomStateResponse, m_room.getRoomData().id);
+        getRoomStateResponse.status = 1;
+        result.newHandler = this;
+    }
+    catch (...) {
+        getRoomStateResponse.status = 0;
+        result.newHandler = this;
+    }
 
+    result.response = JsonResponsePacketSerializer::serializeResponse(getRoomStateResponse);
+    return result;
 }
