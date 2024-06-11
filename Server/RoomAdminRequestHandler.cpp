@@ -11,7 +11,8 @@ bool RoomAdminRequestHandler::isRequestRelevant(const RequestInfo& info) {
 RequestResult RoomAdminRequestHandler::handleRequest(const RequestInfo& info) {
     return std::unordered_map<RequestCode, std::function<RequestResult(const RequestInfo&)>>{
         {RequestCode::CLOSE_ROOM_REQUEST_CODE, [this](const RequestInfo& info) { return closeRoom(info); }},
-        { RequestCode::START_GAME_REQUEST_CODE, [this](const RequestInfo& info) { return startGame(info); }}
+        { RequestCode::START_GAME_REQUEST_CODE, [this](const RequestInfo& info) { return startGame(info); }},
+        { RequestCode::GET_ROOM_STATE_REQUEST_CODE, [this](const RequestInfo& info) { return getRoomState(info); } }
     }.at(info.id)(info);
 }
 
@@ -48,5 +49,23 @@ RequestResult RoomAdminRequestHandler::startGame(const RequestInfo& info) {
     }
 
     result.response = JsonResponsePacketSerializer::serializeResponse(startGameResponse);
+    return result;
+}
+
+RequestResult RoomAdminRequestHandler::getRoomState(const RequestInfo& info) {
+    RequestResult result;
+    Buffer buff;
+    GetRoomStateResponse getRoomStateResponse;
+    try {
+        RoomManager::get().getRoomState(getRoomStateResponse, m_room.getRoomData().id);
+        getRoomStateResponse.status = 1;
+        result.newHandler = this;
+    }
+    catch (...) {
+        getRoomStateResponse.status = 0;
+        result.newHandler = this;
+    }
+
+    result.response = JsonResponsePacketSerializer::serializeResponse(getRoomStateResponse);
     return result;
 }

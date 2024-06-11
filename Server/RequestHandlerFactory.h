@@ -4,15 +4,21 @@
 #include "LoginRequestHandler.h"
 #include "MenuRequestHandler.h"
 #include "RoomAdminRequestHandler.h"
+#include "RoomMemberRequestHandler.h"
 
 class LoginRequestHandler;
 class MenuRequestHandler;
+class RoomAdminRequestHandler;
+class RoomMemberRequestHandler;
 
 class RequestHandlerFactory {
 public:
 	LoginRequestHandler* createLoginRequestHandler() const;
 	MenuRequestHandler* createMenuRequestHandler(const LoggedUser& loggedUser) const;
 	RoomAdminRequestHandler* createRoomAdminRequestHandler(const LoggedUser& loggedUser, const Room& room);
+	RoomMemberRequestHandler* creatRoomMemberRequestHandler(const LoggedUser& loggedUser, const Room& room);
+
+
 
 	static RequestHandlerFactory& get() noexcept;
 };
