@@ -15,7 +15,7 @@ void Room::removeUser(const LoggedUser& loggedUser) {
 		}
 	}
 }
-const std::vector<std::string>& Room::getAllUsers() const {
+const std::vector<std::string> Room::getAllUsers() const {
 	std::vector<std::string> allUsers;
 	for (auto user : m_users) {
 		allUsers.emplace_back(user.getUsername());

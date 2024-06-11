@@ -92,6 +92,17 @@ namespace Client.MVVM.Model
         }
     }
 
+    public class UserStatisticsRequest : Request
+    {
+        public UserStatisticsRequest() { }
+    }
+
+    public class HighScoreRequest : Request
+    {
+        public HighScoreRequest() { }
+    }
+
+
     public class RequestResult
     {
         public int code;

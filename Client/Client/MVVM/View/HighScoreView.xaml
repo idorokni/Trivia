@@ -25,53 +25,53 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0"
-                           HorizontalAlignment="Left"
+                           HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            FontSize="30"
                            FontWeight="SemiBold">
-                    <Run Text="{Binding FirstScore.Item1}"/>
+                    <Run Text="{Binding FirstScore.Username, UpdateSourceTrigger=PropertyChanged}"/>
                     <Run Text="-"/>
-                    <Run Text="{Binding FirstScore.Item2}"/>
+                    <Run Text="{Binding FirstScore.Score, UpdateSourceTrigger=PropertyChanged}"/>
                 </TextBlock>
 
                 <TextBlock Grid.Row="1"
-                           HorizontalAlignment="Left"
+                           HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            FontSize="30"
                            FontWeight="SemiBold">
-                    <Run Text="{Binding SecondScore.Item1}"/>
+                    <Run Text="{Binding SecondScore.Username, UpdateSourceTrigger=PropertyChanged}"/>
                     <Run Text="-"/>
-                    <Run Text="{Binding SecondScore.Item2}"/>
+                    <Run Text="{Binding SecondScore.Score, UpdateSourceTrigger=PropertyChanged}"/>
                 </TextBlock>
 
                 <TextBlock Grid.Row="2"
-                           HorizontalAlignment="Left"
+                           HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            FontSize="30"
                            FontWeight="SemiBold">
-                    <Run Text="{Binding ThirdScore.Item1}"/>
+                    <Run Text="{Binding ThirdScore.Username, UpdateSourceTrigger=PropertyChanged}"/>
                     <Run Text="-"/>
-                    <Run Text="{Binding ThirdScore.Item2}"/>
+                    <Run Text="{Binding ThirdScore.Score, UpdateSourceTrigger=PropertyChanged}"/>
                 </TextBlock>
 
                 <TextBlock Grid.Row="3"
-                           HorizontalAlignment="Left"
+                           HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            FontSize="30"
                            FontWeight="SemiBold">
-                    <Run Text="{Binding FourthScore.Item1}"/>
+                    <Run Text="{Binding FourthScore.Username, UpdateSourceTrigger=PropertyChanged}"/>
                     <Run Text="-"/>
-                    <Run Text="{Binding FourthScore.Item2}"/>
+                    <Run Text="{Binding FourthScore.Score, UpdateSourceTrigger=PropertyChanged}"/>
                 </TextBlock>
 
                 <TextBlock Grid.Row="4"
-                           HorizontalAlignment="Left"
+                           HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            FontSize="30"
                            FontWeight="SemiBold">
-                    <Run Text="{Binding FifthScore.Item1}"/>
+                    <Run Text="{Binding FifthScore.Username, UpdateSourceTrigger=PropertyChanged}"/>
                     <Run Text="-"/>
-                    <Run Text="{Binding FifthScore.Item2}"/>
+                    <Run Text="{Binding FifthScore.Score, UpdateSourceTrigger=PropertyChanged}"/>
                 </TextBlock>
             </Grid>
 

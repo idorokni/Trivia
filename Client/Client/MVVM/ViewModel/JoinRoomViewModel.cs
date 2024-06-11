@@ -66,6 +66,7 @@ namespace Client.MVVM.ViewModel
                         userListStartIndex += "userlist-".Length;
                         string participantsNamesSubstring = room.Substring(userListStartIndex, roomDataStartIndex - userListStartIndex);
                         string[] namesArray = participantsNamesSubstring.Split(',');
+                        namesArray = namesArray.Take(namesArray.Length - 1).ToArray();
                         participants.AddRange(namesArray);
 
                         string roomDataSubstring = room.Substring(roomDataStartIndex + "roomdata-".Length);

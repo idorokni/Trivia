@@ -121,6 +121,7 @@
     <Compile Include="MVVM\Model\Communicator.cs" />
     <Compile Include="MVVM\Model\Requests.cs" />
     <Compile Include="MVVM\Model\RoomModel.cs" />
+    <Compile Include="MVVM\Model\ScoreModel.cs" />
     <Compile Include="MVVM\Model\UserModel.cs" />
     <Compile Include="MVVM\ViewModel\CreateRoomViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HighScoreViewModel.cs" />

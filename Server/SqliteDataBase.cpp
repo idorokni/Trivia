@@ -42,7 +42,8 @@ bool SqliteDataBase::open()
 			"insert into Question (id, question, correct, ans1, ans2, ans3) VALUES (7, 'capital of Italy?', 'Rome', 'Napoly', 'Firenze', 'Milano');"
 			"insert into Question (id, question, correct, ans1, ans2, ans3) VALUES (8, 'capital of Egypt?', 'Cairo', 'Alexandria', 'Taba', 'Sharem A Sehich');"
 			"insert into Question (id, question, correct, ans1, ans2, ans3) VALUES (9, 'capital of Jordan?', 'Amman', 'Baku', 'Akabba', 'Damascus');"
-			"insert into Question (id, question, correct, ans1, ans2, ans3) VALUES (10, 'capital of Lebanon?', 'Beirut', 'Tzur', 'Baalback', 'Tziddon');";
+			"insert into Question (id, question, correct, ans1, ans2, ans3) VALUES (10, 'capital of Lebanon?', 'Beirut', 'Tzur', 'Baalback', 'Tziddon');"
+			"insert into Statistics (username, num_correct_answers, avg_time_per_question, num_of_total_answers, num_of_total_games, score) values ('idodi', 2, 3.4, 1, 2, 3);";
 
 		char* errMessage = nullptr;
 		res = sqlite3_exec(this->_db, sqlStatement, nullptr, nullptr, &errMessage);
@@ -227,18 +228,21 @@ int SqliteDataBase::getPlayerScore(const std::string& username)
 
 std::vector<std::string> SqliteDataBase::getHighScores()
 {
-	const char* sql = "SELECT score FROM Statistics ORDER BY score DESC LIMIT 5;";
+	const char* sql = "SELECT username, score FROM Statistics ORDER BY score DESC LIMIT 5;";
 	sqlite3_stmt* stmt;
 	std::vector<std::string> topScores;
 
 	// Prepare the SQL statement
-	if (sqlite3_prepare_v2(this->_db, sql, -1, &stmt, nullptr) == SQLITE_OK) 
+	if (sqlite3_prepare_v2(this->_db, sql, -1, &stmt, nullptr) == SQLITE_OK)
 	{
-		// Execute the statement and retrieve the top five scores
-		while (sqlite3_step(stmt) == SQLITE_ROW) 
+		// Execute the statement and retrieve the top five scores with usernames
+		while (sqlite3_step(stmt) == SQLITE_ROW)
 		{
-			int score = sqlite3_column_int(stmt, 0);
-			topScores.push_back(std::to_string(score));
+			const char* username = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
+			int score = sqlite3_column_int(stmt, 1);
+
+			// Format the result as "username - score" and add to the vector
+			topScores.push_back(std::string(username) + "-" + std::to_string(score));
 		}
 
 		// Finalize the statement
@@ -250,6 +254,7 @@ std::vector<std::string> SqliteDataBase::getHighScores()
 
 	return topScores;
 }
+
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// CallBacks ///////////////////////////////////////////////
