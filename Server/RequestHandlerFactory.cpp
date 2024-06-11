@@ -8,6 +8,10 @@ MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler(const Logged
 	return new MenuRequestHandler(loggedUser);
 }
 
+RoomAdminRequestHandler* RequestHandlerFactory::createRoomAdminRequestHandler(const LoggedUser& loggedUser, const Room& room) {
+	return new RoomAdminRequestHandler(loggedUser, room);
+}
+
 RequestHandlerFactory& RequestHandlerFactory::get() noexcept{
 	static RequestHandlerFactory s_Instance;
 	return s_Instance;

@@ -5,6 +5,8 @@
 #include "LoginManager.h"
 #include "RoomManager.h"
 #include "StatisticsManager.h"
+#include "RoomState.h"
+#include "RequestHandlerFactory.h"
 
 class MenuRequestHandler : public IRequestHandler {
 public:

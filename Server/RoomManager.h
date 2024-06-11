@@ -11,6 +11,7 @@ private:
 public:
 	void createRoom(const LoggedUser& loggedUser, const RoomData& roomData);
 	void deleteRoom(int ID);
+	void startGame(int ID);
 	unsigned int getRoomState(int ID);
 	const std::vector<RoomData> getRooms() const;
 	Room& getRoom(int ID);
