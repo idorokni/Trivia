@@ -132,7 +132,7 @@ RequestResult MenuRequestHandler::createRoom(const RequestInfo& info) {
 	else {
 		roomData.id = RoomManager::get().getRooms().back().id + 1;
 	}
-	roomData.isActive = true;
+	roomData.isActive = RoomState::WAITING_FOR_GAME;
 	roomData.maxPlayers = createRoomRequest.maxUsers;
 	roomData.name = createRoomRequest.roomName;
 	roomData.timePerQuestion = createRoomRequest.answerTimeout;
@@ -140,11 +140,12 @@ RequestResult MenuRequestHandler::createRoom(const RequestInfo& info) {
 	try {
 		RoomManager::get().createRoom(m_user, roomData);
 		createRoomResponse.status = 1;
+		reasult.newHandler = RequestHandlerFactory::get().createRoomAdminRequestHandler(m_user, Room(m_user, roomData));
 	}
 	catch (...) {
 		createRoomResponse.status = 0;
+		reasult.newHandler = this;
 	}
-	reasult.newHandler = this; //should be changed in later versions
 	buff = JsonResponsePacketSerializer::serializeResponse(createRoomResponse);
 
 	reasult.response = buff;

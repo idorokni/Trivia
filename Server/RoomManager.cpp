@@ -11,11 +11,15 @@ unsigned int RoomManager::getRoomState(int ID) {
 }
 const std::vector<RoomData> RoomManager::getRooms() const {
 	std::vector<RoomData> data;
-	for (const auto& room : m_rooms) {
+	for (auto& room : m_rooms) {
 		data.push_back(room.second.getRoomData());
 	}
 
 	return data;
+}
+
+void RoomManager::startGame(int ID) {
+	m_rooms.at(ID).getRoomData().isActive = RoomState::GAME_STARTED;
 }
 Room& RoomManager::getRoom(int ID) {
 	return m_rooms.at(ID);

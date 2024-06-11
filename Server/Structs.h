@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "RoomState.h"
 
 struct RoomData {
 	unsigned int id;
@@ -7,5 +8,5 @@ struct RoomData {
 	unsigned int maxPlayers;
 	unsigned int numOfQuestionsInGame;
 	unsigned int timePerQuestion;
-	bool isActive;
+	RoomState isActive;
 };
