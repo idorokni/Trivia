@@ -130,7 +130,7 @@ RequestResult MenuRequestHandler::createRoom(const RequestInfo& info) {
 		roomData.id = 0;
 	}
 	else {
-		roomData.id = RoomManager::get().getRooms().end()->id + 1;
+		roomData.id = RoomManager::get().getRooms().back().id + 1;
 	}
 	roomData.isActive = true;
 	roomData.maxPlayers = createRoomRequest.maxUsers;
