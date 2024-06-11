@@ -20,4 +20,5 @@ private:
 
 	RequestResult closeRoom(const RequestInfo& info);
 	RequestResult startGame(const RequestInfo& info);
+	RequestResult getRoomState(const RequestInfo& info);
 };
