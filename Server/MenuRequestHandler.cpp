@@ -128,12 +128,8 @@ RequestResult MenuRequestHandler::createRoom(const RequestInfo& info) {
 	CreateRoomRequest createRoomRequest = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(info.buff);
 	CreateRoomResponse createRoomResponse;
 	RoomData roomData;
-	if (RoomManager::get().getRooms().size() == 0) {
-		roomData.id = 0;
-	}
-	else {
-		roomData.id = RoomManager::get().getRooms().back().id + 1;
-	}
+	roomData.id = RoomManager::get().getLastGivenId();
+	RoomManager::get().uploadLastGivenId();
 	roomData.isActive = RoomState::WAITING_FOR_GAME;
 	roomData.maxPlayers = createRoomRequest.maxUsers;
 	roomData.name = createRoomRequest.roomName;
