@@ -142,7 +142,6 @@ namespace Client.MVVM.ViewModel
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     uint previouslySelectedRoomId = _selectedRoomId;
-                    _selectedRoomId = 0;
                     _rooms.Clear();
 
                     foreach (string room in rooms)
