@@ -38,7 +38,7 @@ namespace Client.MVVM.ViewModel
             //background_worker.ProgressChanged += background_worker_ProgressChanged;
             background_worker.RunWorkerCompleted += background_worker_RunWorkerCompleted;
 
-            background_worker.RunWorkerAsync(roomModel);
+            background_worker.RunWorkerAsync(roomModel.Id);
         }
 
         private void background_worker_DoWork(object sender, DoWorkEventArgs e)

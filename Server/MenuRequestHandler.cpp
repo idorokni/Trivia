@@ -144,7 +144,7 @@ RequestResult MenuRequestHandler::createRoom(const RequestInfo& info) {
 		createRoomResponse.status = 0;
 		reasult.newHandler = this;
 	}
-	buff = JsonResponsePacketSerializer::serializeResponse(createRoomResponse);
+	buff = JsonResponsePacketSerializer::serializeResponse(createRoomResponse, roomData.id);
 
 	reasult.response = buff;
 	return reasult;

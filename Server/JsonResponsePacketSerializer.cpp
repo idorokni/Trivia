@@ -54,9 +54,10 @@ Buffer JsonResponsePacketSerializer::serializeResponse(JoinRoomResponse joinRoom
 	return convertToBuffer(j, ResponseCode::JOIN_ROOM_RESPONSE);
 }
 
-Buffer JsonResponsePacketSerializer::serializeResponse(CreateRoomResponse createRoomResponse) {
+Buffer JsonResponsePacketSerializer::serializeResponse(CreateRoomResponse createRoomResponse, unsigned int id) {
 	nlohmann::json j;
 	j["status"] = createRoomResponse.status;
+	j["id"] = id;
 	return convertToBuffer(j, ResponseCode::CREATE_ROOM_RESPONSE);
 }
 

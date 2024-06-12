@@ -62,9 +62,9 @@ namespace Client.MVVM.ViewModel
         {
             try
             {
-                CreateRoomRequest CreateroomRequest = new CreateRoomRequest(Name, UInt32.Parse(AmountOfUsers), UInt32.Parse(AmountOfQuestions), UInt32.Parse(TimePerQuestions));
+                CreateRoomRequest createroomRequest = new CreateRoomRequest(Name, UInt32.Parse(AmountOfUsers), UInt32.Parse(AmountOfQuestions), UInt32.Parse(TimePerQuestions));
 
-                byte[] msg = App.Communicator.Serialize(CreateroomRequest, (int)Client.MVVM.Model.RequestCode.CREATE_ROOM_REQUEST_CODE);
+                byte[] msg = App.Communicator.Serialize(createroomRequest, (int)Client.MVVM.Model.RequestCode.CREATE_ROOM_REQUEST_CODE);
                 App.Communicator.SendMessage(msg);
 
                 RequestResult response = App.Communicator.DeserializeMessage();
@@ -72,8 +72,10 @@ namespace Client.MVVM.ViewModel
 
                 if (response.IsSuccess)
                 {
+                    uint roomId = UInt32.Parse(response.Data.Split(',')[0].Split(':')[1]);
                     MessageBox.Show("Create Room successful!");
-                    MainViewModel.Instance.CurrentView = new HomeViewModel();
+                    RoomModel roomModel = new RoomModel(new List<string>(), createroomRequest.roomName, (int)createroomRequest.maxUsers, (int)createroomRequest.questionCount, (int)createroomRequest.answerTimeout, roomId);
+                    MainViewModel.Instance.CurrentView = new InsideRoomViewModel(roomModel);
                 }
                 else
                 {
