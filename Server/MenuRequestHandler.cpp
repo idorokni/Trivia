@@ -116,7 +116,6 @@ RequestResult MenuRequestHandler::joinRoom(const RequestInfo& info) {
 		reasult.newHandler = this;
 		joinRoomResponse.status = 0;
 	}
-	reasult.newHandler = this; //should be changed in later versions
 	buff = JsonResponsePacketSerializer::serializeResponse(joinRoomResponse);
 
 	reasult.response = buff;

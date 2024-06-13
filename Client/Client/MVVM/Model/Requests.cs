@@ -107,6 +107,9 @@ namespace Client.MVVM.Model
     }
 
     public class GetRoomStateRequest : Request
+    {
+        public GetRoomStateRequest() { }
+    }
 
 
     public class RequestResult

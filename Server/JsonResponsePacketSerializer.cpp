@@ -108,7 +108,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(GetRoomStateResponse getR
 {
 	nlohmann::json j;
 	j["status"] = getRoomStateResponse.status;
-	j["hasGameBegun"] = getRoomStateResponse.answerTimeout;
+	j["hasGameBegun"] = (int)getRoomStateResponse.state;
 	std::string playersString = "";
 	for (std::string data : getRoomStateResponse.players) { playersString += data + ","; }
 	playersString.erase(playersString.end());

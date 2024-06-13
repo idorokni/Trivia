@@ -42,9 +42,7 @@ namespace Client.MVVM.ViewModel
                     e.Cancel = true;
                     break;
                 }
-                //Parameters parameter = refreshScreen();
                 refreshScreen((uint)e.Argument);
-                //background_worker.ReportProgress((100 * i) / (int)e.Argument + 1, parameter);
                 Thread.Sleep(3000);
             }
         }
@@ -66,12 +64,15 @@ namespace Client.MVVM.ViewModel
             try
             {
                 //here should get rooms from server
-                GetPlayersInRoomRequest getPlayersInRoomRequest = new GetPlayersInRoomRequest(roomId);
-                byte[] msg = App.Communicator.Serialize(getPlayersInRoomRequest, (int)Client.MVVM.Model.RequestCode.GET_PLAYERS_IN_ROOM_REQUEST_CODE);
+                GetRoomStateRequest getPlayersInRoomRequest = new GetRoomStateRequest();
+                byte[] msg = App.Communicator.Serialize(getPlayersInRoomRequest, (int)Client.MVVM.Model.RequestCode.GET_ROOM_STATE_REQUEST_CODE);
                 App.Communicator.SendMessage(msg);
 
                 RequestResult response = App.Communicator.DeserializeMessage();
-                string[] participantsArray = response.Data.Split(':')[1].Split(',');
+                string participantsPart = response.Data.Split(':')[3];
+                int endIndex = participantsPart.IndexOf("\",\"questionCount\"");
+                string[] participantsArray = response.Data.Split(':')[3].Substring(1, response.Data.Split(':')[3].IndexOf(",\",\"questionCount\"")).Split(',');
+                participantsArray = participantsArray.Take(participantsArray.Length - 1).ToArray();
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     _room.Participants.Clear();
@@ -82,7 +83,6 @@ namespace Client.MVVM.ViewModel
                             _room.Participants.Add(participant);
                         }
                     }
-                    _room.Participants.Add(MainViewModel.Instance.Username);
                 });
             }
             catch (Exception ex)
