@@ -20,21 +20,14 @@ namespace Client
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static MainWindow mainWindow {  get; set; }
         public MainWindow()
         {
             InitializeComponent();
-            mainWindow = this;
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
-        }
-        
-        public void ChangeVisibilityOfButton()
-        {
-            BackButton.Visibility = Visibility.Visible;
         }
     }
 }

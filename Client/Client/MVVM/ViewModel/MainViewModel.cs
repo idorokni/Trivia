@@ -13,12 +13,12 @@ namespace Client.MVVM.ViewModel
     {
         private object _currentView;
         private string _username;
-        private Visibility _buttonVisibility;
+        private Visibility _buttonVisibility = Visibility.Hidden;
 
         public static MainViewModel Instance { get; private set; }
         public RelayCommand BackToMenuCommand { get; set; }
         public RelayCommand SignupViewCommand { get; set; }
-        public Visibility ButtonVisibility { get { return _buttonVisibility; } set { _buttonVisibility = value; } }
+        public Visibility ButtonVisibility { get { return _buttonVisibility; } set { _buttonVisibility = value;  OnPropertyChanged(); } }
 
         public object CurrentView
         {

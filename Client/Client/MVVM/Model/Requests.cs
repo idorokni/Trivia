@@ -111,6 +111,16 @@ namespace Client.MVVM.Model
         public GetRoomStateRequest() { }
     }
 
+    public class  LeaveRoomRequest : Request
+    {
+        public LeaveRoomRequest() { }
+    }
+
+    public class CloseRoom : Request
+    {
+        public CloseRoom() { }
+    }
+
 
     public class RequestResult
     {

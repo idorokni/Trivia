@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace Client.MVVM.ViewModel
 {
-    internal class InsideRoomViewModel : ObservableObject
+    internal class InsideRoomViewModel : ObservableObject, IDisposable
     {
         private RoomModel _room;
         private BackgroundWorker background_worker = new BackgroundWorker();
@@ -90,6 +90,12 @@ namespace Client.MVVM.ViewModel
             {
                 MessageBox.Show("An error occurred: " + ex.Message);
             }
+        }
+
+        public void Dispose()
+        {
+            background_worker.CancelAsync();
+            background_worker.Dispose();
         }
     }
 }

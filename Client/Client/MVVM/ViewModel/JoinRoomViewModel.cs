@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace Client.MVVM.ViewModel
 {
-    internal class JoinRoomViewModel : IDisposable
+    internal class JoinRoomViewModel : ObservableObject, IDisposable
     {
         private ObservableCollection<RoomModel> _rooms;
         private RoomModel _room;
@@ -22,7 +22,7 @@ namespace Client.MVVM.ViewModel
         public ObservableCollection<RoomModel> Rooms
         {
             get { return _rooms; }
-            set { _rooms = value; }
+            set { _rooms = value;  }
         }
 
         public RoomModel Room
@@ -51,6 +51,8 @@ namespace Client.MVVM.ViewModel
             background_worker.RunWorkerCompleted += background_worker_RunWorkerCompleted;
 
             background_worker.RunWorkerAsync(3000);
+
+            MainViewModel.Instance.ButtonVisibility = Visibility.Hidden;
 
             JoinRoomCommand = new RelayCommand(o =>
             {
