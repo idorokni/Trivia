@@ -5,25 +5,19 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace Client.MVVM.ViewModel
 {
-    internal class JoinRoomViewModel
+    internal class JoinRoomViewModel : IDisposable
     {
         private ObservableCollection<RoomModel> _rooms;
         private RoomModel _room;
         private BackgroundWorker background_worker = new BackgroundWorker();
         private uint _selectedRoomId;
-
+        private bool _isDisposed = false;
 
         public ObservableCollection<RoomModel> Rooms
         {
@@ -47,17 +41,6 @@ namespace Client.MVVM.ViewModel
 
         public RelayCommand JoinRoomCommand { get; set; }
 
-        /*public JoinRoomViewModel()
-        {
-            _rooms = new ObservableCollection<RoomModel>();
-            JoinRoomCommand = new RelayCommand(o => ExecuteJoinRoom(), o => CanExecuteJoinRoom());
-        }*/
-
-        private bool CanExecuteJoinRoom()
-        {
-            return _rooms.Count > 0 && _room != null;
-        }
-
         public JoinRoomViewModel()
         {
             _rooms = new ObservableCollection<RoomModel>();
@@ -65,12 +48,9 @@ namespace Client.MVVM.ViewModel
             background_worker.WorkerReportsProgress = true;
 
             background_worker.DoWork += background_worker_DoWork;
-            //background_worker.ProgressChanged += background_worker_ProgressChanged;
             background_worker.RunWorkerCompleted += background_worker_RunWorkerCompleted;
 
             background_worker.RunWorkerAsync(3000);
-
-
 
             JoinRoomCommand = new RelayCommand(o =>
             {
@@ -84,7 +64,9 @@ namespace Client.MVVM.ViewModel
 
                 if (response.IsSuccess)
                 {
-                    MainViewModel.Instance.CurrentView = new InsideRoomViewModel(_room);
+                    // Cancel the background worker before switching view models
+                    background_worker.CancelAsync();
+                    MainViewModel.Instance.CurrentView = new InsideRoomViewModel(_room, false);
                 }
                 else
                 {
@@ -93,29 +75,20 @@ namespace Client.MVVM.ViewModel
             }, o => CanExecuteJoinRoom());
         }
 
+        private bool CanExecuteJoinRoom()
+        {
+            return _rooms.Count > 0 && _room != null;
+        }
+
         private void background_worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            while (true)
+            while (!background_worker.CancellationPending)
             {
-                if (background_worker.CancellationPending)
-                {
-                    e.Cancel = true;
-                    break;
-                }
-                //Parameters parameter = refreshScreen();
                 refreshScreen();
-                //background_worker.ReportProgress((100 * i) / (int)e.Argument + 1, parameter);
                 Thread.Sleep((int)e.Argument);
             }
         }
 
-        /*private void background_worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            Parameters parameter = e.UserState as Parameters;
-            _rooms.Add(new RoomModel(participants, roomDataArray[0], int.Parse(roomDataArray[1]), int.Parse(roomDataArray[2]), int.Parse(roomDataArray[3]), uint.Parse(roomDataArray[4])));
-
-            //txtInterationCounter.Text = e.ProgressPercentage.ToString() + " %";
-        }*/
         private void background_worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Cancelled)
@@ -132,8 +105,7 @@ namespace Client.MVVM.ViewModel
         {
             try
             {
-                //here should get rooms from server
-                //_rooms = new ObservableCollection<RoomModel>();
+                // Here should get rooms from server
                 byte[] msg = new byte[] { (byte)Client.MVVM.Model.RequestCode.GET_ROOMS_REQUEST_CODE };
                 App.Communicator.SendMessage(msg);
 
@@ -148,7 +120,7 @@ namespace Client.MVVM.ViewModel
                     {
                         int userListStartIndex = room.IndexOf("userlist-");
                         int roomDataStartIndex = room.IndexOf("roomdata-");
-                        List<string> participants = new List<string>();
+                        ObservableCollection<string> participants = new ObservableCollection<string>();
 
                         if (userListStartIndex != -1 && roomDataStartIndex != -1 && userListStartIndex < roomDataStartIndex)
                         {
@@ -156,7 +128,10 @@ namespace Client.MVVM.ViewModel
                             string participantsNamesSubstring = room.Substring(userListStartIndex, roomDataStartIndex - userListStartIndex);
                             string[] namesArray = participantsNamesSubstring.Split(',');
                             namesArray = namesArray.Take(namesArray.Length - 1).ToArray();
-                            participants.AddRange(namesArray);
+                            foreach (string name in namesArray)
+                            {
+                                participants.Add(name);
+                            }
 
                             string roomDataSubstring = room.Substring(roomDataStartIndex + "roomdata-".Length);
                             string[] roomDataArray = roomDataSubstring.Split(',');
@@ -170,14 +145,6 @@ namespace Client.MVVM.ViewModel
                         }
                     }
                 });
-                /*
-                JoinRoomCommand = new RelayCommand(o =>
-                {
-                    MainViewModel.Instance.CurrentView = new InsideRoomViewModel(_room);
-                }, o => CanExecuteJoinRoom());
-                */
-
-
             }
             catch (Exception ex)
             {
@@ -185,5 +152,14 @@ namespace Client.MVVM.ViewModel
             }
         }
 
+        public void Dispose()
+        {
+            if (!_isDisposed)
+            {
+                background_worker.CancelAsync();
+                background_worker.Dispose();
+                _isDisposed = true;
+            }
+        }
     }
 }

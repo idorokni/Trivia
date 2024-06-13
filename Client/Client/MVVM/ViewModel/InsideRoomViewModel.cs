@@ -2,6 +2,7 @@
 using Client.MVVM.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -15,23 +16,15 @@ namespace Client.MVVM.ViewModel
     {
         private RoomModel _room;
         private BackgroundWorker background_worker = new BackgroundWorker();
+        private Visibility buttonsVisibility = Visibility.Hidden;
 
-
-        public string Name { get; set; }
-        public int MaxNumOfPlayers { get; set; }
-        public int AmountOfQuestions { get; set; }
-        public int TimePerQuestion { get; set; }
-        public List<string> Participants { get; set; }
-        public InsideRoomViewModel(RoomModel roomModel)
+        public Visibility ButtonVisibility { get { return buttonsVisibility; } set { buttonsVisibility = value; } }
+        public RoomModel Room { get { return _room; } set { _room = value; } }
+        public InsideRoomViewModel(RoomModel roomModel, bool isAdmin)
         {
-            Name = roomModel.Name;
-            MaxNumOfPlayers = roomModel.GetMaxPlayers();
-            AmountOfQuestions = roomModel.GetNumOfQuestionsInGame();
-            TimePerQuestion = roomModel.GetTimePerQuestion();
-            Participants = roomModel.Participants;
-            Participants.Add(MainViewModel.Instance.Username);
-
-
+            _room = roomModel;
+            _room.Participants.Add(MainViewModel.Instance.Username);
+            if(isAdmin) buttonsVisibility = Visibility.Visible;
             background_worker.WorkerSupportsCancellation = true;
             background_worker.WorkerReportsProgress = true;
             background_worker.DoWork += background_worker_DoWork;
@@ -50,9 +43,7 @@ namespace Client.MVVM.ViewModel
                     e.Cancel = true;
                     break;
                 }
-                //Parameters parameter = refreshScreen();
                 refreshScreen((uint)e.Argument);
-                //background_worker.ReportProgress((100 * i) / (int)e.Argument + 1, parameter);
                 Thread.Sleep(3000);
             }
         }
@@ -74,23 +65,25 @@ namespace Client.MVVM.ViewModel
             try
             {
                 //here should get rooms from server
-                GetPlayersInRoomRequest getPlayersInRoomRequest = new GetPlayersInRoomRequest(roomId);
-                byte[] msg = App.Communicator.Serialize(getPlayersInRoomRequest, (int)Client.MVVM.Model.RequestCode.GET_PLAYERS_IN_ROOM_REQUEST_CODE);
+                GetRoomStateRequest getPlayersInRoomRequest = new GetRoomStateRequest();
+                byte[] msg = App.Communicator.Serialize(getPlayersInRoomRequest, (int)Client.MVVM.Model.RequestCode.GET_ROOM_STATE_REQUEST_CODE);
                 App.Communicator.SendMessage(msg);
 
                 RequestResult response = App.Communicator.DeserializeMessage();
-                string[] participantsArray = response.Data.Split(':')[1].Split(',');
+                string participantsPart = response.Data.Split(':')[3];
+                int endIndex = participantsPart.IndexOf("\",\"questionCount\"");
+                string[] participantsArray = response.Data.Split(':')[3].Substring(1, response.Data.Split(':')[3].IndexOf(",\",\"questionCount\"")).Split(',');
+                participantsArray = participantsArray.Take(participantsArray.Length - 1).ToArray();
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    Participants.Clear();
+                    _room.Participants.Clear();
                     foreach (string participant in participantsArray)
                     {
                         if (!string.IsNullOrEmpty(participant))
                         {
-                            Participants.Add(participant);
+                            _room.Participants.Add(participant);
                         }
                     }
-                    Participants.Add(MainViewModel.Instance.Username);
                 });
             }
             catch (Exception ex)

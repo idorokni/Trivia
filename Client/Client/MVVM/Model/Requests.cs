@@ -18,7 +18,11 @@ namespace Client.MVVM.Model
         HIGH_SCORE_REQUEST_CODE = 56,
         LOGOUT_REQUEST_CODE = 57,
         GET_ROOMS_REQUEST_CODE = 58,
-        GET_USER_STATISTICS_REQUEST_CODE = 59
+        GET_USER_STATISTICS_REQUEST_CODE = 59, 
+        CLOSE_ROOM_REQUEST_CODE = 60,
+        START_GAME_REQUEST_CODE = 61,
+        GET_ROOM_STATE_REQUEST_CODE = 62,
+        LEAVE_ROOM_REQUEST_CODE = 63
     };
 
     public class Request
@@ -100,6 +104,11 @@ namespace Client.MVVM.Model
     public class HighScoreRequest : Request
     {
         public HighScoreRequest() { }
+    }
+
+    public class GetRoomStateRequest : Request
+    {
+        public GetRoomStateRequest() { }
     }
 
 

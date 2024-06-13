@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -10,31 +11,20 @@ namespace Client.MVVM.Model
     internal class RoomModel
     {
         private string _name;
-        private List<string> _participants;
+        private ObservableCollection<string> _participants;
         private int _maxPlayers;
         private int _numOfQuestionsInGame;
         private int _timePerQuestion;
         private uint _id;
 
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
+        public string Name {get { return _name; } set { _name = value; } }
+        public ObservableCollection<string> Participants { get { return _participants; } set { _participants = value; } }
+        public uint Id { get { return _id; } set { _id = value; } }
+        public int MaxPlayers { get { return _maxPlayers; } set { _maxPlayers = value; } }
+        public int NumOfQuestionsInGame { get { return _numOfQuestionsInGame; } set { _numOfQuestionsInGame = value; } }
+        public int TimePerQuestion { get { return _timePerQuestion; } set { _timePerQuestion = value; } }
 
-        public List<string> Participants
-        {
-            get { return _participants; }
-            set { _participants = value; }
-        }
-
-        public uint Id
-        {
-            get { return _id; }
-            set { _id = value; }
-        }
-
-        public RoomModel(List<string> participants, string name, int maxPlayers, int numOfQuestionsInGame, int timePerQuestion, uint id)
+        public RoomModel(ObservableCollection<string> participants, string name, int maxPlayers, int numOfQuestionsInGame, int timePerQuestion, uint id)
         {
             _participants = participants;
             _name = name;
@@ -43,9 +33,5 @@ namespace Client.MVVM.Model
             _timePerQuestion = timePerQuestion;
             _id = id;
         }
-
-        public int GetMaxPlayers() => _maxPlayers;
-        public int GetNumOfQuestionsInGame() => _numOfQuestionsInGame;
-        public int GetTimePerQuestion() => _timePerQuestion;
     }
 }
