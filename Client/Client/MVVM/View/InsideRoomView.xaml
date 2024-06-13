@@ -34,7 +34,7 @@
                                VerticalAlignment="Center"
                                FontSize="30">
                         <Run Text="MAX NUMBER OF PLAYERS:"/>
-                        <Run Text="{Binding MaxNumOfPlayers}"/>
+                        <Run Text="{Binding Room.MaxPlayers}"/>
                     </TextBlock>
 
                     <TextBlock Grid.Row="1"
@@ -42,7 +42,7 @@
                                VerticalAlignment="Center"
                                FontSize="30">
                         <Run Text="AMOUNT OF QUESTIONS:"/>
-                        <Run Text="{Binding AmountOfQuestions}"/>
+                        <Run Text="{Binding Room.NumOfQuestionsInGame}"/>
                     </TextBlock>
 
                     <TextBlock Grid.Row="2"
@@ -50,7 +50,7 @@
                                VerticalAlignment="Center"
                                FontSize="30">
                         <Run Text="TIME PER QUESTION:"/>
-                        <Run Text="{Binding TimePerQuestion}"/>
+                        <Run Text="{Binding Room.TimePerQuestion}"/>
                     </TextBlock>
 
                     <Button Grid.Row="3"
@@ -81,7 +81,7 @@
                               Background="Transparent"
                               ItemContainerStyle="{StaticResource ParticipantItem}"
                               BorderThickness="0"
-                              ItemsSource="{Binding Participants}"/>
+                              ItemsSource="{Binding Room.Participants}"/>
                 </Grid>
 
               
@@ -94,7 +94,7 @@
                        FontSize="40"
                        FontWeight="SemiBold">
                 <Run Text="WELCOME TO"/>
-                <Run Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <Run Text="{Binding Room.Name, UpdateSourceTrigger=PropertyChanged}"/>
             </TextBlock>
         </Grid>
     </Border>

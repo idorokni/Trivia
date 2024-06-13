@@ -148,7 +148,7 @@ namespace Client.MVVM.ViewModel
                     {
                         int userListStartIndex = room.IndexOf("userlist-");
                         int roomDataStartIndex = room.IndexOf("roomdata-");
-                        List<string> participants = new List<string>();
+                        ObservableCollection<string> participants = new ObservableCollection<string>();
 
                         if (userListStartIndex != -1 && roomDataStartIndex != -1 && userListStartIndex < roomDataStartIndex)
                         {
@@ -156,7 +156,10 @@ namespace Client.MVVM.ViewModel
                             string participantsNamesSubstring = room.Substring(userListStartIndex, roomDataStartIndex - userListStartIndex);
                             string[] namesArray = participantsNamesSubstring.Split(',');
                             namesArray = namesArray.Take(namesArray.Length - 1).ToArray();
-                            participants.AddRange(namesArray);
+                            foreach(string name in namesArray)
+                            {
+                                participants.Add(name);
+                            }
 
                             string roomDataSubstring = room.Substring(roomDataStartIndex + "roomdata-".Length);
                             string[] roomDataArray = roomDataSubstring.Split(',');

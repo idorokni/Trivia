@@ -2,6 +2,7 @@
 using Client.MVVM.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Security.Policy;
@@ -74,7 +75,7 @@ namespace Client.MVVM.ViewModel
                 {
                     uint roomId = UInt32.Parse(response.Data.Split(',')[0].Split(':')[1]);
                     MessageBox.Show("Create Room successful!");
-                    RoomModel roomModel = new RoomModel(new List<string>(), createroomRequest.roomName, (int)createroomRequest.maxUsers, (int)createroomRequest.questionCount, (int)createroomRequest.answerTimeout, roomId);
+                    RoomModel roomModel = new RoomModel(new ObservableCollection<string>(), createroomRequest.roomName, (int)createroomRequest.maxUsers, (int)createroomRequest.questionCount, (int)createroomRequest.answerTimeout, roomId);
                     MainViewModel.Instance.CurrentView = new InsideRoomViewModel(roomModel);
                 }
                 else

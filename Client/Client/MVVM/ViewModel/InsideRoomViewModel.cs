@@ -2,6 +2,7 @@
 using Client.MVVM.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -16,20 +17,11 @@ namespace Client.MVVM.ViewModel
         private RoomModel _room;
         private BackgroundWorker background_worker = new BackgroundWorker();
 
-
-        public string Name { get; set; }
-        public int MaxNumOfPlayers { get; set; }
-        public int AmountOfQuestions { get; set; }
-        public int TimePerQuestion { get; set; }
-        public List<string> Participants { get; set; }
+        public RoomModel Room { get { return _room; } set { _room = value; } }
         public InsideRoomViewModel(RoomModel roomModel)
         {
-            Name = roomModel.Name;
-            MaxNumOfPlayers = roomModel.GetMaxPlayers();
-            AmountOfQuestions = roomModel.GetNumOfQuestionsInGame();
-            TimePerQuestion = roomModel.GetTimePerQuestion();
-            Participants = roomModel.Participants;
-            Participants.Add(MainViewModel.Instance.Username);
+            _room = roomModel;
+            _room.Participants.Add(MainViewModel.Instance.Username);
 
 
             background_worker.WorkerSupportsCancellation = true;
@@ -82,15 +74,15 @@ namespace Client.MVVM.ViewModel
                 string[] participantsArray = response.Data.Split(':')[1].Split(',');
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    Participants.Clear();
+                    _room.Participants.Clear();
                     foreach (string participant in participantsArray)
                     {
                         if (!string.IsNullOrEmpty(participant))
                         {
-                            Participants.Add(participant);
+                            _room.Participants.Add(participant);
                         }
                     }
-                    Participants.Add(MainViewModel.Instance.Username);
+                    _room.Participants.Add(MainViewModel.Instance.Username);
                 });
             }
             catch (Exception ex)
