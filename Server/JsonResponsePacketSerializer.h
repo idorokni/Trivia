@@ -27,6 +27,13 @@ public:
 	static Buffer serializeResponse(GetRoomStateResponse getRoomStateResponse);
 	static Buffer serializeResponse(LeaveRoomResponse leaveRoomResponse);
 
+	//400
+	static Buffer serializeResponse(GetGameResultsResponse getGameResultsResponse);
+	static Buffer serializeResponse(SubmitAnswerResponse submitAnswerResponse);
+	static Buffer serializeResponse(GetQuestionResponse getQuestionResponse);
+	static Buffer serializeResponse(LeaveGameResponse leaveGameResponse);
+
+
 private:
 	static Buffer convertToBuffer(const nlohmann::json& jsonObj, ResponseCode code);
 };
