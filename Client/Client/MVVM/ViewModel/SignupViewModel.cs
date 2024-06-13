@@ -82,7 +82,7 @@ namespace Client.MVVM.ViewModel
                 {
                     MessageBox.Show("SignUp successful!");
                     MainViewModel.Instance.CurrentView = new HomeViewModel();
-                    MainWindow.mainWindow.ChangeVisibilityOfButton();
+                    MainViewModel.Instance.ButtonVisibility = Visibility.Visible;
                     MainViewModel.Instance.Username = _username;
                 }
                 else

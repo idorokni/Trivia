@@ -1,4 +1,5 @@
 ﻿using Client.Core;
+using Client.MVVM.Model;
 using Client.MVVM.View;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,13 @@ namespace Client.MVVM.ViewModel
     {
         private object _currentView;
         private string _username;
-        private Visibility _buttonVisibility;
+        private Visibility _buttonVisibility = Visibility.Hidden;
 
         public static MainViewModel Instance { get; private set; }
         public RelayCommand BackToMenuCommand { get; set; }
         public RelayCommand SignupViewCommand { get; set; }
-        public Visibility ButtonVisibility { get { return _buttonVisibility; } set { _buttonVisibility = value; } }
+        public RelayCommand LogoutCommand { get; set; }
+        public Visibility ButtonVisibility { get { return _buttonVisibility; } set { _buttonVisibility = value;  OnPropertyChanged(); } }
 
         public object CurrentView
         {
@@ -44,6 +46,27 @@ namespace Client.MVVM.ViewModel
             BackToMenuCommand = new RelayCommand(o =>
             {
                 CurrentView = new HomeViewModel();
+            });
+
+            LogoutCommand = new RelayCommand(o =>
+            {
+                LogoutRequest logoutRequest = new LogoutRequest();
+
+                byte[] msg = App.Communicator.Serialize(logoutRequest, (int)Client.MVVM.Model.RequestCode.LOGOUT_REQUEST_CODE);
+                App.Communicator.SendMessage(msg);
+
+                RequestResult response = App.Communicator.DeserializeMessage();
+
+                if (response.IsSuccess)
+                {
+                    MainViewModel.Instance.CurrentView = new LoginViewModel();
+                    MainViewModel.Instance.ButtonVisibility = Visibility.Hidden;
+                    MainViewModel.Instance.Username = null;
+                }
+                else
+                {
+                    MessageBox.Show("Login failed: " + response.Data);
+                }
             });
         }
     }

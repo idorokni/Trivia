@@ -45,7 +45,7 @@ RequestResult MenuRequestHandler::logout(const RequestInfo& info) {
 	LogoutResponse logoutResponse;
 	if (LoginManager::get().logout(m_user.getUsername())) {
 		logoutResponse.status = 1;
-		reasult.newHandler = this; //should be changed in later versions
+		reasult.newHandler = RequestHandlerFactory::get().createLoginRequestHandler(); //should be changed in later versions
 	}
 	else {
 		logoutResponse.status = 0;
@@ -108,9 +108,15 @@ RequestResult MenuRequestHandler::joinRoom(const RequestInfo& info) {
 	JoinRoomRequest joinRoomRequest = JsonRequestPacketDeserializer::deserializeJoinRoomRequest(info.buff);
 	JoinRoomResponse joinRoomResponse;
 	try {
-		RoomManager::get().getRoom(joinRoomRequest.roomId).addUser(m_user);
-		joinRoomResponse.status = 1;
-		reasult.newHandler = RequestHandlerFactory::get().creatRoomMemberRequestHandler(m_user, RoomManager::get().getRoom(joinRoomRequest.roomId));
+		if (RoomManager::get().getRoom(joinRoomRequest.roomId).getAllUsers().size() < RoomManager::get().getRoom(joinRoomRequest.roomId).getRoomData().maxPlayers) {
+			RoomManager::get().getRoom(joinRoomRequest.roomId).addUser(m_user);
+			joinRoomResponse.status = 1;
+			reasult.newHandler = RequestHandlerFactory::get().creatRoomMemberRequestHandler(m_user, RoomManager::get().getRoom(joinRoomRequest.roomId));
+		}
+		else {
+			reasult.newHandler = this;
+			joinRoomResponse.status = 0;
+		}
 	}
 	catch (...) {
 		reasult.newHandler = this;

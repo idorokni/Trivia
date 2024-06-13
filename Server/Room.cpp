@@ -9,9 +9,12 @@ void Room::addUser(const LoggedUser& loggedUser) {
 	m_users.emplace_back(loggedUser.getUsername());
 }
 void Room::removeUser(const LoggedUser& loggedUser) {
-	for (auto it = m_users.begin(); it < m_users.end(); it++) {
+	for (auto it = m_users.begin(); it != m_users.end();) {
 		if (it->getUsername() == loggedUser.getUsername()) {
-			m_users.erase(it);
+			it = m_users.erase(it); // erase returns the next iterator
+		}
+		else {
+			++it; // only increment if no erase
 		}
 	}
 }

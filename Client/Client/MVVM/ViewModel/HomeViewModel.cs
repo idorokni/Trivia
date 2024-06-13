@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Remoting.Proxies;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Client.MVVM.ViewModel
 {
@@ -17,6 +18,7 @@ namespace Client.MVVM.ViewModel
 
         public HomeViewModel()
         {
+            MainViewModel.Instance.ButtonVisibility = Visibility.Visible;
             CreateRoomViewCommand = new RelayCommand(o =>
             {
                 MainViewModel.Instance.CurrentView = new CreateRoomViewModel();

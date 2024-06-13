@@ -19,7 +19,9 @@ RequestResult RoomMemberRequestHandler::leaveRoom(const RequestInfo& info) {
     Buffer buff;
     LeaveRoomResponse leaveRoomResponse;
     try {
-        RoomManager::get().deleteUserFromGame(m_room.getRoomData().id, m_user);
+        if (RoomManager::get().isInMap(m_room.getRoomData().id)) {
+            RoomManager::get().deleteUserFromGame(m_room.getRoomData().id, m_user);
+        }
         leaveRoomResponse.status = 1;
         result.newHandler = RequestHandlerFactory::get().createMenuRequestHandler(m_user);
     }
