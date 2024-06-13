@@ -48,6 +48,8 @@ void RoomManager::uploadLastGivenId()
 	lastGivenId = lastGivenId + 1;
 }
 
+bool RoomManager::isInMap(int id) noexcept { return m_rooms.find(id) != m_rooms.end(); }
+
 RoomManager& RoomManager::get() noexcept {
 	static RoomManager s_Instance;
 	return s_Instance;

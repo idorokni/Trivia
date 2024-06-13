@@ -52,8 +52,6 @@ namespace Client.MVVM.ViewModel
 
             background_worker.RunWorkerAsync(3000);
 
-            MainViewModel.Instance.ButtonVisibility = Visibility.Hidden;
-
             JoinRoomCommand = new RelayCommand(o =>
             {
                 JoinRoomRequest joinroomRequest = new JoinRoomRequest(_room.Id);

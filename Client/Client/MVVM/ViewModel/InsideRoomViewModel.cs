@@ -63,8 +63,8 @@ namespace Client.MVVM.ViewModel
 
             LeaveRoomRelayCommand = new RelayCommand(o =>
             {
-                LeaveRoomRequest closeRoomRequest = new LeaveRoomRequest();
-                byte[] msg = App.Communicator.Serialize(closeRoomRequest, (int)RequestCode.LEAVE_ROOM_REQUEST_CODE);
+                LeaveRoomRequest leaveRoomRequest = new LeaveRoomRequest();
+                byte[] msg = App.Communicator.Serialize(leaveRoomRequest, (int)RequestCode.LEAVE_ROOM_REQUEST_CODE);
                 App.Communicator.SendMessage(msg);
                 RequestResult response = App.Communicator.DeserializeMessage();
                 if (response.IsSuccess)
@@ -129,25 +129,36 @@ namespace Client.MVVM.ViewModel
         {
             try
             {
-                //here should get rooms from server
+                
                 GetRoomStateRequest getPlayersInRoomRequest = new GetRoomStateRequest();
                 byte[] msg = App.Communicator.Serialize(getPlayersInRoomRequest, (int)Client.MVVM.Model.RequestCode.GET_ROOM_STATE_REQUEST_CODE);
                 App.Communicator.SendMessage(msg);
 
                 RequestResult response = App.Communicator.DeserializeMessage();
-                string[] participantsArray = response.Data.Split(':')[3].Substring(1, response.Data.Split(':')[3].IndexOf(",\",\"questionCount\"")).Split(',');
-                participantsArray = participantsArray.Take(participantsArray.Length - 1).ToArray();
-                Application.Current.Dispatcher.Invoke(() =>
+                string c = response.Data.Split(':')[2].Split(',')[0];
+                if (int.Parse(response.Data.Split(':')[2].Split(',')[0]) != 3)
                 {
-                    _room.Participants.Clear();
-                    foreach (string participant in participantsArray)
+                    string[] participantsArray = response.Data.Split(':')[3].Substring(1, response.Data.Split(':')[3].IndexOf(",\",\"questionCount\"")).Split(',');
+                    participantsArray = participantsArray.Take(participantsArray.Length - 1).ToArray();
+                    Application.Current.Dispatcher.Invoke(() =>
                     {
-                        if (!string.IsNullOrEmpty(participant))
+                        _room.Participants.Clear();
+                        foreach (string participant in participantsArray)
                         {
-                            _room.Participants.Add(participant);
+                            if (!string.IsNullOrEmpty(participant))
+                            {
+                                _room.Participants.Add(participant);
+                            }
                         }
-                    }
-                });
+                    });
+                }
+                else
+                {
+                    LeaveRoomRelayCommand.Execute(null);
+                    background_worker.CancelAsync();
+                    MainViewModel.Instance.CurrentView = new HomeViewModel();
+                }
+
             }
             catch (Exception ex)
             {

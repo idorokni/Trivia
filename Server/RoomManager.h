@@ -21,6 +21,7 @@ public:
 	Room& getRoom(int ID);
 	int getLastGivenId();
 	void uploadLastGivenId();
+	bool isInMap(int ID) noexcept;
 
 	static RoomManager& get() noexcept;
 };

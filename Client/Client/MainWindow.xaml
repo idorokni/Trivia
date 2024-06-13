@@ -51,7 +51,7 @@
                                 FontSize="30"
                                 FontWeight="SemiBold"
                                 Background="#F18F71"
-                                Command="{Binding BackToMenuCommand}"
+                                Command="{Binding LogoutCommand}"
                                 Visibility="{Binding ButtonVisibility}"/>
 
                         <Button Grid.Row="1"
