@@ -16,14 +16,15 @@ namespace Client.MVVM.ViewModel
     {
         private RoomModel _room;
         private BackgroundWorker background_worker = new BackgroundWorker();
+        private Visibility buttonsVisibility = Visibility.Hidden;
 
+        public Visibility ButtonVisibility { get { return buttonsVisibility; } set { buttonsVisibility = value; } }
         public RoomModel Room { get { return _room; } set { _room = value; } }
-        public InsideRoomViewModel(RoomModel roomModel)
+        public InsideRoomViewModel(RoomModel roomModel, bool isAdmin)
         {
             _room = roomModel;
             _room.Participants.Add(MainViewModel.Instance.Username);
-
-
+            if(isAdmin) buttonsVisibility = Visibility.Visible;
             background_worker.WorkerSupportsCancellation = true;
             background_worker.WorkerReportsProgress = true;
             background_worker.DoWork += background_worker_DoWork;

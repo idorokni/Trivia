@@ -76,7 +76,7 @@ namespace Client.MVVM.ViewModel
                     uint roomId = UInt32.Parse(response.Data.Split(',')[0].Split(':')[1]);
                     MessageBox.Show("Create Room successful!");
                     RoomModel roomModel = new RoomModel(new ObservableCollection<string>(), createroomRequest.roomName, (int)createroomRequest.maxUsers, (int)createroomRequest.questionCount, (int)createroomRequest.answerTimeout, roomId);
-                    MainViewModel.Instance.CurrentView = new InsideRoomViewModel(roomModel);
+                    MainViewModel.Instance.CurrentView = new InsideRoomViewModel(roomModel, true);
                 }
                 else
                 {

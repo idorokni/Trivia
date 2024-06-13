@@ -37,6 +37,33 @@
                         <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
 
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Button Grid.Row="0"
+                                Style="{StaticResource OptionButtonStyle}"
+                                Width="150"
+                                Height="50"
+                                Content="LOGOUT"
+                                FontSize="30"
+                                FontWeight="SemiBold"
+                                Background="#F18F71"
+                                Command="{Binding BackToMenuCommand}"/>
+
+                        <Button Grid.Row="1"
+                                Style="{StaticResource OptionButtonStyle}"
+                                Width="150"
+                                Height="50"
+                                Content="BACK"
+                                FontSize="30"
+                                FontWeight="SemiBold"
+                                Background="#EDFFD9"
+                                Command="{Binding BackToMenuCommand}"/>
+                    </Grid>
+
                     <TextBlock Grid.Column ="1"
                                Text="BRAINPOP"
                                VerticalAlignment="Center"
@@ -51,17 +78,6 @@
                                Foreground="Black"
                                FontSize="30"
                                FontWeight="SemiBold"/>
-                    <Button Grid.Column="0"
-                            Style="{StaticResource OptionButtonStyle}"
-                            Width="150"
-                            Height="70"
-                            Content="BACK"
-                            FontSize="30"
-                            FontWeight="SemiBold"
-                            Background="#FDFFFC"
-                            Visibility="Hidden"
-                            x:Name="BackButton"
-                            Command="{Binding BackToMenuCommand}"/>
                 </Grid>
 
                 <Image Grid.Column="0" 

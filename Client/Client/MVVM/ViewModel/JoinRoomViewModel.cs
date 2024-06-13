@@ -66,7 +66,7 @@ namespace Client.MVVM.ViewModel
                 {
                     // Cancel the background worker before switching view models
                     background_worker.CancelAsync();
-                    MainViewModel.Instance.CurrentView = new InsideRoomViewModel(_room);
+                    MainViewModel.Instance.CurrentView = new InsideRoomViewModel(_room, false);
                 }
                 else
                 {
