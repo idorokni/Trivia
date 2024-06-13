@@ -16,7 +16,7 @@ public:
 	static Buffer serializeResponse(LogoutResponse logoutResponse);
 	static Buffer serializeResponse(GetRoomsResponse getRoomsResponse);
 	static Buffer serializeResponse(JoinRoomResponse joinRoomResponse);
-	static Buffer serializeResponse(CreateRoomResponse createRoomResponse);
+	static Buffer serializeResponse(CreateRoomResponse createRoomResponse, unsigned int id);
 	static Buffer serializeResponse(GetHighScoreResponse getHighScoreResponse);
 	static Buffer serializeResponse(GetPersonalStatusResponse getPersonalStatusResponse);
 	static Buffer serializeResponse(GetPlayersInRoomResponse getPlayersInRoomRespone);

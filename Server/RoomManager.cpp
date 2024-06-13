@@ -38,6 +38,15 @@ void RoomManager::deleteUserFromGame(int ID, const LoggedUser& loggedUser) {
 	m_rooms.at(ID).removeUser(loggedUser);
 }
 
+int RoomManager::getLastGivenId()
+{
+	return lastGivenId;
+}
+
+void RoomManager::uploadLastGivenId()
+{
+	lastGivenId = lastGivenId + 1;
+}
 
 RoomManager& RoomManager::get() noexcept {
 	static RoomManager s_Instance;
