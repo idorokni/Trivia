@@ -16,15 +16,80 @@ namespace Client.MVVM.ViewModel
     {
         private RoomModel _room;
         private BackgroundWorker background_worker = new BackgroundWorker();
-        private Visibility buttonsVisibility = Visibility.Hidden;
+        private Visibility _adminButtonsVisibility = Visibility.Hidden;
+        private Visibility _memberButtonsVisibility = Visibility.Visible;
 
-        public Visibility ButtonVisibility { get { return buttonsVisibility; } set { buttonsVisibility = value; } }
+        public Visibility AdminButtonVisibility { get { return _adminButtonsVisibility; } set { _adminButtonsVisibility = value; OnPropertyChanged(); } }
+        public Visibility MemberButtonVisibility { get { return _memberButtonsVisibility; } set { _memberButtonsVisibility = value; OnPropertyChanged(); } }
         public RoomModel Room { get { return _room; } set { _room = value; } }
+        public RelayCommand CloseRoomRelayCommand { get; set; }
+        public RelayCommand StartGameRelayCommand {  get; set; }
+        public RelayCommand LeaveRoomRelayCommand { get; set; }
         public InsideRoomViewModel(RoomModel roomModel, bool isAdmin)
         {
+            CloseRoomRelayCommand = new RelayCommand(o =>
+            {
+                CloseRoomRequest closeRoomRequest = new CloseRoomRequest();
+                byte[] msg = App.Communicator.Serialize(closeRoomRequest, (int)RequestCode.CLOSE_ROOM_REQUEST_CODE);
+                App.Communicator.SendMessage(msg);
+                RequestResult response = App.Communicator.DeserializeMessage();
+                if (response.IsSuccess)
+                {
+                    background_worker.CancelAsync();
+                    MainViewModel.Instance.CurrentView = new HomeViewModel();
+                }
+                else
+                {
+                    MessageBox.Show("Close room failed: " + response.Data);
+                }
+            });
+
+            StartGameRelayCommand = new RelayCommand(o =>
+            {
+                StartGameRequest closeRoomRequest = new StartGameRequest();
+                byte[] msg = App.Communicator.Serialize(closeRoomRequest, (int)RequestCode.START_GAME_REQUEST_CODE);
+                App.Communicator.SendMessage(msg);
+                RequestResult response = App.Communicator.DeserializeMessage();
+                if (response.IsSuccess)
+                {
+                    background_worker.CancelAsync();
+                    MainViewModel.Instance.CurrentView = new HomeViewModel();
+                }
+                else
+                {
+                    MessageBox.Show("Start game failed: " + response.Data);
+                }
+            });
+
+            LeaveRoomRelayCommand = new RelayCommand(o =>
+            {
+                LeaveRoomRequest closeRoomRequest = new LeaveRoomRequest();
+                byte[] msg = App.Communicator.Serialize(closeRoomRequest, (int)RequestCode.LEAVE_ROOM_REQUEST_CODE);
+                App.Communicator.SendMessage(msg);
+                RequestResult response = App.Communicator.DeserializeMessage();
+                if (response.IsSuccess)
+                {
+                    background_worker.CancelAsync();
+                    MainViewModel.Instance.CurrentView = new HomeViewModel();
+                }
+                else
+                {
+                    MessageBox.Show("Leave room failed: " + response.Data);
+                }
+            });
+
             _room = roomModel;
             _room.Participants.Add(MainViewModel.Instance.Username);
-            if(isAdmin) buttonsVisibility = Visibility.Visible;
+            MainViewModel.Instance.ButtonVisibility = Visibility.Hidden;
+            if (isAdmin)
+            {
+                _adminButtonsVisibility = Visibility.Visible;
+                _memberButtonsVisibility = Visibility.Hidden;
+            }
+            else
+            {
+
+            }
             background_worker.WorkerSupportsCancellation = true;
             background_worker.WorkerReportsProgress = true;
             background_worker.DoWork += background_worker_DoWork;
@@ -70,8 +135,6 @@ namespace Client.MVVM.ViewModel
                 App.Communicator.SendMessage(msg);
 
                 RequestResult response = App.Communicator.DeserializeMessage();
-                string participantsPart = response.Data.Split(':')[3];
-                int endIndex = participantsPart.IndexOf("\",\"questionCount\"");
                 string[] participantsArray = response.Data.Split(':')[3].Substring(1, response.Data.Split(':')[3].IndexOf(",\",\"questionCount\"")).Split(',');
                 participantsArray = participantsArray.Take(participantsArray.Length - 1).ToArray();
                 Application.Current.Dispatcher.Invoke(() =>

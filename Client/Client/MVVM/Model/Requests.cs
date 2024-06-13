@@ -18,7 +18,7 @@ namespace Client.MVVM.Model
         HIGH_SCORE_REQUEST_CODE = 56,
         LOGOUT_REQUEST_CODE = 57,
         GET_ROOMS_REQUEST_CODE = 58,
-        GET_USER_STATISTICS_REQUEST_CODE = 59, 
+        GET_USER_STATISTICS_REQUEST_CODE = 59,
         CLOSE_ROOM_REQUEST_CODE = 60,
         START_GAME_REQUEST_CODE = 61,
         GET_ROOM_STATE_REQUEST_CODE = 62,
@@ -70,7 +70,7 @@ namespace Client.MVVM.Model
             this.roomId = roomId;
         }
     }
-    
+
     public class JoinRoomRequest : Request
     {
         public uint roomId;
@@ -79,7 +79,7 @@ namespace Client.MVVM.Model
             this.roomId = roomId;
         }
     }
-    
+
     public class CreateRoomRequest : Request
     {
         public string roomName;
@@ -111,16 +111,25 @@ namespace Client.MVVM.Model
         public GetRoomStateRequest() { }
     }
 
-    public class  LeaveRoomRequest : Request
+    public class LeaveRoomRequest : Request
     {
         public LeaveRoomRequest() { }
     }
 
-    public class CloseRoom : Request
+    public class CloseRoomRequest : Request
     {
-        public CloseRoom() { }
+        public CloseRoomRequest() { }
     }
 
+    public class StartGameRequest : Request
+    {
+        public StartGameRequest() { }
+    }
+
+    public class LogoutRequest : Request
+    {
+        public LogoutRequest() { }
+    }
 
     public class RequestResult
     {

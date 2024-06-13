@@ -44,7 +44,8 @@
                                 FontWeight="SemiBold"
                                 Background="#FF88DC"
                                 Margin="120,0,0,0"
-                                Visibility="{Binding ButtonVisibility}"/>
+                                Visibility="{Binding AdminButtonVisibility}"
+                                Command="{Binding StartGameRelayCommand}"/>
                         <Button Grid.Column="1"
                                 Height="40"
                                 Width="180"
@@ -53,8 +54,9 @@
                                 Style="{StaticResource OptionButtonStyle}"
                                 FontWeight="SemiBold"
                                 Background="#FF88DC"
-                                Visibility="{Binding ButtonVisibility}"
-                                Margin="120,0,0,0"/>
+                                Visibility="{Binding AdminButtonVisibility}"
+                                Margin="120,0,0,0"
+                                Command="{Binding CloseRoomRelayCommand}"/>
                     </Grid>
 
                     <TextBlock Grid.Row="0"
@@ -90,7 +92,8 @@
                             FontWeight="SemiBold"
                             Background="#DEBA6F"
                             Margin="120,0,0,0"
-                            Visibility="{Binding ButtonVisibility}"/>
+                            Visibility="{Binding MemberButtonVisibility}"
+                            Command="{Binding LeaveRoomRelayCommand}"/>
                 </Grid>
 
                 <Grid Grid.Column="1">
