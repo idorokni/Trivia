@@ -20,6 +20,23 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
+            <ListView Grid.Row="1"
+                      Grid.Column="0"
+                      Background="Transparent"
+                      ItemContainerStyle="{StaticResource GameResultItem}"/>
+            <ListView Grid.Row="1"
+                      Grid.Column="1"
+                      Background="Transparent"
+                      ItemContainerStyle="{StaticResource GameResultItem}"/>
+            <ListView Grid.Row="1"
+                      Grid.Column="2"
+                      Background="Transparent"
+                      ItemContainerStyle="{StaticResource GameResultItem}"/>
+            <ListView Grid.Row="1"
+                      Grid.Column="3"
+                      Background="Transparent"
+                      ItemContainerStyle="{StaticResource GameResultItem}"/>
+
             <Grid Grid.Row="0" 
                   Grid.Column="1">
                 <Grid.RowDefinitions>

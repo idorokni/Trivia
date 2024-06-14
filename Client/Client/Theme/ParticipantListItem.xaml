@@ -3,7 +3,7 @@
     <Style TargetType="ListViewItem" x:Key="ParticipantItem">
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="#CADA71"/>
+                <Setter Property="Background" Value="Transparent"/>
             </Trigger>
         </Style.Triggers>
 
