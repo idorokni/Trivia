@@ -46,14 +46,14 @@ namespace Client.MVVM.ViewModel
 
             StartGameRelayCommand = new RelayCommand(o =>
             {
-                StartGameRequest closeRoomRequest = new StartGameRequest();
-                byte[] msg = App.Communicator.Serialize(closeRoomRequest, (int)RequestCode.START_GAME_REQUEST_CODE);
+                StartGameRequest startGameRequest = new StartGameRequest();
+                byte[] msg = App.Communicator.Serialize(startGameRequest, (int)RequestCode.START_GAME_REQUEST_CODE);
                 App.Communicator.SendMessage(msg);
                 RequestResult response = App.Communicator.DeserializeMessage();
                 if (response.IsSuccess)
                 {
                     background_worker.CancelAsync();
-                    MainViewModel.Instance.CurrentView = new HomeViewModel();
+                    MainViewModel.Instance.CurrentView = new TriviaGameViewModel(_room.NumOfQuestionsInGame, _room.TimePerQuestion);
                 }
                 else
                 {
