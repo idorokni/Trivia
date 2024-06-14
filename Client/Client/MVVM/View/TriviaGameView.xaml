@@ -64,7 +64,9 @@
                         Width="350"
                         Content="a."
                         FontWeight="SemiBold"
-                        FontSize="30"/>
+                        FontSize="30"
+                        Command="{Binding SwitchQuestion}"
+                        CommandParameter="1"/>
                 <Button Grid.Column="1"
                         Grid.Row="0"
                         Style="{StaticResource OptionButtonStyle}"
@@ -73,7 +75,9 @@
                         Width="350"
                         Content="b."
                         FontWeight="SemiBold"
-                        FontSize="30"/>
+                        FontSize="30"
+                        Command="{Binding SwitchQuestion}"
+                        CommandParameter="2"/>
                 <Button Grid.Column="0"
                         Grid.Row="1"
                         Background="#FCFF4B"
@@ -82,7 +86,9 @@
                         Width="350"
                         Content="c."
                         FontWeight="SemiBold"
-                        FontSize="30"/>
+                        FontSize="30"
+                        Command ="{Binding SwitchQuestion}"
+                        CommandParameter="3"/>
                 <Button Grid.Column="1"
                         Grid.Row="1"
                         Style="{StaticResource OptionButtonStyle}"
@@ -91,7 +97,9 @@
                         Width="350"
                         Content="d."
                         FontWeight="SemiBold"
-                        FontSize="30"/>
+                        FontSize="30"
+                        Command="{Binding SwitchQuestion}"
+                        CommandParameter="4"/>
             </Grid>
         </Grid>
     </Border>
