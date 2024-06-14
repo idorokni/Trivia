@@ -16,33 +16,46 @@ namespace Client.MVVM.ViewModel
         private DispatcherTimer timer;
         private int _timePerQuestion;
         private int _decrement;
-        private int _amountOfQuestions;
         private string _timeRepresentation;
-        private int currentQuestionNumber = 1;
+        private int _currentQuestionNumber = 1;
         private ObservableCollection<string> _buttonNames;
+        private string _question;
+        private int _amountOfCorrectAnswers;
+        private int _amountOfQuestions;
 
         public string Time { get { return _timeRepresentation; } set { _timeRepresentation = value; OnPropertyChanged(); } }
+        public string Question { get { return _question; } set { _question = value; OnPropertyChanged(); } }
         public RelayCommand SwitchQuestion {  get; set; }
         public ObservableCollection<string> ButtonNames { get { return _buttonNames; } set { _buttonNames = value; OnPropertyChanged(); } }
+        public int CurrentQuestionNumber { get { return _currentQuestionNumber; } set { _currentQuestionNumber = value; OnPropertyChanged(); } }
+        public int AmountOfCorrectAnswers { get { return _amountOfCorrectAnswers; } set { _amountOfCorrectAnswers = value; OnPropertyChanged(); } }
+        public int AmountOfQuestions { get { return _amountOfQuestions; } set { _amountOfQuestions = value; OnPropertyChanged(); } }
 
         public TriviaGameViewModel(int amountOfQuestions, int timePerQuestion)
         {
             SwitchQuestion = new RelayCommand(answerId =>
             {
-                SubmitAnswerRequest submitAnswerRequest = new SubmitAnswerRequest((uint)answerId);
+                SubmitAnswerRequest submitAnswerRequest = new SubmitAnswerRequest(uint.Parse(((string)answerId)));
                 byte[] msg = App.Communicator.Serialize(submitAnswerRequest, (int)Client.MVVM.Model.RequestCode.SUBMIT_ANSWER_REUEST_CODE);
                 App.Communicator.SendMessage(msg);
                 RequestResult response = App.Communicator.DeserializeMessage();
-                if (response.IsSuccess && currentQuestionNumber < amountOfQuestions)
+                if (response.IsSuccess && _currentQuestionNumber < amountOfQuestions)
                 {
-                    currentQuestionNumber++;
+                    CurrentQuestionNumber++;
                     GetQuestionRequest getQuestionRequest = new GetQuestionRequest();
                     msg = App.Communicator.Serialize(submitAnswerRequest, (int)Client.MVVM.Model.RequestCode.SUBMIT_ANSWER_REUEST_CODE);
                     App.Communicator.SendMessage(msg);
                     response = App.Communicator.DeserializeMessage();
                     if (response.IsSuccess)
                     {
+                        string[] answers = { "f" , "fd", "e", "t"};
+                        for(char i = 'a'; i <= 'd'; i++)
+                        {
+                            ButtonNames.Add(i + ". " + answers[i - 'a']);
+                        }
+                        //add question
 
+                        _decrement = amountOfQuestions;
                     }
                     else
                     {
@@ -54,7 +67,7 @@ namespace Client.MVVM.ViewModel
                     MessageBox.Show("Submit failed: " + response.Data);
                 }
 
-                if(currentQuestionNumber == amountOfQuestions)
+                if(_currentQuestionNumber == amountOfQuestions)
                 {
                     MessageBox.Show("Login failed: " + response.Data);
 
@@ -63,7 +76,7 @@ namespace Client.MVVM.ViewModel
 
 
             });
-
+            AmountOfQuestions = amountOfQuestions;
             _timePerQuestion = timePerQuestion;
             _decrement = _timePerQuestion;
 
@@ -78,6 +91,10 @@ namespace Client.MVVM.ViewModel
         {
             _decrement--;
             Time = _decrement.ToString();
+            if(_decrement == 0)
+            {
+                SwitchQuestion.Execute("0");
+            }
         }
     }
 }

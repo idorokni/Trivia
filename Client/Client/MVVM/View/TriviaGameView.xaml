@@ -15,17 +15,52 @@
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="1"
+                           FontWeight="SemiBold"
+                           FontSize="25"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center">
+                    <Run Text="{Binding CurrentQuestionNumber}"/>
+                    <Run Text="/"/>
+                    <Run Text="{Binding AmountOfQuestions, UpdateSourceTrigger=PropertyChanged}"/>
+                </TextBlock>
+            </Grid>
+
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="180"/>
                     <ColumnDefinition/>
-                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="180"/>
                 </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" 
+                               TextAlignment="Center"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left"
+                               Margin="10,0,0,0"
+                               FontSize="20"
+                               FontWeight="SemiBold">
+                        <Run Text="SCORE:"/>
+                        <Run Text="{Binding AmountOfCorrectAnswers}"/>
+                        <Run Text="/"/>
+                        <Run Text="{Binding AmountOfQuestions}"/>
+                    </TextBlock>
+
+                </Grid>
 
                 <Border Grid.Column="1"
                         CornerRadius="30"
                         Background="#044389"
-                        Width="500"
+                        Width="430"
                         Height="40">
 
                     <TextBlock Grid.Column="1" 
@@ -62,7 +97,7 @@
                         Background="#FCFF4B"
                         Height="150"
                         Width="350"
-                        Content="a."
+                        Content="{Binding ButtonNames[0]}"
                         FontWeight="SemiBold"
                         FontSize="30"
                         Command="{Binding SwitchQuestion}"
@@ -73,7 +108,7 @@
                         Background="#FCFF4B"
                         Height="150"
                         Width="350"
-                        Content="b."
+                        Content="{Binding ButtonNames[1]}"
                         FontWeight="SemiBold"
                         FontSize="30"
                         Command="{Binding SwitchQuestion}"
@@ -84,7 +119,7 @@
                         Style="{StaticResource OptionButtonStyle}"
                         Height="150"
                         Width="350"
-                        Content="c."
+                        Content="{Binding ButtonNames[2]}"
                         FontWeight="SemiBold"
                         FontSize="30"
                         Command ="{Binding SwitchQuestion}"
@@ -95,7 +130,7 @@
                         Background="#FCFF4B"
                         Height="150"
                         Width="350"
-                        Content="d."
+                        Content="{Binding ButtonNames[3]}"
                         FontWeight="SemiBold"
                         FontSize="30"
                         Command="{Binding SwitchQuestion}"
