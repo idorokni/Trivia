@@ -11,6 +11,7 @@ public:
 	static GetPlayersInRoomRequest deserializeGetPlayersInRoomRequest(Buffer buff);
 	static JoinRoomRequest deserializeJoinRoomRequest(Buffer buff);
 	static CreateRoomRequest deserializeCreateRoomRequest(Buffer buff);
+	static SubmitAnswerRequest deserializeSubmitAnswerRequest(Buffer buff);
 private:
 	static nlohmann::json convertToJsonObject(Buffer buff);
 };

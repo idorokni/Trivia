@@ -7,7 +7,7 @@
 
 class IRequestHandler;
 
-enum class RequestCode{
+enum class RequestCode {
     LOGIN_REQUEST_CODE = 51,
     SIGNUP_REQUEST_CODE = 52,
     GET_PLAYERS_IN_ROOM_REQUEST_CODE = 53,
@@ -20,7 +20,11 @@ enum class RequestCode{
     CLOSE_ROOM_REQUEST_CODE = 60,
     START_GAME_REQUEST_CODE = 61,
     GET_ROOM_STATE_REQUEST_CODE = 62,
-    LEAVE_ROOM_REQUEST_CODE = 63
+    LEAVE_ROOM_REQUEST_CODE = 63,
+    LEAVE_GAME_REQUEST_CODE = 64,
+    GET_QUESTION_REQUEST_CODE = 65,
+    SUBMIT_ANSWER_REUEST_CODE = 66,
+    GET_GAME_RESULT_REQUEST_CODE = 67
 };
 
 struct LoginRequest {
@@ -61,4 +65,9 @@ struct CreateRoomRequest {
     unsigned int maxUsers;
     unsigned int questionCount;
     unsigned int answerTimeout;
+};
+
+struct SubmitAnswerRequest
+{
+    unsigned int answerId;
 };

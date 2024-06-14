@@ -125,6 +125,56 @@ Buffer JsonResponsePacketSerializer::serializeResponse(LeaveRoomResponse leaveRo
 	return convertToBuffer(j, ResponseCode::LEAVE_ROOM_RESPONSE);
 }
 
+Buffer JsonResponsePacketSerializer::serializeResponse(GetGameResultsResponse getGameResultsResponse)
+{
+	nlohmann::json j;
+	j["status"] = getGameResultsResponse.status;
+	std::string resultsString = "";
+	if (getGameResultsResponse.status == 1)
+	{
+		for (PlayerResults playerResults : getGameResultsResponse.results)
+		{
+			resultsString += playerResults.username + "," + std::to_string(playerResults.correctAnswerCounter) + "," + std::to_string(playerResults.wrongAnswerCounter) + "," + std::to_string(playerResults.averageAnswerTime) + "-";
+		}
+		resultsString.erase(resultsString.end());
+		j["results"] = resultsString;
+	}
+	j["results"] = resultsString;
+	return convertToBuffer(j, ResponseCode::GET_GAME_RESULTS_RESPONSE);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(SubmitAnswerResponse submitAnswerResponse)
+{
+	nlohmann::json j;
+	j["status"] = submitAnswerResponse.status;
+	return convertToBuffer(j, ResponseCode::SUBMIT_ANSWER_RESPONSE);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(GetQuestionResponse getQuestionResponse)
+{
+	nlohmann::json j;
+	j["status"] = getQuestionResponse.status;
+	j["question"] = getQuestionResponse.question;
+	std::string answersString = "";
+	if (getQuestionResponse.status == 1)
+	{
+		for (std::pair<unsigned int, std::string> pair : getQuestionResponse.answers)
+		{
+			answersString += std::to_string(pair.first) + "-" + pair.second + ",";
+		}
+		answersString.erase(answersString.end());
+	}
+	j["answers"] = answersString;
+	return convertToBuffer(j, ResponseCode::GET_QUESTION_RESPONSE);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(LeaveGameResponse leaveGameResponse)
+{
+	nlohmann::json j;
+	j["status"] = leaveGameResponse.status;
+	return convertToBuffer(j, ResponseCode::LEAVE_GAME_RESPONSE);
+}
+
 
 Buffer JsonResponsePacketSerializer::convertToBuffer(const nlohmann::json& jsonObj, ResponseCode code) {
 	std::string jsonDump = jsonObj.dump();
