@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Client.MVVM.View"
+             xmlns:local="clr-namespace:Client.MVVM.View" xmlns:viewmodel="clr-namespace:Client.MVVM.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:GameResultsViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border CornerRadius="30"
@@ -23,19 +23,23 @@
             <ListView Grid.Row="1"
                       Grid.Column="0"
                       Background="Transparent"
-                      ItemContainerStyle="{StaticResource GameResultItem}"/>
+                      ItemContainerStyle="{StaticResource GameResultItem}"
+                      ItemsSource="{Binding Usernames}"/>
             <ListView Grid.Row="1"
                       Grid.Column="1"
                       Background="Transparent"
-                      ItemContainerStyle="{StaticResource GameResultItem}"/>
+                      ItemContainerStyle="{StaticResource GameResultItem}"
+                      ItemsSource="{Binding CorrectAnswers}"/>
             <ListView Grid.Row="1"
                       Grid.Column="2"
                       Background="Transparent"
-                      ItemContainerStyle="{StaticResource GameResultItem}"/>
+                      ItemContainerStyle="{StaticResource GameResultItem}"
+                      ItemsSource="{Binding WrongAnswers}"/>
             <ListView Grid.Row="1"
                       Grid.Column="3"
                       Background="Transparent"
-                      ItemContainerStyle="{StaticResource GameResultItem}"/>
+                      ItemContainerStyle="{StaticResource GameResultItem}"
+                      ItemsSource="{Binding AvgAnswerTime}"/>
 
             <Grid Grid.Row="0" 
                   Grid.Column="1">
