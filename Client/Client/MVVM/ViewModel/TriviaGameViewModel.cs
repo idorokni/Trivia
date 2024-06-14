@@ -17,9 +17,14 @@ namespace Client.MVVM.ViewModel
         private string _timeRepresentation;
 
         public string Time { get { return _timeRepresentation; } set { _timeRepresentation = value; OnPropertyChanged(); } }
+        public RelayCommand SwitchQuestion {  get; set; }
 
         public TriviaGameViewModel(int amountOfQuestions, int timePerQuestion)
         {
+            SwitchQuestion = new RelayCommand(o =>
+            {
+
+            });
             _amountOfQuestions = amountOfQuestions;
             _timePerQuestion = timePerQuestion;
             _decrement = _timePerQuestion;

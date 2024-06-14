@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -133,6 +134,31 @@ namespace Client.MVVM.Model
     public class LogoutRequest : Request
     {
         public LogoutRequest() { }
+    }
+
+    public class LeaveGameRequest : Request
+    {
+        public LeaveGameRequest() { }
+    }
+
+    public class GetQuestionRequest : Request
+    {
+        public GetQuestionRequest() { }
+    }
+
+    public class GetGameResultsRequest : Request
+    {
+        public GetGameResultsRequest() { }
+    }
+
+    public class SubmitAnswerRequest : Request
+    {
+        public uint _answerId;
+
+        public SubmitAnswerRequest(uint answerId)
+        {
+            _answerId = answerId;
+        }
     }
 
     public class RequestResult
