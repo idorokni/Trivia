@@ -135,6 +135,7 @@
     <Compile Include="MVVM\ViewModel\LoginViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SignupViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\TriviaGameViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UserStatsViewModel.cs" />
     <Compile Include="MVVM\View\CreateRoomView.xaml.cs">
       <DependentUpon>CreateRoomView.xaml</DependentUpon>
