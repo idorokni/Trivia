@@ -63,6 +63,14 @@ CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(Bu
 	return createRoomRequest;
 }
 
+SubmitAnswerRequest JsonRequestPacketDeserializer::deserializeSubmitAnswerRequest(Buffer buff)
+{
+	SubmitAnswerRequest submitAnswerRequest;
+	nlohmann::json jsonObj = convertToJsonObject(buff);
+	if (jsonObj.contains("AanswerId")) submitAnswerRequest.answerId = jsonObj["AanswerId"];
+	return submitAnswerRequest;
+}
+
 nlohmann::json JsonRequestPacketDeserializer::convertToJsonObject(Buffer buff) {
 	uint32_t length;
 	std::memcpy(&length, &buff.data()[CODE_AMOUNT_BYTES], BYTES_LENGTH);
