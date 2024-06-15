@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,7 +23,11 @@ namespace Client.MVVM.Model
         CLOSE_ROOM_REQUEST_CODE = 60,
         START_GAME_REQUEST_CODE = 61,
         GET_ROOM_STATE_REQUEST_CODE = 62,
-        LEAVE_ROOM_REQUEST_CODE = 63
+        LEAVE_ROOM_REQUEST_CODE = 63,
+        LEAVE_GAME_REQUEST_CODE = 64,
+        GET_QUESTION_REQUEST_CODE = 65,
+        SUBMIT_ANSWER_REUEST_CODE = 66,
+        GET_GAME_RESULT_REQUEST_CODE = 67
     };
 
     public class Request
@@ -129,6 +134,31 @@ namespace Client.MVVM.Model
     public class LogoutRequest : Request
     {
         public LogoutRequest() { }
+    }
+
+    public class LeaveGameRequest : Request
+    {
+        public LeaveGameRequest() { }
+    }
+
+    public class GetQuestionRequest : Request
+    {
+        public GetQuestionRequest() { }
+    }
+
+    public class GetGameResultsRequest : Request
+    {
+        public GetGameResultsRequest() { }
+    }
+
+    public class SubmitAnswerRequest : Request
+    {
+        public uint _answerId;
+
+        public SubmitAnswerRequest(uint answerId)
+        {
+            _answerId = answerId;
+        }
     }
 
     public class RequestResult

@@ -76,6 +76,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MVVM\View\GameResultsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\HighScoreView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -100,6 +104,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MVVM\View\TriviaGameView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\UserStatsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -109,6 +117,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Theme\ParticipantListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme\ResultListItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -124,6 +136,7 @@
     <Compile Include="MVVM\Model\ScoreModel.cs" />
     <Compile Include="MVVM\Model\UserModel.cs" />
     <Compile Include="MVVM\ViewModel\CreateRoomViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\GameResultsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HighScoreViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\InsideRoomViewModel.cs" />
@@ -131,9 +144,13 @@
     <Compile Include="MVVM\ViewModel\LoginViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SignupViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\TriviaGameViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UserStatsViewModel.cs" />
     <Compile Include="MVVM\View\CreateRoomView.xaml.cs">
       <DependentUpon>CreateRoomView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\GameResultsView.xaml.cs">
+      <DependentUpon>GameResultsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\HighScoreView.xaml.cs">
       <DependentUpon>HighScoreView.xaml</DependentUpon>
@@ -152,6 +169,9 @@
     </Compile>
     <Compile Include="MVVM\View\SignupView.xaml.cs">
       <DependentUpon>SignupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\TriviaGameView.xaml.cs">
+      <DependentUpon>TriviaGameView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\UserStatsView.xaml.cs">
       <DependentUpon>UserStatsView.xaml</DependentUpon>

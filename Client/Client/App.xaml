@@ -31,11 +31,15 @@
             <DataTemplate DataType="{x:Type viewModel:HighScoreViewModel}">
                 <view:HighScoreView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:TriviaGameViewModel}">
+                <view:TriviaGameView/>
+            </DataTemplate>
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/OptionButtonTheme.xaml"/>
                 <ResourceDictionary Source="Theme/RoomListItemTheme.xaml"/>
                 <ResourceDictionary Source="Theme/ParticipantListItem.xaml"/>
+                <ResourceDictionary Source="Theme/ResultListItem.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
