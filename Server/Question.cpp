@@ -5,6 +5,11 @@ std::string Question::getQuestion()
 	return this->m_question;
 }
 
+Question::Question()
+{
+	m_question = "";
+}
+
 std::vector<std::string> Question::getPossibleAnswers()
 {
 	return this->m_possibleAnswers;

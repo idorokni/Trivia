@@ -1,6 +1,7 @@
 #pragma once
 #include "Structs.h"
 #include <string>
+#include <map>
 
 
 enum class ResponseCode {
@@ -111,10 +112,3 @@ struct GetGameResultsResponse
 	std::vector<PlayerResults> results;
 };
 
-struct PlayerResults
-{
-	std::string username;
-	unsigned int correctAnswerCounter;
-	unsigned int wrongAnswerCounter;
-	unsigned int averageAnswerTime;
-};

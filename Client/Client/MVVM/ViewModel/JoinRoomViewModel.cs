@@ -31,6 +31,7 @@ namespace Client.MVVM.ViewModel
             set
             {
                 _room = value;
+                OnPropertyChanged();
                 // Update the selected room ID when the Room property changes
                 if (_room != null)
                 {
