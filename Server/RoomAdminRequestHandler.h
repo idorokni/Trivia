@@ -6,6 +6,7 @@
 #include "RoomManager.h"
 #include "JsonResponsePacketSerializer.h"
 #include "RequestHandlerFactory.h"
+#include "GameManager.h"
 #include <unordered_map>
 #include <functional>
 

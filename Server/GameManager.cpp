@@ -2,7 +2,7 @@
 
 Game GameManager::createGame(Room room)
 {
-	std::list<Question> questionsList= IDatabase::get().getQuestions(room.getRoomData().numOfQuestionsInGame);
+    std::list<Question> questionsList = IDatabase::get().getQuestions(room.getRoomData().numOfQuestionsInGame);
     std::vector<Question> questionsVector;
     questionsVector.reserve(questionsList.size());
     for (const auto& question : questionsList) questionsVector.push_back(question);

@@ -1,5 +1,6 @@
 ﻿using Client.Core;
 using Client.MVVM.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,6 +33,7 @@ namespace Client.MVVM.ViewModel
         public int AmountOfQuestions { get { return _amountOfQuestions; } set { _amountOfQuestions = value; OnPropertyChanged(); } }
 
         public TriviaGameViewModel(int amountOfQuestions, int timePerQuestion)
+
         {
             SwitchQuestion = new RelayCommand(answerId =>
             {
@@ -48,12 +50,15 @@ namespace Client.MVVM.ViewModel
                     response = App.Communicator.DeserializeMessage();
                     if (response.IsSuccess)
                     {
-                        string[] answers = { "f" , "fd", "e", "t"};
+                        dynamic jsonObject = JsonConvert.DeserializeObject(response.Data);
+                        
+                        string[] answers = jsonObject.answers.split(',');
                         for(char i = 'a'; i <= 'd'; i++)
                         {
                             ButtonNames.Add(i + ". " + answers[i - 'a']);
                         }
                         //add question
+                        _question = jsonObject.question;
 
                         _decrement = amountOfQuestions;
                     }
