@@ -1,6 +1,6 @@
 #include "GameManager.h"
 
-Game GameManager::createGame(Room room)
+Game& GameManager::createGame(Room room)
 {
     std::list<Question> questionsList = IDatabase::get().getQuestions(room.getRoomData().numOfQuestionsInGame);
     std::vector<Question> questionsVector;
@@ -19,7 +19,8 @@ Game GameManager::createGame(Room room)
     }
 
     m_games.emplace_back(questionsVector, players, room.getRoomData().id);
-    return Game(questionsVector, players, room.getRoomData().id);
+    std::cout << "adding room, rooms = " << m_games.size() << std::endl;
+    return m_games.back();
 }
 
 void GameManager::deleteGame(unsigned int gameId)
@@ -34,6 +35,8 @@ void GameManager::deleteGame(unsigned int gameId)
         }
         else it++;
     }
+    std::cout << "deleting room, rooms = " << m_games.size() << std::endl;
+
 }
 
 GameManager& GameManager::get() noexcept {

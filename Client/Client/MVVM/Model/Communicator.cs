@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Windows.Markup;
 using Client.MVVM.ViewModel;
 using Newtonsoft.Json;
@@ -13,12 +14,13 @@ namespace Client.MVVM.Model
         private TcpClient client;
         private IPEndPoint serverEndPoint;
         private NetworkStream clientStream;
-
+        private Mutex mutex;
 
         public Communicator()
         {
             this.client = new TcpClient();
             this.serverEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8326);
+            this.mutex = new Mutex();
         }
 
         public void Connect()
@@ -29,8 +31,10 @@ namespace Client.MVVM.Model
 
         public void SendMessage(byte[] buffer)
         {
+            mutex.WaitOne();
             this.clientStream.Write(buffer, 0, buffer.Length);
             this.clientStream.Flush();
+            mutex.ReleaseMutex();
         }
 
         public byte[] Serialize(Request request, int messageCode)
@@ -69,7 +73,7 @@ namespace Client.MVVM.Model
         {
             byte[] codeBuffer = new byte[1];
             byte[] lengthBytes = new byte[4];
-
+            mutex.WaitOne();
             clientStream.Read(codeBuffer, 0, codeBuffer.Length);
 
             // Extract message code (1 byte)
@@ -87,7 +91,7 @@ namespace Client.MVVM.Model
             // Extract data (dataLength bytes)
             byte[] dataBytes = new byte[dataLength];
             clientStream.Read(dataBytes, 0, dataBytes.Length);
-
+            mutex.ReleaseMutex();
             // Convert data to JSON string
             string jsonData = Encoding.UTF8.GetString(dataBytes);
 

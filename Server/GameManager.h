@@ -11,7 +11,7 @@ private:
 	//unsigned int lastGivenId = 0;
 
 public:
-	Game createGame(Room room);
+	Game& createGame(Room room);
 	void deleteGame(unsigned int gameId);
 	static GameManager& get() noexcept;
 

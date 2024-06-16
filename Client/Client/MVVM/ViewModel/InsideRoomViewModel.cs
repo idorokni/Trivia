@@ -53,6 +53,7 @@ namespace Client.MVVM.ViewModel
                 if (response.IsSuccess)
                 {
                     background_worker.CancelAsync();
+                    MessageBox.Show("canceled");
                     MainViewModel.Instance.CurrentView = new TriviaGameViewModel(_room.NumOfQuestionsInGame, _room.TimePerQuestion);
                 }
                 else
@@ -170,6 +171,8 @@ namespace Client.MVVM.ViewModel
         {
             background_worker.CancelAsync();
             background_worker.Dispose();
+            MessageBox.Show("canceled.");
+
         }
     }
 }
