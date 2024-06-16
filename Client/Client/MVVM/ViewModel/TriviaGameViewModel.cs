@@ -14,7 +14,7 @@ namespace Client.MVVM.ViewModel
         private int _timePerQuestion;
         private int _decrement;
         private string _timeRepresentation;
-        private int _currentQuestionNumber = 1;
+        private int _currentQuestionNumber;
         private ObservableCollection<string> _buttonNames;
         private string _question;
         private int _amountOfCorrectAnswers;
@@ -53,7 +53,10 @@ namespace Client.MVVM.ViewModel
                 RequestResult response = App.Communicator.DeserializeMessage();
                 if (response.IsSuccess)
                 {
-                    AmountOfCorrectAnswers++;
+                    if ((string)answerId == "1")
+                    {
+                        AmountOfCorrectAnswers++;
+                    }
                 }
                 else
                 {
@@ -63,11 +66,15 @@ namespace Client.MVVM.ViewModel
                 if (_currentQuestionNumber < AmountOfQuestions)
                 {
                     GetQuestion(); // Move to the next question
+                                   // Restart the timer
+                    _decrement = _timePerQuestion; // Reset decrement counter
+                    Time = _decrement.ToString();
+                    timer.Start();
                 }
                 else
                 {
                     MessageBox.Show("Game over! Show final scores.");
-                    // Here you might want to switch to a final scores screen or reset the game state
+                    MainViewModel.Instance.CurrentView = new GameResultsViewModel();
                 }
             });
         }

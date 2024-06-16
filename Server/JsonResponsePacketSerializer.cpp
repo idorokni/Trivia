@@ -147,6 +147,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(SubmitAnswerResponse subm
 {
 	nlohmann::json j;
 	j["status"] = submitAnswerResponse.status;
+	j["correctId"] = submitAnswerResponse.correctAnswerId;
 	return convertToBuffer(j, ResponseCode::SUBMIT_ANSWER_RESPONSE);
 }
 

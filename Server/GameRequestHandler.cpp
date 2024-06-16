@@ -52,7 +52,7 @@ RequestResult GameRequestHandler::submitAnswer(const RequestInfo& info)
 
     try {
         m_game.submitAnswer(submitAnswerRequest.answerId, m_user);
-        submitAnswerResponse.correctAnswerId = submitAnswerRequest.answerId;
+        submitAnswerResponse.correctAnswerId = 1;
         submitAnswerResponse.status = 1;
         result.newHandler = this; // I thing shouldnt be changed - needed to ask rokni
     }
