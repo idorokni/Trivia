@@ -95,6 +95,36 @@ namespace Client.MVVM.Model
             return resault;
         }
 
+        public GetQuestionResult DeserializeGetQuestion()
+        {
+            byte[] codeBuffer = new byte[1];
+            byte[] lengthBytes = new byte[4];
+
+            clientStream.Read(codeBuffer, 0, codeBuffer.Length);
+
+            // Extract message code (1 byte)
+            byte codeByte = codeBuffer[0];
+            RequestCode messageCode = (RequestCode)codeByte;
+
+            clientStream.Read(lengthBytes, 0, lengthBytes.Length);
+            // Extract length of data (4 bytes, little-endian)
+            if (!BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(lengthBytes); // Convert to little-endian if needed
+            }
+            int dataLength = BitConverter.ToInt32(lengthBytes, 0);
+
+            // Extract data (dataLength bytes)
+            byte[] dataBytes = new byte[dataLength];
+            clientStream.Read(dataBytes, 0, dataBytes.Length);
+
+            // Convert data to JSON string
+            string jsonData = Encoding.UTF8.GetString(dataBytes);
+
+            GetQuestionResult result = new GetQuestionResult((int)messageCode, jsonData);
+            return result;
+        }
+
         public void Close()
         {
             clientStream.Close();
