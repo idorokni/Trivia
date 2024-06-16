@@ -15,10 +15,11 @@ Question Game::getQuestionForUser(LoggedUser user)
 	return m_questions[m_players[user].lastGivenQuestionId - 1];
 }
 
-void Game::submitAnswer(unsigned int answerId, LoggedUser player)
+void Game::submitAnswer(unsigned int answerId, unsigned int answerTime, LoggedUser player)
 {
 	if (answerId == 1) m_players[player].correctAnswerCount++;
 	else m_players[player].wrongAnswerCount++;
+	m_players[player].averageAnswerTime = (m_players[player].averageAnswerTime + answerTime) / 2;
 }
 
 void Game::removePlayer(LoggedUser player)
@@ -33,7 +34,7 @@ std::vector<PlayerResults> Game::getGameResults()
 	{
 		PlayerResults currentPlayerResult;
 		currentPlayerResult.username = player.first.getUsername();
-		currentPlayerResult.correctAnswerCounter = player.second.averageAnswerTime;
+		currentPlayerResult.correctAnswerCounter = player.second.correctAnswerCount;
 		currentPlayerResult.wrongAnswerCounter = player.second.wrongAnswerCount;
 		currentPlayerResult.averageAnswerTime = player.second.averageAnswerTime;
 		results.push_back(currentPlayerResult);

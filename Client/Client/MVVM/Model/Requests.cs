@@ -161,10 +161,12 @@ namespace Client.MVVM.Model
     public class SubmitAnswerRequest : Request
     {
         public uint _answerId;
+        public uint _timeToAnswer;
 
-        public SubmitAnswerRequest(uint answerId)
+        public SubmitAnswerRequest(uint answerId, uint timeToAnswer)
         {
             _answerId = answerId;
+            _timeToAnswer = timeToAnswer;
         }
     }
 

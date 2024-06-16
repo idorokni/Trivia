@@ -17,7 +17,7 @@ private:
 public:
 	Game(const std::vector<Question>& questions, std::map<LoggedUser, GameData>& players, unsigned int gameId);
 	Question getQuestionForUser(LoggedUser user);
-	void submitAnswer(unsigned int answerId, LoggedUser player);
+	void submitAnswer(unsigned int answerId, unsigned int answerTime, LoggedUser player);
 	void removePlayer(LoggedUser player);
 	std::vector<PlayerResults> getGameResults();
 	unsigned int getGameId() { return m_gameId; }

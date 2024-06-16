@@ -51,7 +51,15 @@ namespace Client.MVVM.ViewModel
 
             SwitchQuestion = new RelayCommand(answerId =>
             {
-                SubmitAnswerRequest submitAnswerRequest = new SubmitAnswerRequest(uint.Parse((string)answerId));
+                SubmitAnswerRequest submitAnswerRequest;
+                if ((string)answerId == _correctAnswerIndex)
+                {
+                    submitAnswerRequest = new SubmitAnswerRequest(uint.Parse("1"), (uint)(_timePerQuestion - _decrement));
+                }
+                else
+                {
+                    submitAnswerRequest = new SubmitAnswerRequest(uint.Parse("2"), (uint)(_timePerQuestion - _decrement));
+                }
                 byte[] msg = App.Communicator.Serialize(submitAnswerRequest, (int)RequestCode.SUBMIT_ANSWER_REQUEST_CODE);
                 App.Communicator.SendMessage(msg);
                 RequestResult response = App.Communicator.DeserializeMessage();
