@@ -2,6 +2,7 @@
 using Client.MVVM.Model;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Threading;
@@ -19,6 +20,7 @@ namespace Client.MVVM.ViewModel
         private string _question;
         private int _amountOfCorrectAnswers;
         private int _amountOfQuestions;
+        private string _correctAnswerIndex;
 
         public string Time { get { return _timeRepresentation; } set { _timeRepresentation = value; OnPropertyChanged(); } }
         public string Question { get { return _question; } set { _question = value; OnPropertyChanged(); } }
@@ -27,6 +29,8 @@ namespace Client.MVVM.ViewModel
         public int CurrentQuestionNumber { get { return _currentQuestionNumber; } set { _currentQuestionNumber = value; OnPropertyChanged(); } }
         public int AmountOfCorrectAnswers { get { return _amountOfCorrectAnswers; } set { _amountOfCorrectAnswers = value; OnPropertyChanged(); } }
         public int AmountOfQuestions { get { return _amountOfQuestions; } set { _amountOfQuestions = value; OnPropertyChanged(); } }
+
+        public string CorrectAnswerIndex { get { return _correctAnswerIndex; } set { _correctAnswerIndex = value; OnPropertyChanged(); } }
 
         public TriviaGameViewModel(int amountOfQuestions, int timePerQuestion)
         {
@@ -53,7 +57,7 @@ namespace Client.MVVM.ViewModel
                 RequestResult response = App.Communicator.DeserializeMessage();
                 if (response.IsSuccess)
                 {
-                    if ((string)answerId == "1")
+                    if ((string)answerId == _correctAnswerIndex)
                     {
                         AmountOfCorrectAnswers++;
                     }
@@ -66,7 +70,7 @@ namespace Client.MVVM.ViewModel
                 if (_currentQuestionNumber < AmountOfQuestions)
                 {
                     GetQuestion(); // Move to the next question
-                                   // Restart the timer
+                    // Restart the timer
                     _decrement = _timePerQuestion; // Reset decrement counter
                     Time = _decrement.ToString();
                     timer.Start();
@@ -92,6 +96,8 @@ namespace Client.MVVM.ViewModel
 
         private void GetQuestion()
         {
+            List<int> list = new List<int> { 0, 1, 2, 3 };
+
             GetQuestionRequest getQuestionRequest = new GetQuestionRequest();
             byte[] msg = App.Communicator.Serialize(getQuestionRequest, (int)RequestCode.GET_QUESTION_REQUEST_CODE);
             App.Communicator.SendMessage(msg);
@@ -100,11 +106,33 @@ namespace Client.MVVM.ViewModel
             {
                 CurrentQuestionNumber++;
                 ButtonNames.Clear();
-                for (char i = 'a'; i <= 'd'; i++)
+                for (int i = 0; i <= 3; i++)
                 {
-                    ButtonNames.Add(i + ". " + getQuestionResult.answers[i - 'a']);
+                    Shuffle(list);
+                    int lastItem = list[list.Count - 1]; // Get the last item
+                    list.RemoveAt(list.Count - 1); // Remove the last item
+                    ButtonNames.Add(i + ". " + getQuestionResult.answers[lastItem].Split('-')[1]);
+                    if (getQuestionResult.answers[lastItem].Contains("1-"))
+                    {
+                        CorrectAnswerIndex = (i + 1).ToString();
+                    }
+
                 }
                 Question = getQuestionResult.question;
+            }
+        }
+
+        private static void Shuffle(List<int> list)
+        {
+            Random rng = new Random();
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                int value = list[k];
+                list[k] = list[n];
+                list[n] = value;
             }
         }
     }

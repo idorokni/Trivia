@@ -21,7 +21,7 @@ RequestResult GameRequestHandler::getQuestion(const RequestInfo& info)
 	RequestResult result;
 	Buffer buff;
 	GetQuestionResponse getQuestionResponse;
-    int i = 0;
+    int i = 1;
 
     try {
         Question question = m_game.getQuestionForUser(m_user);
