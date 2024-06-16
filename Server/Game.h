@@ -11,7 +11,7 @@ private:
 	std::vector<Question> m_questions;
 	std::map<LoggedUser, GameData> m_players;
 	unsigned int m_gameId;
-	unsigned int m_lastGivenQuestionId;
+	//unsigned int m_lastGivenQuestionId;
 	void submitGameStatsToDB(GameData gameData);
 
 public:

@@ -18,6 +18,7 @@ struct GameData
 	unsigned int correctAnswerCount;
 	unsigned int wrongAnswerCount;
 	unsigned int averageAnswerTime;
+	unsigned int lastGivenQuestionId;
 
 	//GameData(Question CurrentQuestion, unsigned int CorrectAnswerCount, unsigned int WrongAnswerCount, unsigned int AverageAnswerTime) : currentQuestion(CurrentQuestion), correctAnswerCount(CorrectAnswerCount), wrongAnswerCount(WrongAnswerCount), averageAnswerTime(AverageAnswerTime) {}
 };

@@ -5,13 +5,14 @@ Game::Game(const std::vector<Question>& questions, std::map<LoggedUser, GameData
 	m_questions = questions;
 	m_players = players;
 	m_gameId = gameId;
-	m_lastGivenQuestionId = 0;
+	//m_lastGivenQuestionId = 0;
 }
 
 Question Game::getQuestionForUser(LoggedUser user)
 {
-	m_lastGivenQuestionId++;
-	return m_questions[m_lastGivenQuestionId - 1];
+	//m_lastGivenQuestionId++;
+	m_players[user].lastGivenQuestionId++;
+	return m_questions[m_players[user].lastGivenQuestionId - 1];
 }
 
 void Game::submitAnswer(unsigned int answerId, LoggedUser player)

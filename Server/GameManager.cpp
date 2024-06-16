@@ -15,6 +15,7 @@ Game& GameManager::createGame(Room room)
         gameData.correctAnswerCount = 0;
         gameData.wrongAnswerCount = 0;
         gameData.averageAnswerTime = 0;
+        gameData.lastGivenQuestionId = 0;
         players[loggedUser] = gameData;
     }
 
