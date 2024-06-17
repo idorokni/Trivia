@@ -15,7 +15,6 @@ namespace Client.MVVM.ViewModel
         private ObservableCollection<uint> _correctAnswers;
         private ObservableCollection<uint> _wrongAnswers;
         private ObservableCollection<uint> _averageAnswerTime;
-
         public ObservableCollection<string> Usernames {  get { return _userNames; } set { _userNames = value; OnPropertyChanged(); } }
         public ObservableCollection<uint> CorrectAnswers {  get { return _correctAnswers; } set { _correctAnswers = value; OnPropertyChanged(); } }
         public ObservableCollection<uint> WrongAnswers {  get { return _wrongAnswers; } set { _wrongAnswers = value; OnPropertyChanged(); } }

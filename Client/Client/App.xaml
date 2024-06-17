@@ -34,6 +34,9 @@
             <DataTemplate DataType="{x:Type viewModel:TriviaGameViewModel}">
                 <view:TriviaGameView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:GameResultsViewModel}">
+                <view:GameResultsView/>
+            </DataTemplate>
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/OptionButtonTheme.xaml"/>
