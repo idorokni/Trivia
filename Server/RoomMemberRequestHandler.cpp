@@ -40,7 +40,12 @@ RequestResult RoomMemberRequestHandler::getRoomState(const RequestInfo& info) {
     try {
         RoomManager::get().getRoomState(getRoomStateResponse, m_room.getRoomData().id);
         getRoomStateResponse.status = 1;
-        result.newHandler = this;
+        if (getRoomStateResponse.state == RoomState::GAME_STARTED) {
+            result.newHandler = RequestHandlerFactory::get().createGameRequestHandler(GameManager::get().getGamee(m_room.getRoomData().id), m_user);
+        }
+        else {
+            result.newHandler = this;
+        }
     }
     catch (...) {
         getRoomStateResponse.status = 0;

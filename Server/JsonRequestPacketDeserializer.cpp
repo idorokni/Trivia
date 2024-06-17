@@ -67,7 +67,12 @@ SubmitAnswerRequest JsonRequestPacketDeserializer::deserializeSubmitAnswerReques
 {
 	SubmitAnswerRequest submitAnswerRequest;
 	nlohmann::json jsonObj = convertToJsonObject(buff);
-	if (jsonObj.contains("AanswerId")) submitAnswerRequest.answerId = jsonObj["AanswerId"];
+	if (jsonObj.contains("_answerId") && jsonObj.contains("_timeToAnswer"))
+	{
+		submitAnswerRequest.answerId = jsonObj["_answerId"];
+		submitAnswerRequest.answerTime = jsonObj["_timeToAnswer"];
+
+	}
 	return submitAnswerRequest;
 }
 

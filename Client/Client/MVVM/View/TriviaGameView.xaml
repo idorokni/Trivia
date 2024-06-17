@@ -20,7 +20,14 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="80"/>
                 </Grid.ColumnDefinitions>
-
+                
+                <TextBlock Grid.Column="0"
+                           FontWeight="SemiBold"
+                           FontSize="25"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="{Binding Question}"/>
+                
                 <TextBlock Grid.Column="1"
                            FontWeight="SemiBold"
                            FontSize="25"

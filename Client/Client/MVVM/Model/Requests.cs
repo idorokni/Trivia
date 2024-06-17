@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -6,6 +7,7 @@ using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Markup;
 
 namespace Client.MVVM.Model
 {
@@ -26,9 +28,14 @@ namespace Client.MVVM.Model
         LEAVE_ROOM_REQUEST_CODE = 63,
         LEAVE_GAME_REQUEST_CODE = 64,
         GET_QUESTION_REQUEST_CODE = 65,
-        SUBMIT_ANSWER_REUEST_CODE = 66,
+        SUBMIT_ANSWER_REQUEST_CODE = 66,
         GET_GAME_RESULT_REQUEST_CODE = 67
     };
+
+    enum ResultCode
+    {
+        GET_QUESTION_RESPONSE = 116
+    }
 
     public class Request
     {
@@ -154,10 +161,12 @@ namespace Client.MVVM.Model
     public class SubmitAnswerRequest : Request
     {
         public uint _answerId;
+        public uint _timeToAnswer;
 
-        public SubmitAnswerRequest(uint answerId)
+        public SubmitAnswerRequest(uint answerId, uint timeToAnswer)
         {
             _answerId = answerId;
+            _timeToAnswer = timeToAnswer;
         }
     }
 
@@ -172,6 +181,32 @@ namespace Client.MVVM.Model
             this.code = code;
             this.Data = data;
             if (data.Contains("\"status\":1")) this.IsSuccess = true;
+            else this.IsSuccess = false;
+        }
+    }
+
+    public class GetQuestionResult
+    {
+        public int code;
+        public string question { get; set; }
+        public string[] answers { get; set; }
+        public bool IsSuccess;
+
+
+        public GetQuestionResult(int code, string data)
+        {
+            if (data.Contains("\"status\":1")) 
+            {
+                this.IsSuccess = true;
+                dynamic jsonObject = JsonConvert.DeserializeObject(data);
+                // Accessing question and answers
+                string answersString = jsonObject.answers;
+                // Splitting answers by comma
+                string[] answersArray = answersString.Split(',');
+                this.code = code;
+                this.question = jsonObject.question;
+                this.answers = answersArray;
+            }
             else this.IsSuccess = false;
         }
     }

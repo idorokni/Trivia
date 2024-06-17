@@ -136,7 +136,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(GetGameResultsResponse ge
 		{
 			resultsString += playerResults.username + "," + std::to_string(playerResults.correctAnswerCounter) + "," + std::to_string(playerResults.wrongAnswerCounter) + "," + std::to_string(playerResults.averageAnswerTime) + "-";
 		}
-		resultsString.erase(resultsString.end());
+		resultsString.erase(resultsString.end() - 1);
 		j["results"] = resultsString;
 	}
 	j["results"] = resultsString;
@@ -147,6 +147,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(SubmitAnswerResponse subm
 {
 	nlohmann::json j;
 	j["status"] = submitAnswerResponse.status;
+	j["correctId"] = submitAnswerResponse.correctAnswerId;
 	return convertToBuffer(j, ResponseCode::SUBMIT_ANSWER_RESPONSE);
 }
 

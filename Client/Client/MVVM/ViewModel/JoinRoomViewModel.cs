@@ -31,6 +31,7 @@ namespace Client.MVVM.ViewModel
             set
             {
                 _room = value;
+                OnPropertyChanged();
                 // Update the selected room ID when the Room property changes
                 if (_room != null)
                 {
@@ -93,11 +94,11 @@ namespace Client.MVVM.ViewModel
         {
             if (e.Cancelled)
             {
-                MessageBox.Show("BackgroundWorker canceled");
+                //MessageBox.Show("BackgroundWorker canceled");
             }
             else
             {
-                MessageBox.Show("BackgroundWorker ended successfully");
+                //MessageBox.Show("BackgroundWorker ended successfully");
             }
         }
 

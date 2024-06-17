@@ -1,6 +1,6 @@
 #include "RequestHandlerFactory.h"
 
-LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler() const{
+LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler() const {
 	return new LoginRequestHandler();
 }
 
@@ -16,6 +16,10 @@ RoomMemberRequestHandler* RequestHandlerFactory::creatRoomMemberRequestHandler(c
 	return new RoomMemberRequestHandler(loggedUser, room);
 }
 
+GameRequestHandler* RequestHandlerFactory::createGameRequestHandler(Game& game, const LoggedUser& loggedUser)
+{
+	return new GameRequestHandler(game, loggedUser);
+}
 
 RequestHandlerFactory& RequestHandlerFactory::get() noexcept{
 	static RequestHandlerFactory s_Instance;

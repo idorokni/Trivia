@@ -4,6 +4,7 @@
 #include <iostream>
 #include "json.hpp"
 #include "Constants.h"
+#include "Structs.h"
 
 class JsonResponsePacketSerializer {
 public:

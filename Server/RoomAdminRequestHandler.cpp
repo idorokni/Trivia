@@ -41,7 +41,8 @@ RequestResult RoomAdminRequestHandler::startGame(const RequestInfo& info) {
     try {
         RoomManager::get().startGame(m_room.getRoomData().id);
         startGameResponse.status = 1;
-        result.newHandler = this; //should be changed in 400
+        Game& game = GameManager::get().createGame(m_room);
+        result.newHandler = RequestHandlerFactory::get().createGameRequestHandler(game, m_user); //was changed in 400
     }
     catch (...) {
         startGameResponse.status = 0;
