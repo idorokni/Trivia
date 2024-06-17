@@ -1,6 +1,7 @@
 ﻿using Client.Core;
 using Client.MVVM.Model;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -74,23 +75,32 @@ namespace Client.MVVM.ViewModel
                     int statusPos = data.IndexOf(",\"status\"");
                     data = data.Substring(1, statusPos - 2);
                     string[] results = data.Split('-');
-                    string[] names = new string[results.Length];
-                    string[] correctCount = new string[results.Length];
-                    string[] wrongCount = new string[results.Length];
-                    string[] averageTime = new string[results.Length];
+                    List<GameResultEntry> gameResults = new List<GameResultEntry>();
 
-                    for (int i = 0; i < results.Length; i++)
+                    foreach (string result in results)
                     {
-                        string[] resultParts = results[i].Split(',');
+                        string[] resultParts = result.Split(',');
                         if (resultParts.Length >= 4)
                         {
-                            names[i] = resultParts[0];
-                            correctCount[i] = resultParts[1];
-                            wrongCount[i] = resultParts[2];
-                            averageTime[i] = resultParts[3];
+                            string username = resultParts[0];
+                            uint correctCount = uint.TryParse(resultParts[1], out uint correctValue) ? correctValue : 0;
+                            uint wrongCount = uint.TryParse(resultParts[2], out uint wrongValue) ? wrongValue : 0;
+                            uint avgTime = uint.TryParse(resultParts[3], out uint avgTimeValue) ? avgTimeValue : 0;
+
+                            gameResults.Add(new GameResultEntry
+                            {
+                                Username = username,
+                                CorrectAnswers = correctCount,
+                                WrongAnswers = wrongCount,
+                                AverageAnswerTime = avgTime
+                            });
                         }
                     }
 
+                    // Order by CorrectAnswers descending
+                    gameResults = gameResults.OrderByDescending(r => r.CorrectAnswers).ToList();
+
+                    // Clear and update ObservableCollection on UI thread
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         Usernames.Clear();
@@ -98,27 +108,12 @@ namespace Client.MVVM.ViewModel
                         WrongAnswers.Clear();
                         AvgAnswerTime.Clear();
 
-                        foreach (string username in names)
+                        foreach (var result in gameResults)
                         {
-                            Usernames.Add(username);
-                        }
-
-                        foreach (string correct in correctCount)
-                        {
-                            if (uint.TryParse(correct, out uint value))
-                                CorrectAnswers.Add(value);
-                        }
-
-                        foreach (string wrong in wrongCount)
-                        {
-                            if (uint.TryParse(wrong, out uint value))
-                                WrongAnswers.Add(value);
-                        }
-
-                        foreach (string time in averageTime)
-                        {
-                            if (uint.TryParse(time, out uint value))
-                                AvgAnswerTime.Add(value);
+                            Usernames.Add(result.Username);
+                            CorrectAnswers.Add(result.CorrectAnswers);
+                            WrongAnswers.Add(result.WrongAnswers);
+                            AvgAnswerTime.Add(result.AverageAnswerTime);
                         }
                     });
                 }
@@ -128,6 +123,7 @@ namespace Client.MVVM.ViewModel
                 MessageBox.Show("An error occurred: " + ex.Message);
             }
         }
+
 
         public void Dispose()
         {
