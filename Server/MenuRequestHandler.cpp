@@ -108,7 +108,7 @@ RequestResult MenuRequestHandler::joinRoom(const RequestInfo& info) {
 	JoinRoomRequest joinRoomRequest = JsonRequestPacketDeserializer::deserializeJoinRoomRequest(info.buff);
 	JoinRoomResponse joinRoomResponse;
 	try {
-		if (RoomManager::get().getRoom(joinRoomRequest.roomId).getAllUsers().size() < RoomManager::get().getRoom(joinRoomRequest.roomId).getRoomData().maxPlayers) {
+		if (RoomManager::get().getRoom(joinRoomRequest.roomId).getAllUsers().size() < RoomManager::get().getRoom(joinRoomRequest.roomId).getRoomData().maxPlayers && RoomManager::get().getRoom(joinRoomRequest.roomId).getRoomData().isActive != RoomState::GAME_STARTED) {
 			RoomManager::get().getRoom(joinRoomRequest.roomId).addUser(m_user);
 			joinRoomResponse.status = 1;
 			reasult.newHandler = RequestHandlerFactory::get().creatRoomMemberRequestHandler(m_user, RoomManager::get().getRoom(joinRoomRequest.roomId));

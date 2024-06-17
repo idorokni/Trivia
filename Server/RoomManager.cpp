@@ -29,6 +29,7 @@ const std::vector<RoomData> RoomManager::getRooms() const {
 
 void RoomManager::startGame(int ID) {
 	m_rooms.at(ID).getRoomData().isActive = RoomState::GAME_STARTED;
+
 }
 Room& RoomManager::getRoom(int ID) {
 	return m_rooms.at(ID);
