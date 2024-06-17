@@ -1,24 +1,27 @@
 ﻿using Client.Core;
 using Client.MVVM.Model;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
+using System.Windows;
 
 namespace Client.MVVM.ViewModel
 {
-    internal class GameResultsViewModel : ObservableObject
+    internal class GameResultsViewModel : ObservableObject, IDisposable
     {
         private ObservableCollection<string> _userNames;
         private ObservableCollection<uint> _correctAnswers;
         private ObservableCollection<uint> _wrongAnswers;
         private ObservableCollection<uint> _averageAnswerTime;
-        public ObservableCollection<string> Usernames {  get { return _userNames; } set { _userNames = value; OnPropertyChanged(); } }
-        public ObservableCollection<uint> CorrectAnswers {  get { return _correctAnswers; } set { _correctAnswers = value; OnPropertyChanged(); } }
-        public ObservableCollection<uint> WrongAnswers {  get { return _wrongAnswers; } set { _wrongAnswers = value; OnPropertyChanged(); } }
-        public ObservableCollection<uint> AvgAnswerTime {  get { return _averageAnswerTime; } set { _averageAnswerTime = value; OnPropertyChanged(); } }
+        private BackgroundWorker background_worker = new BackgroundWorker();
+        private bool _isDisposed = false;
+
+        public ObservableCollection<string> Usernames { get { return _userNames; } set { _userNames = value; OnPropertyChanged(); } }
+        public ObservableCollection<uint> CorrectAnswers { get { return _correctAnswers; } set { _correctAnswers = value; OnPropertyChanged(); } }
+        public ObservableCollection<uint> WrongAnswers { get { return _wrongAnswers; } set { _wrongAnswers = value; OnPropertyChanged(); } }
+        public ObservableCollection<uint> AvgAnswerTime { get { return _averageAnswerTime; } set { _averageAnswerTime = value; OnPropertyChanged(); } }
 
         public GameResultsViewModel()
         {
@@ -26,55 +29,113 @@ namespace Client.MVVM.ViewModel
             CorrectAnswers = new ObservableCollection<uint>();
             WrongAnswers = new ObservableCollection<uint>();
             AvgAnswerTime = new ObservableCollection<uint>();
-            //should request here
 
-            GetGameResultsRequest getGameResultsRequest = new GetGameResultsRequest();
-            byte[] msg = App.Communicator.Serialize(getGameResultsRequest, (int)Client.MVVM.Model.RequestCode.GET_GAME_RESULT_REQUEST_CODE);
-            App.Communicator.SendMessage(msg);
+            background_worker.WorkerSupportsCancellation = true;
+            background_worker.WorkerReportsProgress = true;
+            background_worker.DoWork += background_worker_DoWork;
+            background_worker.RunWorkerCompleted += background_worker_RunWorkerCompleted;
 
-            RequestResult response = App.Communicator.DeserializeMessage();
-            if (response.IsSuccess)
+            background_worker.RunWorkerAsync(3000);
+        }
+
+        private void background_worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (!background_worker.CancellationPending)
             {
-                string data = response.Data.Split(':')[1];
-                int statusPos = data.IndexOf(",\"status\"");
-                data = data.Substring(1, statusPos - 2);
-                string[] results = data.Split('-');
-                string[] names = new string[results.Length];
-                string[] correctCount = new string[results.Length];
-                string[] wrongCount = new string[results.Length];
-                string[] averageTime = new string[results.Length];
+                refreshGameResults();
+                Thread.Sleep((int)e.Argument);
+            }
+        }
 
-                for (int i = 0; i < results.Length; i++)
+        private void background_worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled)
+            {
+                // Optionally handle cancellation
+            }
+            else
+            {
+                // Optionally handle completion
+            }
+        }
+
+        private void refreshGameResults()
+        {
+            try
+            {
+                GetGameResultsRequest getGameResultsRequest = new GetGameResultsRequest();
+                byte[] msg = App.Communicator.Serialize(getGameResultsRequest, (int)Client.MVVM.Model.RequestCode.GET_GAME_RESULT_REQUEST_CODE);
+                App.Communicator.SendMessage(msg);
+
+                RequestResult response = App.Communicator.DeserializeMessage();
+                if (response.IsSuccess)
                 {
-                    names[i] = results[i].Split(',')[0];
-                    correctCount[i] = results[i].Split(',')[1];
-                    wrongCount[i] = results[i].Split(',')[2];
-                    averageTime[i] = results[i].Split(',')[3];
-                }
+                    string data = response.Data.Split(':')[1];
+                    int statusPos = data.IndexOf(",\"status\"");
+                    data = data.Substring(1, statusPos - 2);
+                    string[] results = data.Split('-');
+                    string[] names = new string[results.Length];
+                    string[] correctCount = new string[results.Length];
+                    string[] wrongCount = new string[results.Length];
+                    string[] averageTime = new string[results.Length];
 
-                foreach (string username in names)
-                {
-                    Usernames.Add(username);
-                }
+                    for (int i = 0; i < results.Length; i++)
+                    {
+                        string[] resultParts = results[i].Split(',');
+                        if (resultParts.Length >= 4)
+                        {
+                            names[i] = resultParts[0];
+                            correctCount[i] = resultParts[1];
+                            wrongCount[i] = resultParts[2];
+                            averageTime[i] = resultParts[3];
+                        }
+                    }
 
-                foreach (string correct in correctCount)
-                {
-                    if (uint.TryParse(correct, out uint value))
-                        CorrectAnswers.Add(value);
-                }
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        Usernames.Clear();
+                        CorrectAnswers.Clear();
+                        WrongAnswers.Clear();
+                        AvgAnswerTime.Clear();
 
-                foreach (string wrong in wrongCount)
-                {
-                    if (uint.TryParse(wrong, out uint value))
-                        WrongAnswers.Add(value);
-                }
+                        foreach (string username in names)
+                        {
+                            Usernames.Add(username);
+                        }
 
-                foreach (string time in averageTime)
-                {
-                    if (uint.TryParse(time, out uint value))
-                        AvgAnswerTime.Add(value);
-                }
+                        foreach (string correct in correctCount)
+                        {
+                            if (uint.TryParse(correct, out uint value))
+                                CorrectAnswers.Add(value);
+                        }
 
+                        foreach (string wrong in wrongCount)
+                        {
+                            if (uint.TryParse(wrong, out uint value))
+                                WrongAnswers.Add(value);
+                        }
+
+                        foreach (string time in averageTime)
+                        {
+                            if (uint.TryParse(time, out uint value))
+                                AvgAnswerTime.Add(value);
+                        }
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message);
+            }
+        }
+
+        public void Dispose()
+        {
+            if (!_isDisposed)
+            {
+                background_worker.CancelAsync();
+                background_worker.Dispose();
+                _isDisposed = true;
             }
         }
     }
