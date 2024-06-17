@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MVVM\Model\Communicator.cs" />
+    <Compile Include="MVVM\Model\GameResultEntry.cs" />
     <Compile Include="MVVM\Model\Requests.cs" />
     <Compile Include="MVVM\Model\RoomModel.cs" />
     <Compile Include="MVVM\Model\ScoreModel.cs" />
