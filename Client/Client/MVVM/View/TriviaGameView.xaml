@@ -85,7 +85,8 @@
                         Background="#1E96FC"
                         Content="LEAVE GAME"
                         FontSize="17"
-                        FontWeight="SemiBold"/>
+                        FontWeight="SemiBold"
+                        Command="{Binding LeaveGame}"/>
             </Grid>
 
             <Grid Grid.Row="1">

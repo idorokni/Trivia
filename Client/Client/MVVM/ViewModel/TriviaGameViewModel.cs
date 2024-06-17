@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -25,6 +26,7 @@ namespace Client.MVVM.ViewModel
         public string Time { get { return _timeRepresentation; } set { _timeRepresentation = value; OnPropertyChanged(); } }
         public string Question { get { return _question; } set { _question = value; OnPropertyChanged(); } }
         public RelayCommand SwitchQuestion { get; set; }
+        public RelayCommand LeaveGame { get; set; }
         public ObservableCollection<string> ButtonNames { get { return _buttonNames; } set { _buttonNames = value; OnPropertyChanged(); } }
         public int CurrentQuestionNumber { get { return _currentQuestionNumber; } set { _currentQuestionNumber = value; OnPropertyChanged(); } }
         public int AmountOfCorrectAnswers { get { return _amountOfCorrectAnswers; } set { _amountOfCorrectAnswers = value; OnPropertyChanged(); } }
@@ -49,6 +51,27 @@ namespace Client.MVVM.ViewModel
             });
 
             ButtonNames = new ObservableCollection<string>();
+
+            LeaveGame = new RelayCommand(o =>
+            {
+                LeaveGameRequest leaveGameRequest = new LeaveGameRequest();
+
+                byte[] msg = App.Communicator.Serialize(leaveGameRequest, (int)Client.MVVM.Model.RequestCode.LEAVE_GAME_REQUEST_CODE);
+                App.Communicator.SendMessage(msg);
+
+                RequestResult response = App.Communicator.DeserializeMessage();
+                // Handle the response here (e.g., check if login was successful)
+
+                if (response.IsSuccess)
+                {
+                    timer.Stop();
+                    MainViewModel.Instance.CurrentView = new HomeViewModel();
+                }
+                else
+                {
+                    MessageBox.Show("Leave room failed: " + response.Data);
+                }
+            });
 
             // Initial question retrieval
             GetQuestion();
