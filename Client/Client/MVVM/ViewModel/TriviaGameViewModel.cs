@@ -38,11 +38,15 @@ namespace Client.MVVM.ViewModel
             _timePerQuestion = timePerQuestion;
             _decrement = _timePerQuestion;
 
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1); // Timer ticks every second
-            timer.Tick += Timer_Tick;
-            Time = _decrement.ToString();
-            timer.Start();
+            // Initialize and start the timer on the UI thread
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                timer = new DispatcherTimer();
+                timer.Interval = TimeSpan.FromSeconds(1); // Timer ticks every second
+                timer.Tick += Timer_Tick;
+                Time = _decrement.ToString();
+                timer.Start();
+            });
 
             ButtonNames = new ObservableCollection<string>();
 
@@ -81,11 +85,11 @@ namespace Client.MVVM.ViewModel
                     // Restart the timer
                     _decrement = _timePerQuestion; // Reset decrement counter
                     Time = _decrement.ToString();
-                    timer.Start();
+                    Application.Current.Dispatcher.Invoke(() => timer.Start());
                 }
                 else
                 {
-                    MessageBox.Show("Game over! Show final scores.");
+                    //MessageBox.Show("Game over! Show final scores.");
                     MainViewModel.Instance.CurrentView = new GameResultsViewModel();
                 }
             });
@@ -94,11 +98,21 @@ namespace Client.MVVM.ViewModel
         private void Timer_Tick(object sender, EventArgs e)
         {
             _decrement--;
-            Time = _decrement.ToString();
+
+            // Update Time property on the UI thread
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Time = _decrement.ToString();
+            });
+
             if (_decrement <= 0)
             {
                 timer.Stop();
-                SwitchQuestion.Execute("0");
+                // Execute on the UI thread
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    SwitchQuestion.Execute("0");
+                });
             }
         }
 
