@@ -54,7 +54,11 @@ namespace Client.MVVM.ViewModel
         {
             if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(AmountOfQuestions) && !string.IsNullOrEmpty(AmountOfUsers) && !string.IsNullOrEmpty(TimePerQuestions))
             {
-                return UInt32.TryParse(AmountOfQuestions, out _) && UInt32.TryParse(AmountOfUsers, out _) && UInt32.TryParse(TimePerQuestions, out _);
+                if (UInt32.TryParse(AmountOfQuestions, out _) && UInt32.TryParse(AmountOfUsers, out _) && UInt32.TryParse(TimePerQuestions, out _))
+                {
+                    return (int.Parse(_amountOfQuestions) <= 10);
+                }
+                return false;
             }
             return false;
         }
