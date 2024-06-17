@@ -17,9 +17,17 @@ Question Game::getQuestionForUser(LoggedUser user)
 
 void Game::submitAnswer(unsigned int answerId, unsigned int answerTime, LoggedUser player)
 {
+	if (m_players[player].correctAnswerCount == 0 && m_players[player].wrongAnswerCount == 0)
+	{
+		m_players[player].averageAnswerTime = answerTime;
+
+	}
+	else
+	{
+		m_players[player].averageAnswerTime = (m_players[player].averageAnswerTime * (m_players[player].correctAnswerCount + m_players[player].wrongAnswerCount) + answerTime) / (m_players[player].correctAnswerCount + m_players[player].wrongAnswerCount + 1);
+	}
 	if (answerId == 1) m_players[player].correctAnswerCount++;
 	else m_players[player].wrongAnswerCount++;
-	m_players[player].averageAnswerTime = (m_players[player].averageAnswerTime + answerTime) / 2;
 }
 
 void Game::removePlayer(LoggedUser player)

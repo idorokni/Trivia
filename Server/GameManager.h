@@ -13,6 +13,7 @@ private:
 public:
 	Game& createGame(Room room);
 	void deleteGame(unsigned int gameId);
+	Game& getGamee(unsigned int roomId);
 	static GameManager& get() noexcept;
 
 };

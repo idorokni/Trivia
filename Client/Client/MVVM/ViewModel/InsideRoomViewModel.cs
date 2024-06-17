@@ -53,7 +53,7 @@ namespace Client.MVVM.ViewModel
                 if (response.IsSuccess)
                 {
                     background_worker.CancelAsync();
-                    MessageBox.Show("canceled");
+                    //MessageBox.Show("canceled");
                     MainViewModel.Instance.CurrentView = new TriviaGameViewModel(_room.NumOfQuestionsInGame, _room.TimePerQuestion);
                 }
                 else
@@ -118,11 +118,11 @@ namespace Client.MVVM.ViewModel
         {
             if (e.Cancelled)
             {
-                MessageBox.Show("BackgroundWorker canceled");
+                //MessageBox.Show("BackgroundWorker canceled");
             }
             else
             {
-                MessageBox.Show("BackgroundWorker ended successfully");
+                //MessageBox.Show("BackgroundWorker ended successfully");
             }
         }
 
@@ -137,7 +137,7 @@ namespace Client.MVVM.ViewModel
 
                 RequestResult response = App.Communicator.DeserializeMessage();
                 string c = response.Data.Split(':')[2].Split(',')[0];
-                if (int.Parse(response.Data.Split(':')[2].Split(',')[0]) != 3)
+                if (int.Parse(response.Data.Split(':')[2].Split(',')[0]) == 1)
                 {
                     string[] participantsArray = response.Data.Split(':')[3].Substring(1, response.Data.Split(':')[3].IndexOf(",\",\"questionCount\"")).Split(',');
                     participantsArray = participantsArray.Take(participantsArray.Length - 1).ToArray();
@@ -152,6 +152,12 @@ namespace Client.MVVM.ViewModel
                             }
                         }
                     });
+                }
+                else if(int.Parse(response.Data.Split(':')[2].Split(',')[0]) == 2)
+                {
+                    background_worker.CancelAsync();
+                   // MessageBox.Show("canceled");
+                    MainViewModel.Instance.CurrentView = new TriviaGameViewModel(_room.NumOfQuestionsInGame, _room.TimePerQuestion);    
                 }
                 else
                 {
@@ -171,7 +177,7 @@ namespace Client.MVVM.ViewModel
         {
             background_worker.CancelAsync();
             background_worker.Dispose();
-            MessageBox.Show("canceled.");
+            //MessageBox.Show("canceled.");
 
         }
     }

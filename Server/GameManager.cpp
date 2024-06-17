@@ -40,6 +40,14 @@ void GameManager::deleteGame(unsigned int gameId)
 
 }
 
+Game& GameManager::getGamee(unsigned int roomId) {
+    for (Game& game : m_games) {
+        if (game.getGameId() == roomId) {
+            return game;
+        }
+    }
+}
+
 GameManager& GameManager::get() noexcept {
     static GameManager s_Instance;
     return s_Instance;
