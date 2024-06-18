@@ -35,22 +35,37 @@ void Game::removePlayer(LoggedUser player)
 	m_players.erase(player);
 }
 
-std::vector<PlayerResults> Game::getGameResults()
+std::vector<PlayerResults> Game::getGameResults(const LoggedUser& loggedUser)
 {
 	std::vector<PlayerResults> results;
-	for (std::pair<LoggedUser, GameData> player : m_players)
+	bool sendStatistics = true;
+
+	for (auto& player : m_players)
 	{
 		PlayerResults currentPlayerResult;
 		currentPlayerResult.username = player.first.getUsername();
 		currentPlayerResult.correctAnswerCounter = player.second.correctAnswerCount;
 		currentPlayerResult.wrongAnswerCounter = player.second.wrongAnswerCount;
 		currentPlayerResult.averageAnswerTime = player.second.averageAnswerTime;
+
+		if (player.first.getUsername() == loggedUser.getUsername()) {
+			player.second.isFinished = true;
+		}
+		if (!player.second.isFinished) {
+			sendStatistics = false;
+		}
 		results.push_back(currentPlayerResult);
 	}
+
+	if (sendStatistics) {
+		submitGameStatsToDB();
+	}
+
 	return results;
 }
 
-void Game::submitGameStatsToDB(GameData gameData)
+
+void Game::submitGameStatsToDB()
 {
 	//IDatabase::get().
 }

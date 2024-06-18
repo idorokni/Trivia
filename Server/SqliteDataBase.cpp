@@ -292,3 +292,22 @@ int SqliteDataBase::getColumn(const char* sql, const std::string& username)
 
 	return column;
 }
+
+int SqliteDataBase::submitGameStatistics(const GameData& gameData, const LoggedUser& loggedUser) {
+	const char* sqlCheck = "select 1 from Statistics where username = ? limit 1;";
+	sqlite3_stmt* stmtCheck;
+	int exists = 0;
+
+	if (sqlite3_prepare_v2(this->_db, sqlCheck, -1, &stmtCheck, nullptr) == SQLITE_OK) {
+		sqlite3_bind_text(stmtCheck, 1, loggedUser.getUsername().c_str(), -1, SQLITE_STATIC);
+
+		if (sqlite3_step(stmtCheck) == SQLITE_ROW) {
+			
+		}
+
+		sqlite3_finalize(stmtCheck);
+	}
+	else {
+		std::cerr << "Error preparing statement: " << sqlite3_errmsg(this->_db) << std::endl;
+	}
+}

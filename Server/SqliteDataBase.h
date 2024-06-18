@@ -29,6 +29,7 @@ public:
     int getNumOfPlayerGames(const std::string& username) override;
     int getPlayerScore(const std::string& username) override;
     std::vector<std::string> getHighScores() override;
+    int submitGameStatistics(const GameData& gameData, const LoggedUser& loggedUser) override;
 
 
     static IDatabase& get();
