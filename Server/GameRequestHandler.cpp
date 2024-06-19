@@ -94,6 +94,10 @@ RequestResult GameRequestHandler::leaveGame(const RequestInfo& info)
 
     try {
         m_game.removePlayer(m_user);
+        if (m_game.getAmountOfPlayers() == 0) {
+            GameManager::get().deleteGame(m_game.getGameId());
+            RoomManager::get().deleteRoom(m_game.getGameId());
+        }
         //RoomManager::get().deleteUserFromGame(RoomManager::get().);
         leaveGameResponse.status = 1;
         result.newHandler = RequestHandlerFactory::get().createMenuRequestHandler(m_user);

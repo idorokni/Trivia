@@ -20,4 +20,5 @@ public:
 	void removePlayer(LoggedUser player);
 	std::vector<PlayerResults> getGameResults(const LoggedUser& loggedUser);
 	unsigned int getGameId() { return m_gameId; }
+	unsigned int getAmountOfPlayers();
 };

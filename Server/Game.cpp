@@ -58,6 +58,10 @@ std::vector<PlayerResults> Game::getGameResults(const LoggedUser& loggedUser)
 	return results;
 }
 
+unsigned int Game::getAmountOfPlayers() {
+	return m_players.size();
+}
+
 
 void Game::submitGameStatsToDB(const GameData& gameData, const LoggedUser& player)
 {
