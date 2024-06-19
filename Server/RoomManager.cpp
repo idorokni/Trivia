@@ -21,7 +21,9 @@ void RoomManager::getRoomState(GetRoomStateResponse& getRoomStateResponse, int I
 const std::vector<RoomData> RoomManager::getRooms() const {
 	std::vector<RoomData> data;
 	for (auto& room : m_rooms) {
-		data.push_back(room.second.getRoomData());
+		if (room.second.getRoomData().isActive == RoomState::WAITING_FOR_GAME && room.second.getRoomData().maxPlayers > room.second.getAllUsers().size()) {
+			data.push_back(room.second.getRoomData());
+		}
 	}
 
 	return data;
