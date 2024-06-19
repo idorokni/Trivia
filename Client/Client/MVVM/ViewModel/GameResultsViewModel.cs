@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
+using System.Timers;
 using System.Windows;
 
 namespace Client.MVVM.ViewModel
@@ -23,6 +24,7 @@ namespace Client.MVVM.ViewModel
         public ObservableCollection<uint> CorrectAnswers { get { return _correctAnswers; } set { _correctAnswers = value; OnPropertyChanged(); } }
         public ObservableCollection<uint> WrongAnswers { get { return _wrongAnswers; } set { _wrongAnswers = value; OnPropertyChanged(); } }
         public ObservableCollection<uint> AvgAnswerTime { get { return _averageAnswerTime; } set { _averageAnswerTime = value; OnPropertyChanged(); } }
+        public RelayCommand leaveRoomCommand { get; set; }
 
         public GameResultsViewModel()
         {
@@ -37,6 +39,27 @@ namespace Client.MVVM.ViewModel
             background_worker.RunWorkerCompleted += background_worker_RunWorkerCompleted;
 
             background_worker.RunWorkerAsync(3000);
+
+            leaveRoomCommand = new RelayCommand(o =>
+            {
+                LeaveGameRequest leaveGameRequest = new LeaveGameRequest();
+
+                byte[] msg = App.Communicator.Serialize(leaveGameRequest, (int)Client.MVVM.Model.RequestCode.LEAVE_GAME_REQUEST_CODE);
+                App.Communicator.SendMessage(msg);
+
+                RequestResult response = App.Communicator.DeserializeMessage();
+                // Handle the response here (e.g., check if login was successful)
+
+                if (response.IsSuccess)
+                {
+                    background_worker.CancelAsync();
+                    MainViewModel.Instance.CurrentView = new HomeViewModel();
+                }
+                else
+                {
+                    MessageBox.Show("Leave room failed: " + response.Data);
+                }
+            });
         }
 
         private void background_worker_DoWork(object sender, DoWorkEventArgs e)
