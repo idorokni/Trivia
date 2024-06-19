@@ -295,14 +295,37 @@ int SqliteDataBase::getColumn(const char* sql, const std::string& username)
 
 int SqliteDataBase::submitGameStatistics(const GameData& gameData, const LoggedUser& loggedUser) {
 	const char* sqlCheck = "select 1 from Statistics where username = ? limit 1;";
+	const char* updateQuery = "update statistics set num_correct_answers = ((select num_correct_answers from statistics where username = ?) + ?), avg_time_per_question = (((select avg_time_per_question from statistics where username = ?) + ?) / 2), num_of_total_answers = (select num_of_total_answers from statistics where username = ?) + ? + ?, num_of_total_games = (select num_of_total_games from statistics where username = ?) + 1, score = (select score from statistics where username = ?) + ?;";
+	const char* insertQuery
 	sqlite3_stmt* stmtCheck;
+	sqlite3_stmt* stmtUpdate;
 	int exists = 0;
 
 	if (sqlite3_prepare_v2(this->_db, sqlCheck, -1, &stmtCheck, nullptr) == SQLITE_OK) {
 		sqlite3_bind_text(stmtCheck, 1, loggedUser.getUsername().c_str(), -1, SQLITE_STATIC);
 
 		if (sqlite3_step(stmtCheck) == SQLITE_ROW) {
-			
+			if (sqlite3_prepare_v2(this->_db, updateQuery, -1, &stmtUpdate, nullptr) == SQLITE_OK) {
+				sqlite3_bind_text(stmtUpdate, 1, loggedUser.getUsername().c_str(), -1, SQLITE_STATIC);
+				sqlite3_bind_int(stmtUpdate, 2, gameData.correctAnswerCount);
+				sqlite3_bind_text(stmtUpdate, 3, loggedUser.getUsername().c_str(), -1, SQLITE_STATIC);
+				sqlite3_bind_double(stmtUpdate, 4, gameData.averageAnswerTime);
+				sqlite3_bind_text(stmtUpdate, 5, loggedUser.getUsername().c_str(), -1, SQLITE_STATIC);
+				sqlite3_bind_int(stmtUpdate, 6, gameData.correctAnswerCount);
+				sqlite3_bind_int(stmtUpdate, 7, gameData.wrongAnswerCount);
+				sqlite3_bind_text(stmtUpdate, 8, loggedUser.getUsername().c_str(), -1, SQLITE_STATIC);
+				sqlite3_bind_text(stmtUpdate, 9, loggedUser.getUsername().c_str(), -1, SQLITE_STATIC);
+				sqlite3_bind_int(stmtUpdate, 10, gameData.correctAnswerCount);
+
+				sqlite3_finalize(stmtUpdate);
+			}
+			else
+			{
+				std::cerr << "Error preparing statement: " << sqlite3_errmsg(this->_db) << std::endl;
+			}
+		}
+		else {
+
 		}
 
 		sqlite3_finalize(stmtCheck);
