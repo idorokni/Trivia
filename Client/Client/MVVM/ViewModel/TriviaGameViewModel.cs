@@ -114,6 +114,7 @@ namespace Client.MVVM.ViewModel
                 {
                     //MessageBox.Show("Game over! Show final scores.");
                     MainViewModel.Instance.CurrentView = new GameResultsViewModel();
+                    Application.Current.Dispatcher.Invoke(() => timer.Stop());
                 }
             });
         }

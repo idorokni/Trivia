@@ -72,7 +72,7 @@ RequestResult GameRequestHandler::getGameResult(const RequestInfo& info)
     GetGameResultsResponse getGameResultsResponse;
 
     try {
-        getGameResultsResponse.results = m_game.getGameResults();
+        getGameResultsResponse.results = m_game.getGameResults(m_user);
         getGameResultsResponse.status = 1;
         result.newHandler = this; // I thing shouldnt be changed - needed to ask rokni
     }

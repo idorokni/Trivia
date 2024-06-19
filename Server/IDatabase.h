@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include "Question.h"
+#include "Structs.h"
+#include "LoggedUser.h"
 #include <list>
 
 class IDatabase {
@@ -20,6 +22,7 @@ public:
     virtual int getNumOfPlayerGames(const std::string& username) = 0;
     virtual int getPlayerScore(const std::string& username) = 0;
     virtual std::vector<std::string> getHighScores() = 0;
+    virtual int submitGameStatistics(const GameData& gameData, const LoggedUser& loggedUser) = 0;
 
     static IDatabase& get();
 };
