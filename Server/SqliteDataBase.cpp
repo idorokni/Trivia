@@ -296,9 +296,10 @@ int SqliteDataBase::getColumn(const char* sql, const std::string& username)
 int SqliteDataBase::submitGameStatistics(const GameData& gameData, const LoggedUser& loggedUser) {
 	const char* sqlCheck = "select 1 from Statistics where username = ? limit 1;";
 	const char* updateQuery = "update statistics set num_correct_answers = ((select num_correct_answers from statistics where username = ?) + ?), avg_time_per_question = (((select avg_time_per_question from statistics where username = ?) + ?) / 2), num_of_total_answers = (select num_of_total_answers from statistics where username = ?) + ? + ?, num_of_total_games = (select num_of_total_games from statistics where username = ?) + 1, score = (select score from statistics where username = ?) + ?;";
-	const char* insertQuery
+	const char* insertQuery = "insert into statistics (username, num_correct_answers, avg_time_per_question, num_of_total_answers, num_of_total_games, score) values (?, ?, ?, ? + ?, 1, ?);";
 	sqlite3_stmt* stmtCheck;
 	sqlite3_stmt* stmtUpdate;
+	sqlite3_stmt* stmtInsert;
 	int exists = 0;
 
 	if (sqlite3_prepare_v2(this->_db, sqlCheck, -1, &stmtCheck, nullptr) == SQLITE_OK) {
@@ -325,7 +326,20 @@ int SqliteDataBase::submitGameStatistics(const GameData& gameData, const LoggedU
 			}
 		}
 		else {
+			if (sqlite3_prepare_v2(this->_db, insertQuery, -1, &stmtInsert, nullptr) == SQLITE_OK) {
+				sqlite3_bind_text(stmtInsert, 1, loggedUser.getUsername().c_str(), -1, SQLITE_STATIC);
+				sqlite3_bind_int(stmtInsert, 2, gameData.correctAnswerCount);
+				sqlite3_bind_double(stmtInsert, 3, gameData.averageAnswerTime);
+				sqlite3_bind_int(stmtInsert, 4, gameData.correctAnswerCount);
+				sqlite3_bind_int(stmtInsert, 5, gameData.wrongAnswerCount);
+				sqlite3_bind_int(stmtInsert, 6, gameData.correctAnswerCount);
 
+				sqlite3_finalize(stmtInsert);
+			}
+			else
+			{
+				std::cerr << "Error preparing statement: " << sqlite3_errmsg(this->_db) << std::endl;
+			}
 		}
 
 		sqlite3_finalize(stmtCheck);
