@@ -1,5 +1,4 @@
 #pragma once
-#include "Question.h"
 #include "LoggedUser.h"
 #include "Structs.h"
 #include <map>
@@ -12,7 +11,7 @@ private:
 	std::map<LoggedUser, GameData> m_players;
 	unsigned int m_gameId;
 	//unsigned int m_lastGivenQuestionId;
-	void submitGameStatsToDB();
+	void submitGameStatsToDB(const GameData& gameData, const LoggedUser& player);
 
 public:
 	Game(const std::vector<Question>& questions, std::map<LoggedUser, GameData>& players, unsigned int gameId);

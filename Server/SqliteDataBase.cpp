@@ -300,7 +300,7 @@ int SqliteDataBase::submitGameStatistics(const GameData& gameData, const LoggedU
 	sqlite3_stmt* stmtCheck;
 	sqlite3_stmt* stmtUpdate;
 	sqlite3_stmt* stmtInsert;
-	int exists = 0;
+	int res = 1;
 
 	if (sqlite3_prepare_v2(this->_db, sqlCheck, -1, &stmtCheck, nullptr) == SQLITE_OK) {
 		sqlite3_bind_text(stmtCheck, 1, loggedUser.getUsername().c_str(), -1, SQLITE_STATIC);
@@ -318,11 +318,17 @@ int SqliteDataBase::submitGameStatistics(const GameData& gameData, const LoggedU
 				sqlite3_bind_text(stmtUpdate, 9, loggedUser.getUsername().c_str(), -1, SQLITE_STATIC);
 				sqlite3_bind_int(stmtUpdate, 10, gameData.correctAnswerCount);
 
+				if (sqlite3_step(stmtUpdate) != SQLITE_DONE) {
+					std::cerr << "Error executing statement: " << sqlite3_errmsg(this->_db) << std::endl;
+					res = 0; // Return error code
+				}
+
 				sqlite3_finalize(stmtUpdate);
 			}
 			else
 			{
 				std::cerr << "Error preparing statement: " << sqlite3_errmsg(this->_db) << std::endl;
+				res = 0;
 			}
 		}
 		else {
@@ -334,11 +340,17 @@ int SqliteDataBase::submitGameStatistics(const GameData& gameData, const LoggedU
 				sqlite3_bind_int(stmtInsert, 5, gameData.wrongAnswerCount);
 				sqlite3_bind_int(stmtInsert, 6, gameData.correctAnswerCount);
 
+				if (sqlite3_step(stmtInsert) != SQLITE_DONE) {
+					std::cerr << "Error executing statement: " << sqlite3_errmsg(this->_db) << std::endl;
+					res = 0; // Return error code
+				}
+
 				sqlite3_finalize(stmtInsert);
 			}
 			else
 			{
 				std::cerr << "Error preparing statement: " << sqlite3_errmsg(this->_db) << std::endl;
+				res = 0;
 			}
 		}
 
@@ -346,5 +358,8 @@ int SqliteDataBase::submitGameStatistics(const GameData& gameData, const LoggedU
 	}
 	else {
 		std::cerr << "Error preparing statement: " << sqlite3_errmsg(this->_db) << std::endl;
+		res = 0;
 	}
+
+	return res;
 }
