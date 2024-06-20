@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -19,55 +20,80 @@
         </Grid.ColumnDefinitions>
 
         <Button Style="{StaticResource OptionButtonStyle}"
-        Grid.Column="0"
-        Grid.Row="0"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        Height="170"
-        Width="250"
-        Background="#DB162F"
-        Content="JOIN ROOM"
-        FontSize="40"
-        FontWeight="Bold"
-        Command="{Binding JoinRoomViewCommand}"/>
+                Grid.Column="0"
+                Grid.Row="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Height="130"
+                Width="250"
+                Background="#DB162F"
+                Content="JOIN ROOM"
+                FontSize="40"
+                FontWeight="Bold"
+                Command="{Binding JoinRoomViewCommand}"/>
 
         <Button Style="{StaticResource OptionButtonStyle}" 
-        Grid.Column="0"
-        Grid.Row="1"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        Height="170"
-        Width="250"
-        Background="#5FBFF9"
-        Content="CREATE ROOM"
-        FontSize="34"
-        FontWeight="Bold"
-        Command="{Binding CreateRoomViewCommand}"/>
+                Grid.Column="0"
+                Grid.Row="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Height="130"
+                Width="250"
+                Background="#5FBFF9"
+                Content="CREATE ROOM"
+                FontSize="34"
+                FontWeight="Bold"
+                Command="{Binding CreateRoomViewCommand}"/>
 
         <Button Style="{StaticResource OptionButtonStyle}" 
-        Grid.Column="1"
-        Grid.Row="0"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        Height="170"
-        Width="250"
-        Background="#FDE12D"
-        Content="USER STATS"
-        FontSize="40"
-        FontWeight="Bold"
-        Command="{Binding UserStatsViewCommand}"/>
+                Grid.Column="1"
+                Grid.Row="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Height="130"
+                Width="250"
+                Background="#FDE12D"
+                Content="USER STATS"
+                FontSize="40"
+                FontWeight="Bold"
+                Command="{Binding UserStatsViewCommand}"/>
 
         <Button Style="{StaticResource OptionButtonStyle}" 
-        Grid.Column="1"
-        Grid.Row="1"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        Height="170"
-        Width="250"
-        Background="#47A025"
-        Content="HIGH SCORE"
-        FontSize="40"
-        FontWeight="Bold"
-        Command="{Binding HighScoreViewCommand}"/>
+                Grid.Column="1"
+                Grid.Row="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Height="130"
+                Width="250"
+                Background="#47A025"
+                Content="HIGH SCORE"
+                FontSize="40"
+                FontWeight="Bold"
+                Command="{Binding HighScoreViewCommand}"/> 
+        <Button Style="{StaticResource 1v1OptionButtonStyle}" 
+                Grid.Column="0"
+                Grid.Row="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Height="130"
+                Width="250"
+                Background="#161925"
+                Content="1 V 1"
+                FontSize="40"
+                FontWeight="Bold"
+                Foreground="#D1BCE3"
+                Command="{Binding _1v1ViewCommand}"/>
+        <Button Style="{StaticResource OptionButtonStyle}" 
+                Grid.Column="1"
+                Grid.Row="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Height="130"
+                Width="250"
+                Background="#FA466D"
+                Content="ADD QUESTION"
+                FontSize="30"
+                FontWeight="Bold"
+                Command="{Binding HighScoreViewCommand}"/>
     </Grid>
 </UserControl>
