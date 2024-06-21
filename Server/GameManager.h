@@ -14,6 +14,7 @@ public:
 	Game& createGame(Room room);
 	void deleteGame(unsigned int gameId);
 	Game& getGamee(unsigned int roomId);
+	std::unique_ptr<Game> getOpenGame();
 	static GameManager& get() noexcept;
 
 };

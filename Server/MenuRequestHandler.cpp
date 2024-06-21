@@ -5,7 +5,7 @@ MenuRequestHandler::MenuRequestHandler(const LoggedUser& loggedUser) {
 }
 
 bool MenuRequestHandler::isRequestRelevant(const RequestInfo& info) {
-	return info.id == RequestCode::LOGOUT_REQUEST_CODE || info.id == RequestCode::HIGH_SCORE_REQUEST_CODE || info.id == RequestCode::CREATE_ROOM_REQUEST_CODE || info.id == RequestCode::GET_PLAYERS_IN_ROOM_REQUEST_CODE || info.id == RequestCode::GET_ROOMS_REQUEST_CODE || info.id == RequestCode::JOIN_ROOM_REQUEST_CODE || info.id == RequestCode::GET_USER_STATISTICS_REQUEST_CODE;
+	return info.id == RequestCode::LOGOUT_REQUEST_CODE || info.id == RequestCode::HIGH_SCORE_REQUEST_CODE || info.id == RequestCode::CREATE_ROOM_REQUEST_CODE || info.id == RequestCode::GET_PLAYERS_IN_ROOM_REQUEST_CODE || info.id == RequestCode::GET_ROOMS_REQUEST_CODE || info.id == RequestCode::JOIN_ROOM_REQUEST_CODE || info.id == RequestCode::GET_USER_STATISTICS_REQUEST_CODE || info.id == RequestCode::START_HEAD_ON_GAME_REQUEST_CODE;
 }
 
 RequestResult MenuRequestHandler::handleRequest(const RequestInfo& info) {
@@ -33,6 +33,8 @@ RequestResult MenuRequestHandler::handleRequest(const RequestInfo& info) {
 	case RequestCode::GET_USER_STATISTICS_REQUEST_CODE:
 		reasult = getPersonalStats(info);
 		break;
+	case RequestCode::START_HEAD_ON_GAME_REQUEST_CODE:
+		reasult = startHeadOnGame(info);
 	default:
 		break;
 	}
@@ -127,6 +129,24 @@ RequestResult MenuRequestHandler::joinRoom(const RequestInfo& info) {
 	reasult.response = buff;
 	return reasult;
 }
+
+RequestResult MenuRequestHandler::startHeadOnGame(const RequestInfo& info) {
+	RequestResult reasult;
+	Buffer buff;
+	StartHeadOnGameResponse startHeadOnGameResponse;
+	try {
+		//auto it = std::find_if(GameManager::get().)
+		//createRoomResponse.status = 1;
+		//reasult.newHandler = RequestHandlerFactory::get().createRoomAdminRequestHandler(m_user, Room(m_user, roomData));
+	}
+	catch (...) {
+		//createRoomResponse.status = 0;
+		reasult.newHandler = this;
+	}
+	//buff = JsonResponsePacketSerializer::serializeResponse(createRoomResponse, roomData.id);
+	return reasult;
+}
+
 RequestResult MenuRequestHandler::createRoom(const RequestInfo& info) {
 	RequestResult reasult;
 	Buffer buff;

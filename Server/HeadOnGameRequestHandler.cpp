@@ -5,7 +5,7 @@ HeadOnGameRequestHandler::HeadOnGameRequestHandler(Game& game, const LoggedUser&
 }
 
 bool HeadOnGameRequestHandler::isRequestRelevant(const RequestInfo& info) {
-    return info.id == RequestCode::GET_HEAD_ON_GAME_STATE_REQUEST_CODE || GameRequestHandler::isRequestRelevant(info);
+    return info.id == RequestCode::GET_HEAD_ON_GAME_STATE_REQUEST_CODE || GameRequestHandler::isRequestRelevant(info) && info.id != RequestCode::GET_GAME_RESULT_REQUEST_CODE;
 }
 RequestResult HeadOnGameRequestHandler::handleRequest(const RequestInfo& info) {
     if (info.id == RequestCode::GET_HEAD_ON_GAME_STATE_REQUEST_CODE) {

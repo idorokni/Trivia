@@ -183,6 +183,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(GetHeadOnGameStateRespons
 	j["health"] = getHeadOnGameStateResponse.health;
 	return convertToBuffer(j, ResponseCode::GET_HEAD_ON_GAME_STATE_RESPONSE);
 }
+
 Buffer JsonResponsePacketSerializer::serializeResponse(StartHeadOnGameResponse startHeadOnGameResponse)
 {
 	nlohmann::json j;

@@ -33,6 +33,8 @@ void GameManager::deleteGame(unsigned int gameId)
 
 }
 
+//std::unique_ptr<Game> GameManager::getOpenGame() { return std::find_if(m_games.begin(), m_games.end(), [](const std::unique_ptr<Game>& game) {}); }
+
 Game& GameManager::getGamee(unsigned int roomId) { return **std::find_if(m_games.begin(), m_games.end(), [roomId](const std::unique_ptr<Game>& game) {return game->getGameId() == roomId; }); }
 
 GameManager& GameManager::get() noexcept {
