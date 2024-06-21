@@ -50,6 +50,7 @@
                 <ResourceDictionary Source="Theme/RoomListItemTheme.xaml"/>
                 <ResourceDictionary Source="Theme/ParticipantListItem.xaml"/>
                 <ResourceDictionary Source="Theme/ResultListItem.xaml"/>
+                <ResourceDictionary Source="Theme/WaitingAnimation.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

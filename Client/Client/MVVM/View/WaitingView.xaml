@@ -13,24 +13,11 @@
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Foreground="White"
-                       FontSize="24"
-                       FontWeight="Bold">
-                Waiting
-            </TextBlock>
+                       FontSize="50"
+                       FontWeight="Bold"
+                       Text="Waiting"/>
         </Grid>
     </Border>
-
-    <UserControl.Resources>
-        <Storyboard x:Key="WaitingAnimation">
-            <StringAnimationUsingKeyFrames Storyboard.TargetName="WaitingTextBlock" Storyboard.TargetProperty="Text" RepeatBehavior="Forever">
-                <DiscreteStringKeyFrame KeyTime="0:0:0.0" Value="Waiting"/>
-                <DiscreteStringKeyFrame KeyTime="0:0:0.2" Value="Waiting."/>
-                <DiscreteStringKeyFrame KeyTime="0:0:0.4" Value="Waiting.."/>
-                <DiscreteStringKeyFrame KeyTime="0:0:0.6" Value="Waiting..."/>
-                <DiscreteStringKeyFrame KeyTime="0:0:0.8" Value="Waiting"/>
-            </StringAnimationUsingKeyFrames>
-        </Storyboard>
-    </UserControl.Resources>
 
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="UserControl.Loaded">
