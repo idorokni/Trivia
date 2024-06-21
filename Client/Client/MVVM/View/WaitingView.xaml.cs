@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Client.MVVM.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,14 +25,12 @@ namespace Client.MVVM.View
         public WaitingView()
         {
             InitializeComponent();
-            ResourceDictionary resource = Application.Current.Resources.MergedDictionaries[0];
-            Storyboard board = (Storyboard)resource["StartingAnimation"];
-            board.Completed += Storyboard_Completed;
+
         }
 
         private void Storyboard_Completed(object sender, EventArgs e)
         {
-            MessageBox.Show("StartingAnimation storyboard has completed.");
+            MainViewModel.Instance.CurrentView = new _1v1ViewModel();
         }
     }
 }

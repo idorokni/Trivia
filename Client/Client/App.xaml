@@ -51,7 +51,6 @@
                 <ResourceDictionary Source="Theme/ParticipantListItem.xaml"/>
                 <ResourceDictionary Source="Theme/ResultListItem.xaml"/>
                 <ResourceDictionary Source="Theme/WaitingAnimation.xaml"/>
-                <ResourceDictionary Source="Theme/StartingAnimation.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
