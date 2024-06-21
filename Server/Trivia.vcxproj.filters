@@ -245,5 +245,8 @@
     <ClCompile Include="HeadOnPlayerEntry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BasicGameRequestHandler.cpp">
+      <Filter>Source Files\Handlers</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

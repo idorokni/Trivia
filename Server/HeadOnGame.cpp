@@ -51,3 +51,9 @@ void HeadOnGame::removePlayer(LoggedUser player) {
 		_firstPlayer->setIsWinner();
 	}
 }
+
+unsigned int HeadOnGame::getAmountOfPlayers() {
+	if (_firstPlayer == nullptr && _secondPlayer == nullptr) return 0;
+	else if (_firstPlayer != nullptr && _secondPlayer == nullptr || (_firstPlayer == nullptr && _secondPlayer != nullptr)) return 1;
+	else return 2;
+}

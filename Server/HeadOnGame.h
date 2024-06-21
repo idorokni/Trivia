@@ -15,4 +15,5 @@ public:
 	Question getQuestionForUser(LoggedUser user) override;
 	void submitAnswer(unsigned int answerId, unsigned int answerTime, LoggedUser player) override;
 	void removePlayer(LoggedUser player) override;
+	unsigned int getAmountOfPlayers() override;
 };

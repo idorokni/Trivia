@@ -169,6 +169,7 @@
     <ClInclude Include="WSAInitializer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BasicGameRequestHandler.cpp" />
     <ClCompile Include="Communicator.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
