@@ -116,6 +116,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MVVM\View\WaitingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Theme\1v1OptionButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -188,6 +192,9 @@
     </Compile>
     <Compile Include="MVVM\View\UserStatsView.xaml.cs">
       <DependentUpon>UserStatsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\WaitingView.xaml.cs">
+      <DependentUpon>WaitingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
