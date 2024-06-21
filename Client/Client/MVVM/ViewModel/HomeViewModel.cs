@@ -41,7 +41,7 @@ namespace Client.MVVM.ViewModel
             });
             _1v1ViewCommand = new RelayCommand(o =>
             {
-                MainViewModel.Instance.CurrentView = new _1v1ViewModel(); 
+                MainViewModel.Instance.CurrentView = new WaitingViewModel();
             });
 
         }

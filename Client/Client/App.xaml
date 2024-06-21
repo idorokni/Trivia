@@ -40,6 +40,9 @@
             <DataTemplate DataType="{x:Type viewModel:_1v1ViewModel}">
                 <view:_1v1View/>    
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:WaitingViewModel}">
+                <view:WaitingView/>
+            </DataTemplate>
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/OptionButtonTheme.xaml"/>

@@ -160,6 +160,7 @@
     <Compile Include="MVVM\ViewModel\SignupViewModel.cs" />
     <Compile Include="MVVM\ViewModel\TriviaGameViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UserStatsViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\WaitingViewModel.cs" />
     <Compile Include="MVVM\View\1v1View.xaml.cs">
       <DependentUpon>1v1View.xaml</DependentUpon>
     </Compile>
