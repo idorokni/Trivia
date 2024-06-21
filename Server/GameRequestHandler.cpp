@@ -94,7 +94,7 @@ RequestResult GameRequestHandler::leaveGame(const RequestInfo& info)
 
     try {
         m_game.removePlayer(m_user);
-        if (m_game.getAmountOfPlayers() == 0) {
+        if (dynamic_cast<TriviaGame&>(m_game).getAmountOfPlayers() == 0) {
             GameManager::get().deleteGame(m_game.getGameId());
             RoomManager::get().deleteRoom(m_game.getGameId());
         }

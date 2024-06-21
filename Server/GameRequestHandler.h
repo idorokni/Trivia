@@ -1,6 +1,5 @@
 #pragma once
 #include "IRequestHandler.h"
-#include "Game.h"
 #include "LoggedUser.h"
 #include "GameManager.h"
 #include "RequestHandlerFactory.h"
