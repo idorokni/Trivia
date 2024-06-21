@@ -1,0 +1,121 @@
+﻿<UserControl x:Class="Client.MVVM.View._1v1View"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Client.MVVM.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Border CornerRadius="30"
+            Background="#161925">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0"
+                       FontSize="30"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Margin="10,0,0,0"
+                       Text="fdfdf"
+                       FontWeight="SemiBold"
+                       Foreground="#F0F4EF"
+                       />
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Button Grid.Row="0" 
+                        Grid.Column="0"
+                        Style="{StaticResource OptionButtonStyle}"
+                        Background="#D1BCE3"
+                        Width="350"
+                        Height="140"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                <Button Grid.Row="1" 
+                        Grid.Column="0"
+                        Style="{StaticResource OptionButtonStyle}"
+                        Background="#D1BCE3"
+                        Width="350"
+                        Height="140"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                <Button Grid.Row="0" 
+                        Grid.Column="1"
+                        Style="{StaticResource OptionButtonStyle}"
+                        Background="#D1BCE3"
+                        Width="350"
+                        Height="140"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                <Button Grid.Row="1" 
+                        Grid.Column="1"
+                        Style="{StaticResource OptionButtonStyle}"
+                        Background="#D1BCE3"
+                        Width="350"
+                        Height="140"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+
+
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="2"
+                           Text="HP:"
+                           FontSize="30"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           TextAlignment="Left"
+                           Foreground="#D1BCE3"
+                           FontWeight="Bold"/>
+                <Border Grid.Column="2"
+                        CornerRadius="10"
+                        Background="#D1BCE3"
+                        Height="30"
+                        Width="140"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="0,6,5,0"/>
+                <Border Grid.Column="1"
+                        CornerRadius="10"
+                        Background="#D9DAD9"
+                        Width="300"
+                        Height="40">
+                    <TextBlock HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="#202A25"
+                               Text="1"
+                               FontWeight="Bold"
+                               FontSize="30"/>
+                </Border>
+
+                <Button Grid.Column="0"
+                        Style="{StaticResource 1v1OptionButtonStyle}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Width="160"
+                        Height="40"
+                        Background="#170F11"
+                        Content="LEAVE 1V1"
+                        Foreground="#F0F3F5"
+                        FontWeight="Bold"
+                        FontSize="20"/>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>
