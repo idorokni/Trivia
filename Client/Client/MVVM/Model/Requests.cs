@@ -30,7 +30,8 @@ namespace Client.MVVM.Model
         GET_QUESTION_REQUEST_CODE = 65,
         SUBMIT_ANSWER_REQUEST_CODE = 66,
         GET_GAME_RESULT_REQUEST_CODE = 67,
-        GET_HEAD_ON_GAME_STATE = 68
+        GET_HEAD_ON_GAME_STATE_REQUEST_CODE = 68,
+        START_HEAD_ON_GAME_REQUEST_CODE = 69
     };
 
     enum ResultCode

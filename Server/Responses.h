@@ -22,7 +22,9 @@ enum class ResponseCode {
 	GET_GAME_RESULTS_RESPONSE = 115,
 	GET_QUESTION_RESPONSE = 116,
 	SUBMIT_ANSWER_RESPONSE = 117,
-	LEAVE_GAME_RESPONSE = 118
+	LEAVE_GAME_RESPONSE = 118,
+	GET_HEAD_ON_GAME_STATE_RESPONSE =119,
+	START_HEAD_ON_GAME_RESPONSE = 120
 };
 
 struct ErrorResponse {
@@ -110,5 +112,16 @@ struct GetGameResultsResponse
 {
 	unsigned int status;
 	std::vector<PlayerResults> results;
+};
+
+struct StartHeadOnGameResponse
+{
+	unsigned int status;
+};
+
+struct GetHeadOnGameStateResponse
+{
+	unsigned int status;
+	unsigned int health;
 };
 
