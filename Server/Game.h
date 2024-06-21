@@ -15,5 +15,5 @@ public:
 	virtual Question getQuestionForUser(LoggedUser user) = 0;
 	virtual void submitAnswer(unsigned int answerId, unsigned int answerTime, LoggedUser player) = 0;
 	virtual void removePlayer(LoggedUser player) = 0;
-	virtual std::vector<PlayerResults> getGameResults(const LoggedUser& loggedUser) = 0;
+	virtual std::vector<PlayerResults> getGameResults(const LoggedUser& loggedUser) { return std::vector<PlayerResults>(); };
 };

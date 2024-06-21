@@ -31,9 +31,3 @@ struct PlayerResults
 	unsigned int wrongAnswerCounter;
 	unsigned int averageAnswerTime;
 };
-
-struct HeadOnGameData {
-	std::string username;
-	unsigned int health;
-
-};

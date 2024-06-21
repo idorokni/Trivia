@@ -4,27 +4,39 @@ HeadOnGameRequestHandler::HeadOnGameRequestHandler(Game& game, const LoggedUser&
 
 }
 
-RequestResult HeadOnGameRequestHandler::getHeadOnGameHealthState(const RequestInfo& info) {
+bool HeadOnGameRequestHandler::isRequestRelevant(const RequestInfo& info) {
+    return info.id == RequestCode::GET_HEAD_ON_GAME_STATE_REQUEST_CODE || GameRequestHandler::isRequestRelevant(info);
+}
+RequestResult HeadOnGameRequestHandler::handleRequest(const RequestInfo& info) {
+    if (info.id == RequestCode::GET_HEAD_ON_GAME_STATE_REQUEST_CODE) {
+        return getHeadOnGameState(info);
+    }
+    else {
+        return GameRequestHandler::handleRequest(info);
+    }
+}
+
+RequestResult HeadOnGameRequestHandler::getHeadOnGameState(const RequestInfo& info) {
     RequestResult result;
     Buffer buff;
-    GetHeadOnGameState leavGameResponse;
+    GetHeadOnGameStateResponse getHeadOnGameStateResponse;
     int i = 0;
 
     try {
-        m_game.removePlayer(m_user);
-        if (dynamic_cast<TriviaGame&>(m_game).getAmountOfPlayers() == 0) {
-            GameManager::get().deleteGame(m_game.getGameId());
-            RoomManager::get().deleteRoom(m_game.getGameId());
+        if (dynamic_cast<HeadOnGame&>(m_game).isOpenForPlayer()) {
+            getHeadOnGameStateResponse.health = 0;
+            getHeadOnGameStateResponse.status = 2;
         }
-        //RoomManager::get().deleteUserFromGame(RoomManager::get().);
-        leaveGameResponse.status = 1;
-        result.newHandler = RequestHandlerFactory::get().createMenuRequestHandler(m_user);
+        else {
+            getHeadOnGameStateResponse.health = dynamic_cast<HeadOnGame&>(m_game).getPlayerHealth(m_user);
+            getHeadOnGameStateResponse.status = 1;
+        }
     }
     catch (...) {
-        leaveGameResponse.status = 0;
+        getHeadOnGameStateResponse.status = 0;
         result.newHandler = this;
     }
 
-    result.response = JsonResponsePacketSerializer::serializeResponse(leaveGameResponse);
+    result.response = JsonResponsePacketSerializer::serializeResponse(getHeadOnGameStateResponse);
     return result;
 }

@@ -150,6 +150,9 @@
     <ClInclude Include="HeadOnGameRequestHandler.h">
       <Filter>Header Files\Handlers</Filter>
     </ClInclude>
+    <ClInclude Include="HeadOnPlayerEntry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="JsonRequestPacketDeserializer.cpp">
@@ -229,6 +232,12 @@
     </ClCompile>
     <ClCompile Include="HeadOnGameRequestHandler.cpp">
       <Filter>Source Files\Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="HeadOnGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HeadOnPlayerEntry.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
