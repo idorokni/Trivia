@@ -12,7 +12,7 @@ public:
 	RequestResult handleRequest(const RequestInfo& info) override;
 	GameRequestHandler(Game& game, const LoggedUser& loggedUser);
 
-private:
+protected:
 	Game& m_game;
 	LoggedUser m_user;
 

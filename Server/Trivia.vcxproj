@@ -137,6 +137,8 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameRequestHandler.h" />
+    <ClInclude Include="HeadOnGame.h" />
+    <ClInclude Include="HeadOnGameRequestHandler.h" />
     <ClInclude Include="IDatabase.h" />
     <ClInclude Include="IRequestHandler.h" />
     <ClInclude Include="json.hpp" />
@@ -169,6 +171,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameManager.h" />
     <ClCompile Include="GameRequestHandler.cpp" />
+    <ClCompile Include="HeadOnGameRequestHandler.cpp" />
     <ClCompile Include="JsonRequestPacketDeserializer.cpp" />
     <ClCompile Include="JsonResponsePacketSerializer.cpp" />
     <ClCompile Include="LoggedUser.cpp" />

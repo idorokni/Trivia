@@ -144,6 +144,12 @@
     <ClInclude Include="TriviaGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HeadOnGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HeadOnGameRequestHandler.h">
+      <Filter>Header Files\Handlers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="JsonRequestPacketDeserializer.cpp">
@@ -220,6 +226,9 @@
     </ClCompile>
     <ClCompile Include="TriviaGame.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HeadOnGameRequestHandler.cpp">
+      <Filter>Source Files\Handlers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
