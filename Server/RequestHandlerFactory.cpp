@@ -21,6 +21,10 @@ GameRequestHandler* RequestHandlerFactory::createGameRequestHandler(Game& game, 
 	return new GameRequestHandler(game, loggedUser);
 }
 
+HeadOnGameRequestHandler* RequestHandlerFactory::createHeadOnGameRequestHandler(Game& game, const LoggedUser& loggedUser) {
+	return new HeadOnGameRequestHandler(game, loggedUser);
+}
+
 RequestHandlerFactory& RequestHandlerFactory::get() noexcept{
 	static RequestHandlerFactory s_Instance;
 	return s_Instance;

@@ -2,6 +2,7 @@
 #include "IDatabase.h"
 #include "TriviaGame.h"
 #include "Room.h"
+#include "HeadOnGame.h"
 
 class GameManager
 {
@@ -14,7 +15,7 @@ public:
 	Game& createGame(Room room);
 	void deleteGame(unsigned int gameId);
 	Game& getGamee(unsigned int roomId);
-	std::unique_ptr<Game> getOpenGame();
+	std::unique_ptr<Game>& getOpenGame();
 	static GameManager& get() noexcept;
 
 };

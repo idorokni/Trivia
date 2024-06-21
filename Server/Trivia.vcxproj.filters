@@ -153,6 +153,12 @@
     <ClInclude Include="HeadOnPlayerEntry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="includes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicGameRequestHandler.h">
+      <Filter>Header Files\Handlers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="JsonRequestPacketDeserializer.cpp">

@@ -6,12 +6,14 @@
 #include "RoomAdminRequestHandler.h"
 #include "RoomMemberRequestHandler.h"
 #include "GameRequestHandler.h"
+#include "HeadOnGameRequestHandler.h"
 
 class LoginRequestHandler;
 class MenuRequestHandler;
 class RoomAdminRequestHandler;
 class RoomMemberRequestHandler;
 class GameRequestHandler;
+class HeadOnGameRequestHandler;
 
 class RequestHandlerFactory {
 public:
@@ -20,6 +22,7 @@ public:
 	RoomAdminRequestHandler* createRoomAdminRequestHandler(const LoggedUser& loggedUser, const Room& room);
 	RoomMemberRequestHandler* creatRoomMemberRequestHandler(const LoggedUser& loggedUser, const Room& room);
 	GameRequestHandler* createGameRequestHandler(Game& game, const LoggedUser& loggedUser);
+	HeadOnGameRequestHandler* createHeadOnGameRequestHandler(Game& game, const LoggedUser& loggedUser);
 
 
 	static RequestHandlerFactory& get() noexcept;

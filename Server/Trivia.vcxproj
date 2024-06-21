@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BasicGameRequestHandler.h" />
     <ClInclude Include="Buffer.h" />
     <ClInclude Include="Communicator.h" />
     <ClInclude Include="Constants.h" />
@@ -141,6 +142,7 @@
     <ClInclude Include="HeadOnGameRequestHandler.h" />
     <ClInclude Include="HeadOnPlayerEntry.h" />
     <ClInclude Include="IDatabase.h" />
+    <ClInclude Include="includes.h" />
     <ClInclude Include="IRequestHandler.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="JsonRequestPacketDeserializer.h" />

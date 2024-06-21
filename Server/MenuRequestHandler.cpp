@@ -135,15 +135,15 @@ RequestResult MenuRequestHandler::startHeadOnGame(const RequestInfo& info) {
 	Buffer buff;
 	StartHeadOnGameResponse startHeadOnGameResponse;
 	try {
-		//auto it = std::find_if(GameManager::get().)
-		//createRoomResponse.status = 1;
-		//reasult.newHandler = RequestHandlerFactory::get().createRoomAdminRequestHandler(m_user, Room(m_user, roomData));
+		std::unique_ptr<Game>& game = GameManager::get().getOpenGame();
+		startHeadOnGameResponse.status = 1;
+		reasult.newHandler = RequestHandlerFactory::get().createHeadOnGameRequestHandler(*game, m_user);
 	}
 	catch (...) {
-		//createRoomResponse.status = 0;
+		startHeadOnGameResponse.status = 0;
 		reasult.newHandler = this;
 	}
-	//buff = JsonResponsePacketSerializer::serializeResponse(createRoomResponse, roomData.id);
+	buff = JsonResponsePacketSerializer::serializeResponse(startHeadOnGameResponse);
 	return reasult;
 }
 
