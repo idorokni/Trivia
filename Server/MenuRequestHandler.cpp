@@ -136,7 +136,12 @@ RequestResult MenuRequestHandler::startHeadOnGame(const RequestInfo& info) {
 	StartHeadOnGameResponse startHeadOnGameResponse;
 	try {
 		std::unique_ptr<Game>& game = GameManager::get().getOpenGame(m_user);
-		startHeadOnGameResponse.status = 1;
+		if (dynamic_cast<HeadOnGame&>(*game).isOpenForPlayer()) {
+			startHeadOnGameResponse.status = 2;
+		}
+		else {
+			startHeadOnGameResponse.status = 1;
+		}
 		reasult.newHandler = RequestHandlerFactory::get().createHeadOnGameRequestHandler(*game, m_user);
 	}
 	catch (...) {

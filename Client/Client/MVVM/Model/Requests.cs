@@ -172,6 +172,11 @@ namespace Client.MVVM.Model
         }
     }
 
+    public class StartHeadOnGameRequest : Request
+    {
+        public StartHeadOnGameRequest() { }
+    }
+
     public class RequestResult
     {
         public int code;
