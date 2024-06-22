@@ -1,18 +1,18 @@
 #include "HeadOnGameRequestHandler.h"
 
-HeadOnGameRequestHandler::HeadOnGameRequestHandler(Game& game, const LoggedUser& loggedUser) : GameRequestHandler(game, loggedUser) {
+HeadOnGameRequestHandler::HeadOnGameRequestHandler(Game& game, const LoggedUser& loggedUser) : BasicGameRequestHandler(game, loggedUser) {
 
 }
 
 bool HeadOnGameRequestHandler::isRequestRelevant(const RequestInfo& info) {
-    return info.id == RequestCode::GET_HEAD_ON_GAME_STATE_REQUEST_CODE || GameRequestHandler::isRequestRelevant(info) && info.id != RequestCode::GET_GAME_RESULT_REQUEST_CODE;
+    return info.id == RequestCode::GET_HEAD_ON_GAME_STATE_REQUEST_CODE || BasicGameRequestHandler::isRequestRelevant(info);
 }
 RequestResult HeadOnGameRequestHandler::handleRequest(const RequestInfo& info) {
     if (info.id == RequestCode::GET_HEAD_ON_GAME_STATE_REQUEST_CODE) {
         return getHeadOnGameState(info);
     }
     else {
-        return GameRequestHandler::handleRequest(info);
+        return BasicGameRequestHandler::handleRequest(info);
     }
 }
 

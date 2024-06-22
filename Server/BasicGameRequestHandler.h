@@ -7,7 +7,6 @@
 #include "RoomManager.h"
 #include "JsonResponsePacketSerializer.h"
 #include "JsonRequestPacketDeserializer.h"
-#include "RequestHandlerFactory.h"
 #include <unordered_map>
 #include <functional>
 
@@ -24,6 +23,5 @@ protected:
 private:
 	RequestResult getQuestion(const RequestInfo& info);
 	RequestResult submitAnswer(const RequestInfo& info);
-	RequestResult getGameResult(const RequestInfo& info);
-	virtual RequestResult leaveGame(const RequestInfo& info) = 0;
+	RequestResult leaveGame(const RequestInfo& info);
 };

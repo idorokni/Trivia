@@ -3,6 +3,7 @@
 #include "TriviaGame.h"
 #include "Room.h"
 #include "HeadOnGame.h"
+#include "RoomManager.h"
 
 class GameManager
 {
@@ -15,7 +16,7 @@ public:
 	Game& createGame(Room room);
 	void deleteGame(unsigned int gameId);
 	Game& getGamee(unsigned int roomId);
-	std::unique_ptr<Game>& getOpenGame();
+	std::unique_ptr<Game>& getOpenGame(const LoggedUser& loggedUser);
 	static GameManager& get() noexcept;
 
 };

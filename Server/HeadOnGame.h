@@ -11,7 +11,9 @@ private:
 public:
 	bool isOpenForPlayer();
 	unsigned int getPlayerHealth(const LoggedUser& loggedUser);
-	HeadOnGame(const LoggedUser& firstPlayer, const LoggedUser& secondPlayer, unsigned int gameID);
+	void addPlayer(std::unique_ptr<HeadOnPlayerEntry>& player);
+	HeadOnGame(std::unique_ptr<HeadOnPlayerEntry>& firstPlayer, std::unique_ptr<HeadOnPlayerEntry>& secondPlayer, unsigned int gameID);
+	Question& getFirstPlayersQuestion();
 	Question getQuestionForUser(LoggedUser user) override;
 	void submitAnswer(unsigned int answerId, unsigned int answerTime, LoggedUser player) override;
 	void removePlayer(LoggedUser player) override;

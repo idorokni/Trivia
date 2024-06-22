@@ -135,7 +135,7 @@ RequestResult MenuRequestHandler::startHeadOnGame(const RequestInfo& info) {
 	Buffer buff;
 	StartHeadOnGameResponse startHeadOnGameResponse;
 	try {
-		std::unique_ptr<Game>& game = GameManager::get().getOpenGame();
+		std::unique_ptr<Game>& game = GameManager::get().getOpenGame(m_user);
 		startHeadOnGameResponse.status = 1;
 		reasult.newHandler = RequestHandlerFactory::get().createHeadOnGameRequestHandler(*game, m_user);
 	}

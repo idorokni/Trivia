@@ -7,13 +7,13 @@
 #include "RoomMemberRequestHandler.h"
 #include "GameRequestHandler.h"
 #include "HeadOnGameRequestHandler.h"
+#include "BasicGameRequestHandler.h"
 
 class LoginRequestHandler;
 class MenuRequestHandler;
 class RoomAdminRequestHandler;
 class RoomMemberRequestHandler;
-class GameRequestHandler;
-class HeadOnGameRequestHandler;
+class BasicGameRequestHandler;
 
 class RequestHandlerFactory {
 public:
@@ -21,8 +21,8 @@ public:
 	MenuRequestHandler* createMenuRequestHandler(const LoggedUser& loggedUser) const;
 	RoomAdminRequestHandler* createRoomAdminRequestHandler(const LoggedUser& loggedUser, const Room& room);
 	RoomMemberRequestHandler* creatRoomMemberRequestHandler(const LoggedUser& loggedUser, const Room& room);
-	GameRequestHandler* createGameRequestHandler(Game& game, const LoggedUser& loggedUser);
-	HeadOnGameRequestHandler* createHeadOnGameRequestHandler(Game& game, const LoggedUser& loggedUser);
+	BasicGameRequestHandler* createGameRequestHandler(Game& game, const LoggedUser& loggedUser);
+	BasicGameRequestHandler* createHeadOnGameRequestHandler(Game& game, const LoggedUser& loggedUser);
 
 
 	static RequestHandlerFactory& get() noexcept;

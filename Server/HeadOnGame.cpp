@@ -1,14 +1,22 @@
 #include "HeadOnGame.h"
 
-HeadOnGame::HeadOnGame(const LoggedUser& firstPlayer, const LoggedUser& secondPlayer, unsigned int gameID) {
+HeadOnGame::HeadOnGame(std::unique_ptr<HeadOnPlayerEntry>& firstPlayer, std::unique_ptr<HeadOnPlayerEntry>& secondPlayer, unsigned int gameID) {
 	m_gameId = gameID;
 	Question question = IDatabase::get().getQuestions(1).back();
-	_firstPlayer = std::make_unique<HeadOnPlayerEntry>(firstPlayer, STARTING_HEALTH, question);
-	_secondPlayer = std::make_unique<HeadOnPlayerEntry>(secondPlayer, STARTING_HEALTH, question);
+	_firstPlayer = std::move(firstPlayer);
+	_secondPlayer = std::move(secondPlayer);
 }
 
 bool HeadOnGame::isOpenForPlayer() {
 	return _secondPlayer == nullptr;
+}
+
+void HeadOnGame::addPlayer(std::unique_ptr<HeadOnPlayerEntry>& player) {
+	_secondPlayer = std::move(player);
+}
+
+Question& HeadOnGame::getFirstPlayersQuestion() {
+	return _firstPlayer->getLastQuestion();
 }
 
 unsigned int HeadOnGame::getPlayerHealth(const LoggedUser& loggedUser) { 

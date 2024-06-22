@@ -1,8 +1,9 @@
 #include "BasicGameRequestHandler.h"
+#include "RequestHandlerFactory.h"
 
-BasicGameRequestHandler::BasicGameRequestHandler(Game& game, const LoggedUser& loggedUser) {
-    m_game = game;
-    m_user = loggedUser;
+
+BasicGameRequestHandler::BasicGameRequestHandler(Game& game, const LoggedUser& loggedUser) : m_game(game), m_user(loggedUser){
+
 }
 
 bool BasicGameRequestHandler::isRequestRelevant(const RequestInfo& info)
@@ -15,7 +16,6 @@ RequestResult BasicGameRequestHandler::handleRequest(const RequestInfo& info) {
         {RequestCode::LEAVE_GAME_REQUEST_CODE, [this](const RequestInfo& info) { return leaveGame(info); } },
         { RequestCode::GET_QUESTION_REQUEST_CODE, [this](const RequestInfo& info) { return getQuestion(info); } },
         { RequestCode::SUBMIT_ANSWER_REUEST_CODE, [this](const RequestInfo& info) { return submitAnswer(info); } },
-        { RequestCode::GET_GAME_RESULT_REQUEST_CODE, [this](const RequestInfo& info) { return getGameResult(info); } }
     }.at(info.id)(info);
 }
 
@@ -68,26 +68,6 @@ RequestResult BasicGameRequestHandler::submitAnswer(const RequestInfo& info)
     return result;
 }
 
-RequestResult BasicGameRequestHandler::getGameResult(const RequestInfo& info)
-{
-    RequestResult result;
-    Buffer buff;
-    GetGameResultsResponse getGameResultsResponse;
-
-    try {
-        getGameResultsResponse.results = m_game.getGameResults(m_user);
-        getGameResultsResponse.status = 1;
-        result.newHandler = this; // I thing shouldnt be changed - needed to ask rokni
-    }
-    catch (...) {
-        getGameResultsResponse.status = 0;
-        result.newHandler = this;
-    }
-
-    result.response = JsonResponsePacketSerializer::serializeResponse(getGameResultsResponse);
-    return result;
-}
-
 RequestResult BasicGameRequestHandler::leaveGame(const RequestInfo& info)
 {
     RequestResult result;
@@ -99,7 +79,6 @@ RequestResult BasicGameRequestHandler::leaveGame(const RequestInfo& info)
         m_game.removePlayer(m_user);
         if (m_game.getAmountOfPlayers() == 0) {
             GameManager::get().deleteGame(m_game.getGameId());
-            RoomManager::get().deleteRoom(m_game.getGameId());
         }
         //RoomManager::get().deleteUserFromGame(RoomManager::get().);
         leaveGameResponse.status = 1;
