@@ -24,4 +24,5 @@ private:
 	RequestResult joinRoom(const RequestInfo& info);
 	RequestResult createRoom(const RequestInfo& info);
 	RequestResult startHeadOnGame(const RequestInfo& info);
+	RequestResult addQuestion(const RequestInfo& info);
 };

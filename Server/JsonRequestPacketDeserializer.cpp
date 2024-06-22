@@ -76,6 +76,22 @@ SubmitAnswerRequest JsonRequestPacketDeserializer::deserializeSubmitAnswerReques
 	return submitAnswerRequest;
 }
 
+AddQuestionRequest JsonRequestPacketDeserializer::deserializeAddQuestionRequest(Buffer buff)
+{
+	AddQuestionRequest addQuestionRequest;
+	nlohmann::json jsonObj = convertToJsonObject(buff);
+	if (jsonObj.contains("_question") && jsonObj.contains("_correctAnswer") && jsonObj.contains("_wrongAnswer1") && jsonObj.contains("_wrongAnswer2") && jsonObj.contains("_wrongAnswer3"))
+	{
+		addQuestionRequest.question = jsonObj["_question"];
+		addQuestionRequest.correctAnswer = jsonObj["_correctAnswer"];
+		addQuestionRequest.wrongAnswer1 = jsonObj["_wrongAnswer1"];
+		addQuestionRequest.wrongAnswer2 = jsonObj["_wrongAnswer2"];
+		addQuestionRequest.wrongAnswer3 = jsonObj["_wrongAnswer3"];
+	}
+	return addQuestionRequest;
+}
+
+
 nlohmann::json JsonRequestPacketDeserializer::convertToJsonObject(Buffer buff) {
 	uint32_t length;
 	std::memcpy(&length, &buff.data()[CODE_AMOUNT_BYTES], BYTES_LENGTH);

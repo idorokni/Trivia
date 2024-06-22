@@ -94,6 +94,6 @@
                 Content="ADD QUESTION"
                 FontSize="30"
                 FontWeight="Bold"
-                Command="{Binding HighScoreViewCommand}"/>
+                Command="{Binding AddQuestionViewCommand}"/>
     </Grid>
 </UserControl>

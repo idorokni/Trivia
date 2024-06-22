@@ -255,6 +255,40 @@ std::vector<std::string> SqliteDataBase::getHighScores()
 	return topScores;
 }
 
+bool SqliteDataBase::addQuestion(const std::string& question, const std::string& correctAnswer, const std::string& wrongAnswer1, const std::string& wrongAnswer2, const std::string& wrongAnswer3)
+{
+	const char* sql = "INSERT INTO Question (question, correct, ans1, ans2, ans3) VALUES (?, ?, ?, ?, ?);";
+	sqlite3_stmt* stmt;
+	int res;
+
+	// Preparing the SQL statement.
+	res = sqlite3_prepare_v2(this->_db, sql, -1, &stmt, nullptr);
+	if (res != SQLITE_OK) {
+		std::cerr << "Error preparing statement: " << sqlite3_errmsg(this->_db) << std::endl;
+		return false;
+	}
+
+	// Binding the parameters.
+	sqlite3_bind_text(stmt, 1, question.c_str(), -1, SQLITE_STATIC);
+	sqlite3_bind_text(stmt, 2, correctAnswer.c_str(), -1, SQLITE_STATIC);
+	sqlite3_bind_text(stmt, 3, wrongAnswer1.c_str(), -1, SQLITE_STATIC);
+	sqlite3_bind_text(stmt, 4, wrongAnswer2.c_str(), -1, SQLITE_STATIC);
+	sqlite3_bind_text(stmt, 5, wrongAnswer3.c_str(), -1, SQLITE_STATIC);
+
+	// Executing the SQL statement.
+	res = sqlite3_step(stmt);
+	if (res != SQLITE_DONE) {
+		std::cerr << "Error executing statement: " << sqlite3_errmsg(this->_db) << std::endl;
+		sqlite3_finalize(stmt);
+		return false;
+	}
+
+	// Finalizing the SQL statement.
+	sqlite3_finalize(stmt);
+	return true;
+}
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// CallBacks ///////////////////////////////////////////////

@@ -17,6 +17,8 @@ namespace Client.MVVM.ViewModel
         public RelayCommand UserStatsViewCommand { get; set; }
         public RelayCommand HighScoreViewCommand { get; set; }
         public RelayCommand _1v1ViewCommand { get; set; }
+        public RelayCommand AddQuestionViewCommand { get; set; }
+
 
         public HomeViewModel()
         {
@@ -43,6 +45,10 @@ namespace Client.MVVM.ViewModel
             _1v1ViewCommand = new RelayCommand(o =>
             {
                 MainViewModel.Instance.CurrentView = new WaitingView();
+            });
+            AddQuestionViewCommand = new RelayCommand(o =>
+            {
+                MainViewModel.Instance.CurrentView = new AddQuestionViewModel();
             });
 
         }

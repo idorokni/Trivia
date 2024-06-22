@@ -23,6 +23,7 @@ public:
     virtual int getPlayerScore(const std::string& username) = 0;
     virtual std::vector<std::string> getHighScores() = 0;
     virtual int submitGameStatistics(const GameData& gameData, const LoggedUser& loggedUser) = 0;
+    virtual bool addQuestion(const std::string& question, const std::string& correctAnswer, const std::string& wrongAnswer1, const std::string& wrongAnswer2, const std::string& wrongAnswer3) = 0;
 
     static IDatabase& get();
 };

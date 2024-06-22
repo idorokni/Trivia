@@ -12,6 +12,7 @@ public:
 	static JoinRoomRequest deserializeJoinRoomRequest(Buffer buff);
 	static CreateRoomRequest deserializeCreateRoomRequest(Buffer buff);
 	static SubmitAnswerRequest deserializeSubmitAnswerRequest(Buffer buff);
+	static AddQuestionRequest deserializeAddQuestionRequest(Buffer buff);
 private:
 	static nlohmann::json convertToJsonObject(Buffer buff);
 };
