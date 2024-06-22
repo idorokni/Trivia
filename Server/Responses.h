@@ -31,10 +31,12 @@ struct ErrorResponse {
 
 struct LoginResponse {
 	unsigned int status;
+	std::string errorMsg;
 };
 
 struct SignupResponse {
 	unsigned int status;
+	std::string errorMsg;
 };
 
 struct LogoutResponse {

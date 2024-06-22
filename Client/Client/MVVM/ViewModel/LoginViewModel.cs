@@ -78,7 +78,7 @@ namespace Client.MVVM.ViewModel
                 }
                 else
                 {
-                    MessageBox.Show("Login failed: " + response.Data);
+                    MessageBox.Show("Login failed: " + response.Data.Substring("{\"error\":\"".Length, response.Data.Length - "{\"error\":\"".Length - "\",\"status\":0}".Length));
                 }
             }
             catch (Exception ex)

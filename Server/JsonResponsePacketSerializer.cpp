@@ -4,12 +4,14 @@
 Buffer JsonResponsePacketSerializer::serializeResponse(LoginResponse loginResponse) {
 	nlohmann::json j;
 	j["status"] =loginResponse.status;
+	j["error"] = loginResponse.errorMsg;
 	return convertToBuffer(j, ResponseCode::LOGIN_RESPONSE_CODE);
 }
 
 Buffer JsonResponsePacketSerializer::serializeResponse(SignupResponse signUpResponse) {
 	nlohmann::json j;
 	j["status"] = signUpResponse.status;
+	j["error"] = signUpResponse.errorMsg;
 	return convertToBuffer(j, ResponseCode::SIGNUP_RESPONSE_CODE);
 }
 
