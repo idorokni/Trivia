@@ -149,6 +149,8 @@ RequestResult MenuRequestHandler::startHeadOnGame(const RequestInfo& info) {
 		reasult.newHandler = this;
 	}
 	buff = JsonResponsePacketSerializer::serializeResponse(startHeadOnGameResponse);
+
+	reasult.response = buff;
 	return reasult;
 }
 
