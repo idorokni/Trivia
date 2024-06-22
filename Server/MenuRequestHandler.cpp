@@ -35,6 +35,7 @@ RequestResult MenuRequestHandler::handleRequest(const RequestInfo& info) {
 		break;
 	case RequestCode::START_HEAD_ON_GAME_REQUEST_CODE:
 		reasult = startHeadOnGame(info);
+		break;
 	case RequestCode::ADD_QUESTION_REQUEST_CODE:
 		reasult = addQuestion(info);
 		break;
