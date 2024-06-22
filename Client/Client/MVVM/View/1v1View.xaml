@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Client.MVVM.View"
+             xmlns:local="clr-namespace:Client.MVVM.View" xmlns:viewmodel="clr-namespace:Client.MVVM.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:_1v1ViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border CornerRadius="30"
@@ -19,10 +19,9 @@
                        VerticalAlignment="Center"
                        HorizontalAlignment="Left"
                        Margin="10,0,0,0"
-                       Text="fdfdf"
+                       Text="{Binding Question}"
                        FontWeight="SemiBold"
-                       Foreground="#F0F4EF"
-                       />
+                       Foreground="#F0F4EF"/>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -40,7 +39,10 @@
                         Width="350"
                         Height="140"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
+                        VerticalAlignment="Center"
+                        Content="{Binding ButtonNames[0]}"
+                        Command="{Binding SwitchQuestion}"
+                        CommandParameter="1"/>
                 <Button Grid.Row="1" 
                         Grid.Column="0"
                         Style="{StaticResource OptionButtonStyle}"
@@ -48,7 +50,10 @@
                         Width="350"
                         Height="140"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
+                        VerticalAlignment="Center"
+                        Content="{Binding ButtonNames[2]}"
+                        Command="{Binding SwitchQuestion}"
+                        CommandParameter="2"/>
                 <Button Grid.Row="0" 
                         Grid.Column="1"
                         Style="{StaticResource OptionButtonStyle}"
@@ -56,7 +61,11 @@
                         Width="350"
                         Height="140"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
+                        VerticalAlignment="Center"
+                        Content="{Binding ButtonNames[1]}"
+                        Command="{Binding SwitchQuestion}"
+                        CommandParameter="3"/>
+
                 <Button Grid.Row="1" 
                         Grid.Column="1"
                         Style="{StaticResource OptionButtonStyle}"
@@ -64,7 +73,10 @@
                         Width="350"
                         Height="140"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
+                        VerticalAlignment="Center"
+                        Content="{Binding ButtonNames[3]}"
+                        Command="{Binding SwitchQuestion}"
+                        CommandParameter="4"/>
 
 
             </Grid>
@@ -87,7 +99,7 @@
                         CornerRadius="10"
                         Background="#D1BCE3"
                         Height="30"
-                        Width="140"
+                        Width="{Binding Health}"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
                         Margin="0,6,5,0"/>
@@ -99,7 +111,7 @@
                     <TextBlock HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                Foreground="#202A25"
-                               Text="1"
+                               Text="{Binding Time}"
                                FontWeight="Bold"
                                FontSize="30"/>
                 </Border>
@@ -114,7 +126,8 @@
                         Content="LEAVE 1V1"
                         Foreground="#F0F3F5"
                         FontWeight="Bold"
-                        FontSize="20"/>
+                        FontSize="20"
+                        Command="{Binding LeaveGame}"/>
             </Grid>
         </Grid>
     </Border>

@@ -38,10 +38,7 @@
                 <view:GameResultsView/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModel:_1v1ViewModel}">
-                <view:_1v1View/>    
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModel:WaitingViewModel}">
-                <view:WaitingView/>
+                <view:_1v1View/>
             </DataTemplate>
 
             <ResourceDictionary.MergedDictionaries>
@@ -50,7 +47,6 @@
                 <ResourceDictionary Source="Theme/RoomListItemTheme.xaml"/>
                 <ResourceDictionary Source="Theme/ParticipantListItem.xaml"/>
                 <ResourceDictionary Source="Theme/ResultListItem.xaml"/>
-                <ResourceDictionary Source="Theme/WaitingAnimation.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

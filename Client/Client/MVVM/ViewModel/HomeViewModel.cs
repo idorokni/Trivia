@@ -1,4 +1,5 @@
 ﻿using Client.Core;
+using Client.MVVM.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,7 @@ namespace Client.MVVM.ViewModel
             });
             _1v1ViewCommand = new RelayCommand(o =>
             {
-                MainViewModel.Instance.CurrentView = new WaitingViewModel();
+                MainViewModel.Instance.CurrentView = new WaitingView();
             });
 
         }

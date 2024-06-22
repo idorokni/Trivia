@@ -2,12 +2,13 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Client.MVVM.View"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Client.MVVM.View" 
+             xmlns:viewmodel="clr-namespace:Client.MVVM.ViewModel" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <Storyboard x:Key="StartingAnimation" Completed="Storyboard_Completed">
+        <Storyboard  x:Key="StartingAnimation" Completed="Storyboard_Completed" x:Name="StartingAnimation" >
             <!-- Number 1 -->
             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="StartingTextBlock" Storyboard.TargetProperty="(TextBlock.Text)" Duration="0:0:0.8">
                 <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="5"/>
@@ -106,10 +107,21 @@
             </DoubleAnimation>
             <DoubleAnimation Storyboard.TargetName="LogoImage" Storyboard.TargetProperty="Opacity" From="1" To="0" BeginTime="0:0:4.2" Duration="0:0:0.2"/>
         </Storyboard>
+
+        <Storyboard x:Key="WaitingAnimation" x:Name="WaitingAnimation">
+            <StringAnimationUsingKeyFrames Storyboard.TargetName="WaitingTextBlock" Storyboard.TargetProperty="(TextBlock.Text)" RepeatBehavior="Forever">
+                <DiscreteStringKeyFrame KeyTime="0:0:0.4" Value="Waiting"/>
+                <DiscreteStringKeyFrame KeyTime="0:0:0.8" Value="Waiting."/>
+                <DiscreteStringKeyFrame KeyTime="0:0:1.2" Value="Waiting.."/>
+                <DiscreteStringKeyFrame KeyTime="0:0:1.6" Value="Waiting..."/>
+                <DiscreteStringKeyFrame KeyTime="0:0:2" Value="Waiting"/>
+            </StringAnimationUsingKeyFrames>
+        </Storyboard>
     </UserControl.Resources>
     <Border CornerRadius="30"
             Background="#161925">
         <Grid>
+
             <TextBlock x:Name="WaitingTextBlock"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
@@ -117,7 +129,7 @@
                        FontSize="50"
                        FontWeight="Bold"
                        Text="Waiting"
-                       Opacity="0"/>
+                       Opacity="1"/>
             <TextBlock x:Name="StartingTextBlock"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
@@ -126,7 +138,7 @@
                        FontWeight="Bold"
                        RenderTransformOrigin="0.5,0.5"
                        Text="5"
-                       Opacity="1">
+                       Opacity="0">
                 <TextBlock.RenderTransform>
                     <ScaleTransform ScaleX="1" ScaleY="1"/>
                 </TextBlock.RenderTransform>
@@ -142,9 +154,6 @@
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="UserControl.Loaded">
             <BeginStoryboard Storyboard="{StaticResource WaitingAnimation}"/>
-        </EventTrigger>
-        <EventTrigger RoutedEvent="UserControl.Loaded">
-            <BeginStoryboard Storyboard="{StaticResource StartingAnimation}"/>
         </EventTrigger>
     </UserControl.Triggers>
 </UserControl>

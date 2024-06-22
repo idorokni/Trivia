@@ -140,10 +140,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Theme\WaitingAnimation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MVVM\Model\Communicator.cs" />
@@ -164,7 +160,6 @@
     <Compile Include="MVVM\ViewModel\SignupViewModel.cs" />
     <Compile Include="MVVM\ViewModel\TriviaGameViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UserStatsViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\WaitingViewModel.cs" />
     <Compile Include="MVVM\View\1v1View.xaml.cs">
       <DependentUpon>1v1View.xaml</DependentUpon>
     </Compile>
