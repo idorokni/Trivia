@@ -193,7 +193,7 @@ RequestResult MenuRequestHandler::addQuestion(const RequestInfo& info)
 	AddQuestionResponse addQuestionResponse;
 	try
 	{
-		if (IDatabase::get().addQuestion(addQuestionRequest.question, addQuestionRequest.correctAnswer, addQuestionRequest.wrongAnswer1, addQuestionRequest.wrongAnswer2, addQuestionRequest.wrongAnswer3) == 0) 
+		if (IDatabase::get().addQuestion(addQuestionRequest.question, addQuestionRequest.correctAnswer, addQuestionRequest.wrongAnswer1, addQuestionRequest.wrongAnswer2, addQuestionRequest.wrongAnswer3)) 
 		{
 			addQuestionResponse.status = 1;
 			reasult.newHandler = this;
