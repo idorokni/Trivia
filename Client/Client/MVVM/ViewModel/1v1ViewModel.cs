@@ -69,8 +69,9 @@ namespace Client.MVVM.ViewModel
 
                 if (response.IsSuccess)
                 {
-                    timer.Stop();
-                    MainViewModel.Instance.CurrentView = new HomeViewModel();
+                    Application.Current.Dispatcher.Invoke(() => timer.Stop());
+                    Dispose();
+                    MainViewModel.Instance.CurrentView = new HeadOnGameResultsViewModel(false);
                 }
                 else
                 {

@@ -76,6 +76,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MVVM\View\AddQuestionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\CreateRoomView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -153,6 +157,7 @@
     <Compile Include="MVVM\Model\ScoreModel.cs" />
     <Compile Include="MVVM\Model\UserModel.cs" />
     <Compile Include="MVVM\ViewModel\1v1ViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\AddQuestionViewModel.cs" />
     <Compile Include="MVVM\ViewModel\CreateRoomViewModel.cs" />
     <Compile Include="MVVM\ViewModel\GameResultsViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HeadOnGameResultsViewModel.cs" />
@@ -167,6 +172,9 @@
     <Compile Include="MVVM\ViewModel\UserStatsViewModel.cs" />
     <Compile Include="MVVM\View\1v1View.xaml.cs">
       <DependentUpon>1v1View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\AddQuestionView.xaml.cs">
+      <DependentUpon>AddQuestionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\CreateRoomView.xaml.cs">
       <DependentUpon>CreateRoomView.xaml</DependentUpon>
