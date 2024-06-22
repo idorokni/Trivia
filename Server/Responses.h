@@ -132,4 +132,5 @@ struct GetHeadOnGameStateResponse
 struct AddQuestionResponse
 {
 	unsigned int status;
+	std::string errorMsg;
 };

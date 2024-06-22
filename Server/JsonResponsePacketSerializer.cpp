@@ -198,6 +198,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(AddQuestionResponse addQu
 {
 	nlohmann::json j;
 	j["status"] = addQuestionResponse.status;
+	j["error"] = addQuestionResponse.errorMsg;
 	return convertToBuffer(j, ResponseCode::ADD_QUESTION_RESPONSE);
 }
 

@@ -194,19 +194,26 @@ RequestResult MenuRequestHandler::addQuestion(const RequestInfo& info)
 	AddQuestionResponse addQuestionResponse;
 	try
 	{
+		if (!std::regex_search(addQuestionRequest.question, std::regex(QUESTION_MARK_REGEX_PATTERN)))
+		{
+			throw std::runtime_error("Question Must End In Question Mark!");
+		}
 		if (IDatabase::get().addQuestion(addQuestionRequest.question, addQuestionRequest.correctAnswer, addQuestionRequest.wrongAnswer1, addQuestionRequest.wrongAnswer2, addQuestionRequest.wrongAnswer3)) 
 		{
 			addQuestionResponse.status = 1;
+			addQuestionResponse.errorMsg = "OK!";
 			reasult.newHandler = this;
 		}
 		else {
 			addQuestionResponse.status = 0;
+			addQuestionResponse.errorMsg = "Something happened!";
 			reasult.newHandler = this;
 		}
 	}
-	catch (...)
+	catch (const std::exception& error)
 	{
 		addQuestionResponse.status = 0;
+		addQuestionResponse.errorMsg = error.what();
 		reasult.newHandler = this;
 	}
 	buff = JsonResponsePacketSerializer::serializeResponse(addQuestionResponse);
