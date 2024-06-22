@@ -181,6 +181,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(GetHeadOnGameStateRespons
 	nlohmann::json j;
 	j["status"] = getHeadOnGameStateResponse.status;
 	j["health"] = getHeadOnGameStateResponse.health;
+	j["isWinner"] = getHeadOnGameStateResponse.isWinner;
 	return convertToBuffer(j, ResponseCode::GET_HEAD_ON_GAME_STATE_RESPONSE);
 }
 

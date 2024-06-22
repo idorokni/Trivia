@@ -1,4 +1,5 @@
 #include "HeadOnGameRequestHandler.h"
+#include "RequestHandlerFactory.h"
 
 HeadOnGameRequestHandler::HeadOnGameRequestHandler(Game& game, const LoggedUser& loggedUser) : BasicGameRequestHandler(game, loggedUser) {
 
@@ -23,12 +24,19 @@ RequestResult HeadOnGameRequestHandler::getHeadOnGameState(const RequestInfo& in
     int i = 0;
 
     try {
+        getHeadOnGameStateResponse.isWinner = 0;
+        result.newHandler = this;
         if (dynamic_cast<HeadOnGame&>(m_game).isOpenForPlayer()) {
             getHeadOnGameStateResponse.health = 0;
             getHeadOnGameStateResponse.status = 2;
         }
         else {
             getHeadOnGameStateResponse.health = dynamic_cast<HeadOnGame&>(m_game).getPlayerHealth(m_user);
+            if (getHeadOnGameStateResponse.health <= 0) {
+                result.newHandler = RequestHandlerFactory::get().createMenuRequestHandler(m_user);
+                dynamic_cast<HeadOnGame&>(m_game).setOtherPlayerToWinner(m_user);
+                getHeadOnGameStateResponse.isWinner = dynamic_cast<HeadOnGame&>(m_game).winningState(m_user);
+            }
             getHeadOnGameStateResponse.status = 1;
         }
     }

@@ -123,5 +123,6 @@ struct GetHeadOnGameStateResponse
 {
 	unsigned int status;
 	unsigned int health;
+	unsigned int isWinner;
 };
 

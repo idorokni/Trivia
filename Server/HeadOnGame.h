@@ -14,6 +14,8 @@ public:
 	bool isOpenForPlayer();
 	unsigned int getPlayerHealth(const LoggedUser& loggedUser);
 	void addPlayer(std::unique_ptr<HeadOnPlayerEntry>& player);
+	unsigned int winningState(const LoggedUser& loggedUser);
+	void setOtherPlayerToWinner(const LoggedUser& loggedUser);
 	HeadOnGame(std::unique_ptr<HeadOnPlayerEntry>& firstPlayer, std::unique_ptr<HeadOnPlayerEntry>& secondPlayer, unsigned int gameID);
 	Question& getFirstPlayersQuestion();
 	Question getQuestionForUser(LoggedUser user) override;

@@ -108,12 +108,6 @@ namespace Client.MVVM.ViewModel
                     Time = _decrement.ToString();
                     Application.Current.Dispatcher.Invoke(() => timer.Start());
                 }
-                else
-                {
-                    //MessageBox.Show("Game over! Show final scores.");
-                    MainViewModel.Instance.CurrentView = new GameResultsViewModel();
-                    Application.Current.Dispatcher.Invoke(() => timer.Stop());
-                }
             });
 
             background_worker.RunWorkerAsync(3000);
@@ -150,6 +144,12 @@ namespace Client.MVVM.ViewModel
 
                 RequestResult response = App.Communicator.DeserializeMessage();
                 uint health = uint.Parse(response.Data.Split(':')[1].Split(',')[0]);
+                if (health <= 0)
+                {
+                    MessageBox.Show("YOU LOST");
+                    MainViewModel.Instance.CurrentView = new HomeViewModel();
+                }
+               
                 Application.Current.Dispatcher.Invoke(() => {
                     Health = health;
                 });

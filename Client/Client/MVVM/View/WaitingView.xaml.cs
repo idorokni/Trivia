@@ -90,9 +90,9 @@ namespace Client.MVVM.View
                 App.Communicator.SendMessage(msg);
 
                 RequestResult response = App.Communicator.DeserializeMessage();
-                int status = int.Parse(response.Data.Split(':')[2].Split('}')[0]);
+                int status = int.Parse(response.Data.Split(':')[2].Split(',')[0]);
                 Application.Current.Dispatcher.Invoke(() => {
-                    if (int.Parse(response.Data.Split(':')[2].Split('}')[0]) == 1)
+                    if (int.Parse(response.Data.Split(':')[2].Split(',')[0]) == 1)
                     {
                         Dispose();
                         StartStoryboard();

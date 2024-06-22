@@ -17,6 +17,22 @@ void HeadOnGame::addPlayer(std::unique_ptr<HeadOnPlayerEntry>& player) {
 	_secondPlayer = std::move(player);
 }
 
+void HeadOnGame::setOtherPlayerToWinner(const LoggedUser& loggedUser) {
+	if (_firstPlayer->getLoggedUser().getUsername() == loggedUser.getUsername()) {
+		_secondPlayer->setIsWinner();
+	}
+	else {
+		_firstPlayer->setIsWinner();
+	}
+}
+
+unsigned int HeadOnGame::winningState(const LoggedUser& loggedUser) {
+	if (_firstPlayer->getLoggedUser().getUsername() == loggedUser.getUsername()) {
+		return _firstPlayer->getIsWinner();
+	}
+	return _secondPlayer->getIsWinner();
+}
+
 Question& HeadOnGame::getFirstPlayersQuestion() {
 	return _firstPlayer->getLastQuestion();
 }
@@ -36,11 +52,17 @@ Question HeadOnGame::getQuestionForUser(LoggedUser user) {
 		question = IDatabase::get().getQuestions(_firstPlayerAmountOfQuestions).back();
 		_firstPlayer->getLastQuestion() = question;
 		_firstPlayerAmountOfQuestions++;
+		if (_firstPlayerAmountOfQuestions >= 10) {
+			_firstPlayerAmountOfQuestions = 1;
+		}
 	}
 	else {
 		question = IDatabase::get().getQuestions(_secondPlayerAmountOfQuestions).back();
 		_firstPlayer->getLastQuestion() = question;
 		_secondPlayerAmountOfQuestions++;
+		if (_secondPlayerAmountOfQuestions >= 10) {
+			_secondPlayerAmountOfQuestions = 1;
+		}
 	}
 	
 
