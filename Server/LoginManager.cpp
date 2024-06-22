@@ -4,8 +4,28 @@
 bool LoginManager::signup(const std::string& password, const std::string& userName, const std::string& mail, const std::string& address, const std::string& phone, const std::string& birthday)
 {
 	// Adding the user using the addNewUser from the dataBase class
-	if (std::regex_search(password, std::regex(PASSWORD_REGEX_PATTERN)) && std::regex_search(mail, std::regex(EMAIL_REGEX_PATTERN)) && std::regex_search(address, std::regex(ADDRESS_REGEX_PATTERN)) && std::regex_search(phone, std::regex(PHONE_REGEX_PATTERN)) && std::regex_search(birthday, std::regex(BIRTHDAY_REGEX_PATTERN)) && IDatabase::get().addNewUser(userName, password, mail, address, phone, birthday) == 0) return login(password, userName);
-	else return false;
+	if (std::regex_search(password, std::regex(PASSWORD_REGEX_PATTERN)))
+	{
+		if (std::regex_search(mail, std::regex(EMAIL_REGEX_PATTERN)))
+		{
+			if (std::regex_search(address, std::regex(ADDRESS_REGEX_PATTERN)))
+			{
+				if (std::regex_search(phone, std::regex(PHONE_REGEX_PATTERN)))
+				{
+					if (std::regex_search(birthday, std::regex(BIRTHDAY_REGEX_PATTERN)))
+					{
+						if (IDatabase::get().addNewUser(userName, password, mail, address, phone, birthday) == 0) return login(password, userName);
+						else throw std::runtime_error("This username is already occupied!");
+					}
+					else throw std::runtime_error("Birthday has to be in the structure of: DD.MM.YYYY!");
+				}
+				else throw std::runtime_error("Phone has to be in the structure of: prefix - number! Number must contain 7 digits.");
+			}
+			else throw std::runtime_error("Address has to be in the structure of: Street, Apt, City! Street and City contain only letters, Apt contains only number.");
+		}
+		else throw std::runtime_error("Mail has to contain '@' and ending must be a domain name seperated by a dot!");
+	}
+	else throw std::runtime_error("Password has to be at least 8 characters long and contain at least one uppercase letter, one lowercase letter and a special char!");
 }
 
 bool LoginManager::login(const std::string& password, const std::string& userName) 
@@ -21,7 +41,7 @@ bool LoginManager::login(const std::string& password, const std::string& userNam
 		this->m_loggedUsers.emplace_back(userName);
 		return true;
 	}
-	else return false;
+	else throw std::runtime_error("Username or password aren't correct!");
 }
 
 bool LoginManager::logout(const std::string& userName) 

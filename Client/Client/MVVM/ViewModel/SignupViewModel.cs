@@ -87,7 +87,7 @@ namespace Client.MVVM.ViewModel
                 }
                 else
                 {
-                    MessageBox.Show("SignUp failed: " + response.Data);
+                    MessageBox.Show("SignUp failed: " + response.Data.Substring("{\"error\":\"".Length, response.Data.Length - "{\"error\":\"".Length - "\",\"status\":0}".Length));
                 }
             }
             catch (Exception ex)

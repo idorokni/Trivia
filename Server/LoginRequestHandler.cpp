@@ -33,12 +33,23 @@ RequestResult LoginRequestHandler::login(const RequestInfo& info) {
 	Buffer buff;
 	LoginRequest loginRequest = JsonRequestPacketDeserializer::deserializeLoginRequest(info.buff);
 	LoginResponse loginResponse;
-	if (LoginManager::get().login(loginRequest.password, loginRequest.username)) {
-		loginResponse.status = 1;
-		reasult.newHandler = RequestHandlerFactory::get().createMenuRequestHandler(LoggedUser(loginRequest.username));
+	try
+	{
+		if (LoginManager::get().login(loginRequest.password, loginRequest.username)) {
+			loginResponse.status = 1;
+			loginResponse.errorMsg = "OK";
+			reasult.newHandler = RequestHandlerFactory::get().createMenuRequestHandler(LoggedUser(loginRequest.username));
+		}
+		else {
+			loginResponse.status = 0;
+			loginResponse.errorMsg = "This user is already logged in!";
+			reasult.newHandler = this;
+		}
 	}
-	else {
+	catch (const std::exception& error)
+	{
 		loginResponse.status = 0;
+		loginResponse.errorMsg = error.what();
 		reasult.newHandler = this;
 	}
 	buff = JsonResponsePacketSerializer::serializeResponse(loginResponse);
@@ -51,12 +62,23 @@ RequestResult LoginRequestHandler::signup(const RequestInfo& info) {
 	Buffer buff;
 	SignUpRequest signupRequest = JsonRequestPacketDeserializer::deserializeSignupRequest(info.buff);
 	SignupResponse signupResponse;
-	if (LoginManager::get().signup(signupRequest.password, signupRequest.username, signupRequest.email, signupRequest.address, signupRequest.phone, signupRequest.birthday)) {
-		signupResponse.status = 1;
-		reasult.newHandler = RequestHandlerFactory::get().createMenuRequestHandler(LoggedUser(signupRequest.username));
+	try
+	{
+		if (LoginManager::get().signup(signupRequest.password, signupRequest.username, signupRequest.email, signupRequest.address, signupRequest.phone, signupRequest.birthday)) {
+			signupResponse.status = 1;
+			signupResponse.errorMsg = "OK";
+			reasult.newHandler = RequestHandlerFactory::get().createMenuRequestHandler(LoggedUser(signupRequest.username));
+		}
+		else {
+			signupResponse.status = 0;
+			signupResponse.errorMsg = "Something happened!";
+			reasult.newHandler = this;
+		}
 	}
-	else {
+	catch (const std::exception& error)
+	{
 		signupResponse.status = 0;
+		signupResponse.errorMsg = error.what();
 		reasult.newHandler = this;
 	}
 	buff = JsonResponsePacketSerializer::serializeResponse(signupResponse);
