@@ -146,8 +146,8 @@ int SqliteDataBase::addNewUser(const std::string& username, const std::string& p
 
 std::list<Question> SqliteDataBase::getQuestions(const int number) 
 {
-	//const char* sql = "SELECT question, correct, ans1, ans2, ans3 FROM Question ORDER BY RANDOM() LIMIT ?;";
-	const char* sql = "SELECT question, correct, ans1, ans2, ans3 FROM Question LIMIT ?;";
+	const char* sql = "SELECT question, correct, ans1, ans2, ans3 FROM Question ORDER BY RANDOM() LIMIT ?;";
+	//const char* sql = "SELECT question, correct, ans1, ans2, ans3 FROM Question LIMIT ?;";
 	sqlite3_stmt* stmt;
 	std::list<Question> questions;
 
