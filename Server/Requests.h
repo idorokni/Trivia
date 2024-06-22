@@ -26,7 +26,8 @@ enum class RequestCode {
     SUBMIT_ANSWER_REUEST_CODE = 66,
     GET_GAME_RESULT_REQUEST_CODE = 67,
     GET_HEAD_ON_GAME_STATE_REQUEST_CODE = 68,
-    START_HEAD_ON_GAME_REQUEST_CODE = 69
+    START_HEAD_ON_GAME_REQUEST_CODE = 69,
+    ADD_QUESTION_REQUEST_CODE = 70
 };
 
 struct LoginRequest {
@@ -73,4 +74,13 @@ struct SubmitAnswerRequest
 {
     unsigned int answerId;
     unsigned int answerTime;
+};
+
+struct AddQuestionRequest
+{
+    std::string question;
+    std::string correctAnswer;
+    std::string wrongAnswer1;
+    std::string wrongAnswer2;
+    std::string wrongAnswer3;
 };

@@ -24,7 +24,8 @@ enum class ResponseCode {
 	SUBMIT_ANSWER_RESPONSE = 117,
 	LEAVE_GAME_RESPONSE = 118,
 	GET_HEAD_ON_GAME_STATE_RESPONSE =119,
-	START_HEAD_ON_GAME_RESPONSE = 120
+	START_HEAD_ON_GAME_RESPONSE = 120,
+	ADD_QUESTION_RESPONSE = 121
 };
 
 struct ErrorResponse {
@@ -128,3 +129,7 @@ struct GetHeadOnGameStateResponse
 	unsigned int isWinner;
 };
 
+struct AddQuestionResponse
+{
+	unsigned int status;
+};

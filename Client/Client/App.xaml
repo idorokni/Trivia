@@ -43,6 +43,9 @@
             <DataTemplate DataType="{x:Type viewModel:HeadOnGameResultsViewModel}">
                 <view:HeadOnGameResultsView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:AddQuestionViewModel}">
+                <view:AddQuestionView/>
+            </DataTemplate>
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Theme/OptionButtonTheme.xaml"/>

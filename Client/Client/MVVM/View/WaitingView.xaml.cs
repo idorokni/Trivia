@@ -32,6 +32,7 @@ namespace Client.MVVM.View
         {
             InitializeComponent();
 
+            MainViewModel.Instance.ButtonVisibility = Visibility.Hidden;
             background_worker.WorkerSupportsCancellation = true;
             background_worker.WorkerReportsProgress = true;
 

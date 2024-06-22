@@ -30,6 +30,7 @@ public:
     int getPlayerScore(const std::string& username) override;
     std::vector<std::string> getHighScores() override;
     int submitGameStatistics(const GameData& gameData, const LoggedUser& loggedUser) override;
+    bool addQuestion(const std::string& question, const std::string& correctAnswer, const std::string& wrongAnswer1, const std::string& wrongAnswer2, const std::string& wrongAnswer3) override;
 
 
     static IDatabase& get();

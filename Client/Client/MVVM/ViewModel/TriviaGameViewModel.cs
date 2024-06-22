@@ -36,6 +36,8 @@ namespace Client.MVVM.ViewModel
 
         public TriviaGameViewModel(int amountOfQuestions, int timePerQuestion)
         {
+            MainViewModel.Instance.ButtonVisibility = Visibility.Hidden;
+
             AmountOfQuestions = amountOfQuestions;
             _timePerQuestion = timePerQuestion;
             _decrement = _timePerQuestion;

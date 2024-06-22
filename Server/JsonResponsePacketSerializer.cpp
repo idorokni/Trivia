@@ -194,6 +194,13 @@ Buffer JsonResponsePacketSerializer::serializeResponse(StartHeadOnGameResponse s
 	return convertToBuffer(j, ResponseCode::START_HEAD_ON_GAME_RESPONSE);
 }
 
+Buffer JsonResponsePacketSerializer::serializeResponse(AddQuestionResponse addQuestionResponse)
+{
+	nlohmann::json j;
+	j["status"] = addQuestionResponse.status;
+	return convertToBuffer(j, ResponseCode::ADD_QUESTION_RESPONSE);
+}
+
 
 Buffer JsonResponsePacketSerializer::convertToBuffer(const nlohmann::json& jsonObj, ResponseCode code) {
 	std::string jsonDump = jsonObj.dump();

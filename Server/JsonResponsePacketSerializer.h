@@ -37,6 +37,7 @@ public:
 	//401
 	static Buffer serializeResponse(GetHeadOnGameStateResponse getHeadOnGameStateResponse);
 	static Buffer serializeResponse(StartHeadOnGameResponse getHeadOnGameStateResponse);
+	static Buffer serializeResponse(AddQuestionResponse addQuestionResponse);
 
 
 private:
