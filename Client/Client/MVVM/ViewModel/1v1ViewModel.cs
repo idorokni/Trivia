@@ -37,7 +37,7 @@ namespace Client.MVVM.ViewModel
 
         public _1v1ViewModel()
         {
-            _decrement = 0;
+            _decrement = 1;
             _health = 140;
 
             background_worker.WorkerSupportsCancellation = true;
@@ -105,7 +105,7 @@ namespace Client.MVVM.ViewModel
                     GetQuestion(); // Move to the next question
                     Application.Current.Dispatcher.Invoke(() => timer.Stop());
                     // Restart the timer
-                    _decrement = 0; // Reset decrement counter
+                    _decrement = 1; // Reset decrement counter
                     Time = _decrement.ToString();
                     Application.Current.Dispatcher.Invoke(() => timer.Start());
                 }
@@ -145,7 +145,12 @@ namespace Client.MVVM.ViewModel
 
                 RequestResult response = App.Communicator.DeserializeMessage();
                 int health = int.Parse(response.Data.Split(':')[1].Split(',')[0]);
-
+                if (int.Parse(response.Data.Split(':')[2].Split(',')[0]) == 1)
+                {
+                    MainViewModel.Instance.CurrentView = new HeadOnGameResultsViewModel(true);
+                    Application.Current.Dispatcher.Invoke(() => timer.Stop());
+                    Dispose();
+                }
                 if (health <= 0)
                 {
                     MainViewModel.Instance.CurrentView = new HeadOnGameResultsViewModel(false);

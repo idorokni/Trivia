@@ -32,10 +32,13 @@ RequestResult HeadOnGameRequestHandler::getHeadOnGameState(const RequestInfo& in
         }
         else {
             getHeadOnGameStateResponse.health = dynamic_cast<HeadOnGame&>(m_game).getPlayerHealth(m_user);
+            getHeadOnGameStateResponse.isWinner = dynamic_cast<HeadOnGame&>(m_game).winningState(m_user);
+            if (getHeadOnGameStateResponse.isWinner == 1) {
+                result.newHandler = RequestHandlerFactory::get().createMenuRequestHandler(m_user);
+            }
             if (getHeadOnGameStateResponse.health <= 0) {
                 result.newHandler = RequestHandlerFactory::get().createMenuRequestHandler(m_user);
                 dynamic_cast<HeadOnGame&>(m_game).setOtherPlayerToWinner(m_user);
-                getHeadOnGameStateResponse.isWinner = dynamic_cast<HeadOnGame&>(m_game).winningState(m_user);
             }
             getHeadOnGameStateResponse.status = 1;
         }

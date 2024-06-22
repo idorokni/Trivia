@@ -42,6 +42,9 @@
                         VerticalAlignment="Center"
                         Content="{Binding ButtonNames[0]}"
                         Command="{Binding SwitchQuestion}"
+                        FontWeight="Bold"
+                        FontSize="40"
+                        Foreground="#161925"
                         CommandParameter="1"/>
                 <Button Grid.Row="1" 
                         Grid.Column="0"
@@ -53,7 +56,10 @@
                         VerticalAlignment="Center"
                         Content="{Binding ButtonNames[2]}"
                         Command="{Binding SwitchQuestion}"
-                        CommandParameter="2"/>
+                        CommandParameter="3"
+                        FontWeight="Bold"
+                        FontSize="40"
+                        Foreground="#161925"/>
                 <Button Grid.Row="0" 
                         Grid.Column="1"
                         Style="{StaticResource OptionButtonStyle}"
@@ -64,7 +70,10 @@
                         VerticalAlignment="Center"
                         Content="{Binding ButtonNames[1]}"
                         Command="{Binding SwitchQuestion}"
-                        CommandParameter="3"/>
+                        CommandParameter="2"
+                        FontWeight="Bold"
+                        FontSize="40"
+                        Foreground="#161925"/>
 
                 <Button Grid.Row="1" 
                         Grid.Column="1"
@@ -76,7 +85,10 @@
                         VerticalAlignment="Center"
                         Content="{Binding ButtonNames[3]}"
                         Command="{Binding SwitchQuestion}"
-                        CommandParameter="4"/>
+                        CommandParameter="4"
+                        FontWeight="Bold"
+                        FontSize="40"
+                        Foreground="#161925"/>
 
 
             </Grid>
