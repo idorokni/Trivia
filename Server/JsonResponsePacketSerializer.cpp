@@ -178,6 +178,22 @@ Buffer JsonResponsePacketSerializer::serializeResponse(LeaveGameResponse leaveGa
 	return convertToBuffer(j, ResponseCode::LEAVE_GAME_RESPONSE);
 }
 
+Buffer JsonResponsePacketSerializer::serializeResponse(GetHeadOnGameStateResponse getHeadOnGameStateResponse)
+{
+	nlohmann::json j;
+	j["status"] = getHeadOnGameStateResponse.status;
+	j["health"] = getHeadOnGameStateResponse.health;
+	j["isWinner"] = getHeadOnGameStateResponse.isWinner;
+	return convertToBuffer(j, ResponseCode::GET_HEAD_ON_GAME_STATE_RESPONSE);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(StartHeadOnGameResponse startHeadOnGameResponse)
+{
+	nlohmann::json j;
+	j["status"] = startHeadOnGameResponse.status;
+	return convertToBuffer(j, ResponseCode::START_HEAD_ON_GAME_RESPONSE);
+}
+
 
 Buffer JsonResponsePacketSerializer::convertToBuffer(const nlohmann::json& jsonObj, ResponseCode code) {
 	std::string jsonDump = jsonObj.dump();

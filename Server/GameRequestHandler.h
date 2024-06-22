@@ -1,25 +1,14 @@
 #pragma once
-#include "IRequestHandler.h"
-#include "Game.h"
-#include "LoggedUser.h"
-#include "GameManager.h"
-#include "RequestHandlerFactory.h"
+#include "BasicGameRequestHandler.h"
 
-
-class GameRequestHandler : public IRequestHandler
+class GameRequestHandler : public BasicGameRequestHandler
 {
 public:
-	bool isRequestRelevant(const RequestInfo& info) override;
-	RequestResult handleRequest(const RequestInfo& info) override;
+	bool isRequestRelevant(const RequestInfo& info);
+	RequestResult handleRequest(const RequestInfo& info);
 	GameRequestHandler(Game& game, const LoggedUser& loggedUser);
 
 private:
-	Game& m_game;
-	LoggedUser m_user;
-
-	RequestResult getQuestion(const RequestInfo& info);	
-	RequestResult submitAnswer(const RequestInfo& info);
 	RequestResult getGameResult(const RequestInfo& info);
-	RequestResult leaveGame(const RequestInfo& info);
 
 };

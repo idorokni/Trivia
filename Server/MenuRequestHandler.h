@@ -23,4 +23,5 @@ private:
 	RequestResult getHighScore(const RequestInfo& info);
 	RequestResult joinRoom(const RequestInfo& info);
 	RequestResult createRoom(const RequestInfo& info);
+	RequestResult startHeadOnGame(const RequestInfo& info);
 };

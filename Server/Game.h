@@ -6,19 +6,15 @@
 
 class Game
 {
-private:
-	std::vector<Question> m_questions;
-	std::map<LoggedUser, GameData> m_players;
+protected:
 	unsigned int m_gameId;
-	//unsigned int m_lastGivenQuestionId;
 	void submitGameStatsToDB(const GameData& gameData, const LoggedUser& player);
 
 public:
-	Game(const std::vector<Question>& questions, std::map<LoggedUser, GameData>& players, unsigned int gameId);
-	Question getQuestionForUser(LoggedUser user);
-	void submitAnswer(unsigned int answerId, unsigned int answerTime, LoggedUser player);
-	void removePlayer(LoggedUser player);
-	std::vector<PlayerResults> getGameResults(const LoggedUser& loggedUser);
 	unsigned int getGameId() { return m_gameId; }
-	unsigned int getAmountOfPlayers();
+	virtual Question getQuestionForUser(LoggedUser user) = 0;
+	virtual void submitAnswer(unsigned int answerId, unsigned int answerTime, LoggedUser player) = 0;
+	virtual void removePlayer(LoggedUser player) = 0;
+	virtual unsigned int getAmountOfPlayers() = 0;
+	virtual std::vector<PlayerResults> getGameResults(const LoggedUser& loggedUser) { return std::vector<PlayerResults>(); };
 };

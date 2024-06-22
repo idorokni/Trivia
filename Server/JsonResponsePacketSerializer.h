@@ -34,6 +34,10 @@ public:
 	static Buffer serializeResponse(GetQuestionResponse getQuestionResponse);
 	static Buffer serializeResponse(LeaveGameResponse leaveGameResponse);
 
+	//401
+	static Buffer serializeResponse(GetHeadOnGameStateResponse getHeadOnGameStateResponse);
+	static Buffer serializeResponse(StartHeadOnGameResponse getHeadOnGameStateResponse);
+
 
 private:
 	static Buffer convertToBuffer(const nlohmann::json& jsonObj, ResponseCode code);

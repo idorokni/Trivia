@@ -19,37 +19,39 @@ Game& GameManager::createGame(Room room)
         players[loggedUser] = gameData;
     }
 
-    m_games.emplace_back(questionsVector, players, room.getRoomData().id);
+    m_games.emplace_back(std::make_unique<TriviaGame>(questionsVector, players, room.getRoomData().id));
     std::cout << "adding room, rooms = " << m_games.size() << std::endl;
-    return m_games.back();
+    return *m_games.back();
 }
 
 void GameManager::deleteGame(unsigned int gameId)
 {
-    auto it = m_games.begin();
-    for (Game game : m_games)
-    {
-        if (game.getGameId() == gameId)
-        {
-            m_games.erase(it);
-            break;
+    auto it = std::find_if(m_games.begin(), m_games.end(), [gameId](const std::unique_ptr<Game>& game) {return game->getGameId() == gameId; });
+    if (it != m_games.end()) {
+        if (dynamic_cast<HeadOnGame*>(it->get()) != nullptr) {
+            RoomManager::get().deleteRoom(gameId);
         }
-        else it++;
+        m_games.erase(it);
     }
-    std::cout << "deleting room, rooms = " << m_games.size() << std::endl;
 
 }
 
-Game& GameManager::getGamee(unsigned int roomId) {
-    for (Game& game : m_games) {
-        if (game.getGameId() == roomId) {
-            return game;
-        }
+std::unique_ptr<Game>& GameManager::getOpenGame(const LoggedUser& loggedUser) {
+    auto it = std::find_if(m_games.begin(), m_games.end(), [](const std::unique_ptr<Game>& game) { return dynamic_cast<HeadOnGame*>(game.get()) != nullptr && dynamic_cast<HeadOnGame*>(game.get())->isOpenForPlayer(); });
+    if (it != m_games.end()) {
+        std::unique_ptr<HeadOnPlayerEntry> player = std::make_unique<HeadOnPlayerEntry>(loggedUser, STARTING_HEALTH, dynamic_cast<HeadOnGame*>(it->get())->getFirstPlayersQuestion());
+        dynamic_cast<HeadOnGame*>(it->get())->addPlayer(player);
+        return *it;
+    }
+    else {
+        std::unique_ptr<HeadOnPlayerEntry> secondPlayer = nullptr;
+        std::unique_ptr<HeadOnPlayerEntry> firstPlayer = std::make_unique<HeadOnPlayerEntry>(loggedUser, STARTING_HEALTH, IDatabase::get().getQuestions(1).back());
+        m_games.emplace_back(std::make_unique<HeadOnGame>(firstPlayer, secondPlayer, RoomManager::get().getLastGivenId()));
+        RoomManager::get().uploadLastGivenId();
+        return m_games.back();
     }
 }
-
-
-
+Game& GameManager::getGamee(unsigned int roomId) { return **std::find_if(m_games.begin(), m_games.end(), [roomId](const std::unique_ptr<Game>& game) {return game->getGameId() == roomId; }); }
 
 GameManager& GameManager::get() noexcept {
     static GameManager s_Instance;

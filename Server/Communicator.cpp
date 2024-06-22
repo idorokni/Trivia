@@ -68,6 +68,7 @@ void Communicator::handleNewClient(SOCKET sock) {
 			info.buff = std::move(buff);
 			info.recivalTime = std::time(nullptr);
 			if (this->m_clients[sock]->isRequestRelevant(info)) {
+				std::lock_guard<std::mutex>lock(this->mutex);
 				RequestResult reasult = this->m_clients.at(sock)->handleRequest(info);
 				if (reasult.newHandler != this->m_clients.at(sock)) {
 					delete this->m_clients.at(sock);

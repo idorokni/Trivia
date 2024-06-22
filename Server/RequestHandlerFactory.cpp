@@ -16,9 +16,13 @@ RoomMemberRequestHandler* RequestHandlerFactory::creatRoomMemberRequestHandler(c
 	return new RoomMemberRequestHandler(loggedUser, room);
 }
 
-GameRequestHandler* RequestHandlerFactory::createGameRequestHandler(Game& game, const LoggedUser& loggedUser)
+BasicGameRequestHandler* RequestHandlerFactory::createGameRequestHandler(Game& game, const LoggedUser& loggedUser)
 {
 	return new GameRequestHandler(game, loggedUser);
+}
+
+BasicGameRequestHandler* RequestHandlerFactory::createHeadOnGameRequestHandler(Game& game, const LoggedUser& loggedUser) {
+	return new HeadOnGameRequestHandler(game, loggedUser);
 }
 
 RequestHandlerFactory& RequestHandlerFactory::get() noexcept{
