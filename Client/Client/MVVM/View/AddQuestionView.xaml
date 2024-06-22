@@ -10,6 +10,110 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Border CornerRadius="30"
             Background="#FA466D">
-        <TextBlock Text="{Binding CorrectAnswer}"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" 
+                   Text="Question:"
+                   FontSize="30"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="30,0,0,0"/>
+
+                <TextBox Grid.Row="0"
+                 Height="30"
+                 Width="480"
+                 HorizontalAlignment="Left"
+                 Margin="280,13,0,13"
+                 Text="{Binding Question, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Grid.Row="1" 
+                   Text="Correct Answer:"
+                   FontSize="30"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="30,0,0,0"/>
+
+                <TextBox Grid.Row="1"
+                 Height="30"
+                 Width="480"
+                 HorizontalAlignment="Left"
+                 Margin="280,13,0,12"
+                 Text="{Binding CorrectAnswer, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Grid.Row="2" 
+                   Text="Wrong Answer 1:"
+                   FontSize="30"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="30,0,0,0"/>
+
+                <TextBox Grid.Row="2"
+                 Height="30"
+                 Width="480"
+                 HorizontalAlignment="Left"
+                 Margin="280,13,0,13"
+                 Text="{Binding WrongAnswer1, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Grid.Row="3" 
+                   Text="Wrong Answer 2:"
+                   FontSize="30"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="30,0,0,0"/>
+
+                <TextBox Grid.Row="3"
+                 Height="30"
+                 Width="480"
+                 HorizontalAlignment="Left"
+                 Margin="280,13,0,13"
+                 Text="{Binding WrongAnswer2, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Grid.Row="4" 
+                   Text="Wrong Answer 3:"
+                   FontSize="30"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="30,0,0,0"/>
+
+                <TextBox Grid.Row="4"
+                 Height="30"
+                 Width="480"
+                 HorizontalAlignment="Right"
+                 Margin="0,0,40,0"
+                 Text="{Binding WrongAnswer3, UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                <Button Grid.Row="6"
+                Style="{StaticResource OptionButtonStyle}"
+                Content="SUBMIT"
+                Width="100"
+                Height="60"
+                Background="#4F6367"
+                Foreground="AntiqueWhite"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Command="{Binding AddQuestionCommand}"/>
+            </Grid>
+
+            <TextBlock Grid.Row="0" 
+    Text="Add Question"
+    FontSize="50"
+    HorizontalAlignment="Center"
+    VerticalAlignment="Center"/>
+        </Grid>
     </Border>
 </UserControl>

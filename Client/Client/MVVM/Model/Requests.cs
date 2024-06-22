@@ -31,7 +31,8 @@ namespace Client.MVVM.Model
         SUBMIT_ANSWER_REQUEST_CODE = 66,
         GET_GAME_RESULT_REQUEST_CODE = 67,
         GET_HEAD_ON_GAME_STATE_REQUEST_CODE = 68,
-        START_HEAD_ON_GAME_REQUEST_CODE = 69
+        START_HEAD_ON_GAME_REQUEST_CODE = 69,
+        ADD_QUESTION_REQUEST_CODE = 70
     };
 
     enum ResultCode
@@ -169,6 +170,24 @@ namespace Client.MVVM.Model
         {
             _answerId = answerId;
             _timeToAnswer = timeToAnswer;
+        }
+    }
+
+    public class AddQuestionRequest : Request
+    {
+        public string _question;
+        public string _correctAnswer;
+        public string _wrongAnswer1;
+        public string _wrongAnswer2;
+        public string _wrongAnswer3;
+
+        public AddQuestionRequest(string question, string correctAnswer, string wrongAnswer1, string wrongAnswer2, string wrongAnswer3)
+        {
+            _question = question;
+            _correctAnswer = correctAnswer;
+            _wrongAnswer1 = wrongAnswer1;
+            _wrongAnswer2 = wrongAnswer2;
+            _wrongAnswer3 = wrongAnswer3;
         }
     }
 
