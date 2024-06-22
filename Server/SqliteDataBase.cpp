@@ -42,8 +42,7 @@ bool SqliteDataBase::open()
 			"insert into Question (id, question, correct, ans1, ans2, ans3) VALUES (7, 'capital of Italy?', 'Rome', 'Napoly', 'Firenze', 'Milano');"
 			"insert into Question (id, question, correct, ans1, ans2, ans3) VALUES (8, 'capital of Egypt?', 'Cairo', 'Alexandria', 'Taba', 'Sharem A Sehich');"
 			"insert into Question (id, question, correct, ans1, ans2, ans3) VALUES (9, 'capital of Jordan?', 'Amman', 'Baku', 'Akabba', 'Damascus');"
-			"insert into Question (id, question, correct, ans1, ans2, ans3) VALUES (10, 'capital of Lebanon?', 'Beirut', 'Tzur', 'Baalback', 'Tziddon');"
-			"insert into Statistics (username, num_correct_answers, avg_time_per_question, num_of_total_answers, num_of_total_games, score) values ('idodi', 2, 3.4, 1, 2, 3);";
+			"insert into Question (id, question, correct, ans1, ans2, ans3) VALUES (10, 'capital of Lebanon?', 'Beirut', 'Tzur', 'Baalback', 'Tziddon');";
 
 		char* errMessage = nullptr;
 		res = sqlite3_exec(this->_db, sqlStatement, nullptr, nullptr, &errMessage);
@@ -147,7 +146,7 @@ int SqliteDataBase::addNewUser(const std::string& username, const std::string& p
 
 std::list<Question> SqliteDataBase::getQuestions(const int number) 
 {
-	const char* sql = "SELECT question, correct, ans1, ans2, ans3 FROM Question LIMIT ?;";
+	const char* sql = "SELECT question, correct, ans1, ans2, ans3 FROM Question ORDER BY RANDOM() LIMIT ?;";
 	sqlite3_stmt* stmt;
 	std::list<Question> questions;
 
