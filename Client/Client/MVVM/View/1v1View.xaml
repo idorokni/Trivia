@@ -100,9 +100,9 @@
                         Background="#D1BCE3"
                         Height="30"
                         Width="{Binding Health}"
-                        HorizontalAlignment="Right"
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Margin="0,6,5,0"/>
+                        Margin="53,6,5,0"/>
                 <Border Grid.Column="1"
                         CornerRadius="10"
                         Background="#D9DAD9"

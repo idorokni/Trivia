@@ -8,6 +8,8 @@ class HeadOnGame : public Game {
 private:
 	std::unique_ptr<HeadOnPlayerEntry> _firstPlayer;
 	std::unique_ptr<HeadOnPlayerEntry> _secondPlayer;
+	unsigned int _firstPlayerAmountOfQuestions;
+	unsigned int _secondPlayerAmountOfQuestions;
 public:
 	bool isOpenForPlayer();
 	unsigned int getPlayerHealth(const LoggedUser& loggedUser);

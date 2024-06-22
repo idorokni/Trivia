@@ -5,6 +5,8 @@ HeadOnGame::HeadOnGame(std::unique_ptr<HeadOnPlayerEntry>& firstPlayer, std::uni
 	Question question = IDatabase::get().getQuestions(1).back();
 	_firstPlayer = std::move(firstPlayer);
 	_secondPlayer = std::move(secondPlayer);
+	_firstPlayerAmountOfQuestions = 1;
+	_secondPlayerAmountOfQuestions = 1;
 }
 
 bool HeadOnGame::isOpenForPlayer() {
@@ -29,13 +31,18 @@ unsigned int HeadOnGame::getPlayerHealth(const LoggedUser& loggedUser) {
 }
 
 Question HeadOnGame::getQuestionForUser(LoggedUser user) {
-	Question question = IDatabase::get().getQuestions(1).back();
+	Question question;
 	if (_firstPlayer->getLoggedUser().getUsername() == user.getUsername()) {
+		question = IDatabase::get().getQuestions(_firstPlayerAmountOfQuestions).back();
 		_firstPlayer->getLastQuestion() = question;
+		_firstPlayerAmountOfQuestions++;
 	}
 	else {
+		question = IDatabase::get().getQuestions(_secondPlayerAmountOfQuestions).back();
 		_firstPlayer->getLastQuestion() = question;
+		_secondPlayerAmountOfQuestions++;
 	}
+	
 
 	return question;
 }
