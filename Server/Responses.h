@@ -122,7 +122,7 @@ struct StartHeadOnGameResponse
 struct GetHeadOnGameStateResponse
 {
 	unsigned int status;
-	unsigned int health;
+	int health;
 	unsigned int isWinner;
 };
 

@@ -1,6 +1,6 @@
 #include "HeadOnPlayerEntry.h"
 
-HeadOnPlayerEntry::HeadOnPlayerEntry(const LoggedUser& loggedUser, unsigned int health, const Question& question)
+HeadOnPlayerEntry::HeadOnPlayerEntry(const LoggedUser& loggedUser, int health, const Question& question)
 {
 	_loggedUser = loggedUser;
 	_health = health;
@@ -18,7 +18,7 @@ const LoggedUser& HeadOnPlayerEntry::getLoggedUser() {
 	return _loggedUser;
 }
 
-unsigned int HeadOnPlayerEntry::getHealth() {
+int HeadOnPlayerEntry::getHealth() {
 	return _health;
 }
 
@@ -30,6 +30,6 @@ unsigned int HeadOnPlayerEntry::getIsWinner() {
 	return _isWinner;
 }
 
-void HeadOnPlayerEntry::setHealth(unsigned int health) {
+void HeadOnPlayerEntry::setHealth(int health) {
 	_health = health;
 }

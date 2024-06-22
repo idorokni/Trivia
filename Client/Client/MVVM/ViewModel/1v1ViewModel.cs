@@ -103,6 +103,7 @@ namespace Client.MVVM.ViewModel
                 if (_health > 0)
                 {
                     GetQuestion(); // Move to the next question
+                    Application.Current.Dispatcher.Invoke(() => timer.Stop());
                     // Restart the timer
                     _decrement = 0; // Reset decrement counter
                     Time = _decrement.ToString();
@@ -143,16 +144,21 @@ namespace Client.MVVM.ViewModel
                 App.Communicator.SendMessage(msg);
 
                 RequestResult response = App.Communicator.DeserializeMessage();
-                uint health = uint.Parse(response.Data.Split(':')[1].Split(',')[0]);
+                int health = int.Parse(response.Data.Split(':')[1].Split(',')[0]);
+
                 if (health <= 0)
                 {
-                    MessageBox.Show("YOU LOST");
-                    MainViewModel.Instance.CurrentView = new HomeViewModel();
+                    MainViewModel.Instance.CurrentView = new HeadOnGameResultsViewModel(false);
+                    Application.Current.Dispatcher.Invoke(() => timer.Stop());
+                    Dispose();
                 }
-               
-                Application.Current.Dispatcher.Invoke(() => {
-                    Health = health;
-                });
+                else
+                {
+
+                    Application.Current.Dispatcher.Invoke(() => {
+                        Health = (uint)health;
+                    });
+                }
 
             }
             catch (Exception ex)
